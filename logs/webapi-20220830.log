@@ -1,0 +1,23 @@
+[INF]  User profile is available. Using 'C:\Users\dell\AppData\Local\ASP.NET\DataProtection-Keys' as key repository and Windows DPAPI to encrypt keys at rest. 
+[INF]  Now listening on: https://localhost:7263 
+[INF]  Now listening on: http://localhost:5263 
+[INF]  Application started. Press Ctrl+C to shut down. 
+[INF]  Hosting environment: Development 
+[INF]  Content root path: C:\Users\dell\Desktop\RailWayCleanArchitecture\HRMSApp\HRMS\ 
+[INF]  Request starting HTTP/2 GET https://localhost:7263/swagger - - 
+[INF]  Request starting HTTP/2 GET https://localhost:7263/swagger/index.html - - 
+[INF]  Request finished HTTP/2 GET https://localhost:7263/swagger - - - 301 0 - 1991.0406ms 
+[INF]  Request starting HTTP/2 GET https://localhost:7263/swagger/swagger-ui.css - - 
+[INF]  Request starting HTTP/2 GET https://localhost:7263/swagger/swagger-ui-bundle.js - - 
+[INF]  Request starting HTTP/2 GET https://localhost:7263/swagger/swagger-ui-standalone-preset.js - - 
+[INF]  Request starting HTTP/2 GET https://localhost:7263/_framework/aspnetcore-browser-refresh.js - - 
+[INF]  Request finished HTTP/2 GET https://localhost:7263/swagger/index.html - - - 200 - text/html;charset=utf-8 6116.0956ms 
+[INF]  Request finished HTTP/2 GET https://localhost:7263/_framework/aspnetcore-browser-refresh.js - - - 200 11974 application/javascript;+charset=utf-8 125.8114ms 
+[INF]  Sending file. Request path: '/swagger-ui.css'. Physical path: 'N/A' 
+[INF]  Request finished HTTP/2 GET https://localhost:7263/swagger/swagger-ui.css - - - 200 143943 text/css 602.2919ms 
+[INF]  Sending file. Request path: '/swagger-ui-standalone-preset.js'. Physical path: 'N/A' 
+[INF]  Request finished HTTP/2 GET https://localhost:7263/swagger/swagger-ui-standalone-preset.js - - - 200 339486 application/javascript 1154.4175ms 
+[INF]  Sending file. Request path: '/swagger-ui-bundle.js'. Physical path: 'N/A' 
+[INF]  Request finished HTTP/2 GET https://localhost:7263/swagger/swagger-ui-bundle.js - - - 200 1096145 application/javascript 1505.0923ms 
+[INF]  Request starting HTTP/2 GET https://localhost:7263/swagger/v1/swagger.json - - 
+[INF]  Request finished HTTP/2 GET https://localhost:7263/swagger/v1/swagger.json - - - 200 - application/json;charset=utf-8 1709.7733ms 

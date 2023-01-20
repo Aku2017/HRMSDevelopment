@@ -1,0 +1,680 @@
+[WRN]  No store type was specified for the decimal property 'Allowance' on entity type 'Leave'. This will cause values to be silently truncated if they do not fit in the default precision and scale. Explicitly specify the SQL server column type that can accommodate all the values in 'OnModelCreating' using 'HasColumnType', specify precision and scale using 'HasPrecision', or configure a value converter using 'HasConversion'. 
+[INF]  Entity Framework Core 6.0.8 initialized 'HRMSDbContext' using provider 'Microsoft.EntityFrameworkCore.SqlServer:6.0.8' with options: None 
+[WRN]  No store type was specified for the decimal property 'Allowance' on entity type 'Leave'. This will cause values to be silently truncated if they do not fit in the default precision and scale. Explicitly specify the SQL server column type that can accommodate all the values in 'OnModelCreating' using 'HasColumnType', specify precision and scale using 'HasPrecision', or configure a value converter using 'HasConversion'. 
+[WRN]  No store type was specified for the decimal property 'Allowance' on entity type 'Leave'. This will cause values to be silently truncated if they do not fit in the default precision and scale. Explicitly specify the SQL server column type that can accommodate all the values in 'OnModelCreating' using 'HasColumnType', specify precision and scale using 'HasPrecision', or configure a value converter using 'HasConversion'. 
+[INF]  Entity Framework Core 6.0.8 initialized 'HRMSDbContext' using provider 'Microsoft.EntityFrameworkCore.SqlServer:6.0.8' with options: None 
+[WRN]  No store type was specified for the decimal property 'Allowance' on entity type 'Leave'. This will cause values to be silently truncated if they do not fit in the default precision and scale. Explicitly specify the SQL server column type that can accommodate all the values in 'OnModelCreating' using 'HasColumnType', specify precision and scale using 'HasPrecision', or configure a value converter using 'HasConversion'. 
+[INF]  Executed DbCommand (7,195ms) [Parameters=[], CommandType='"Text"', CommandTimeout='60']
+CREATE DATABASE [HrmsDb]; 
+[INF]  Executed DbCommand (2,292ms) [Parameters=[], CommandType='"Text"', CommandTimeout='60']
+IF SERVERPROPERTY('EngineEdition') <> 5
+BEGIN
+    ALTER DATABASE [HrmsDb] SET READ_COMMITTED_SNAPSHOT ON;
+END; 
+[INF]  Executed DbCommand (153ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT 1 
+[INF]  Executed DbCommand (315ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+CREATE TABLE [__EFMigrationsHistory] (
+    [MigrationId] nvarchar(150) NOT NULL,
+    [ProductVersion] nvarchar(32) NOT NULL,
+    CONSTRAINT [PK___EFMigrationsHistory] PRIMARY KEY ([MigrationId])
+); 
+[INF]  Executed DbCommand (0ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT 1 
+[INF]  Executed DbCommand (107ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT OBJECT_ID(N'[__EFMigrationsHistory]'); 
+[INF]  Executed DbCommand (74ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT [MigrationId], [ProductVersion]
+FROM [__EFMigrationsHistory]
+ORDER BY [MigrationId]; 
+[INF]  Applying migration '20220910134935_FirstMigration'. 
+[INF]  Executed DbCommand (83ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+CREATE TABLE [Leave] (
+    [Id] uniqueidentifier NOT NULL,
+    [Name] nvarchar(max) NOT NULL,
+    [Days] int NOT NULL,
+    [Allowance] decimal(18,2) NOT NULL,
+    [CreateDate] datetime2 NOT NULL,
+    [LastModifyDate] datetime2 NOT NULL,
+    CONSTRAINT [PK_Leave] PRIMARY KEY ([Id])
+); 
+[INF]  Executed DbCommand (134ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+CREATE TABLE [ApplyLeave] (
+    [Id] uniqueidentifier NOT NULL,
+    [LeaveId] uniqueidentifier NOT NULL,
+    [EmployeeId] uniqueidentifier NOT NULL,
+    [Reason] nvarchar(max) NOT NULL,
+    [StartDate] datetime2 NOT NULL,
+    [IsPprove] bit NOT NULL,
+    [IsReject] bit NOT NULL,
+    [ApproverMessage] nvarchar(max) NULL,
+    [CreateDate] datetime2 NOT NULL,
+    [LastModifyDate] datetime2 NOT NULL,
+    CONSTRAINT [PK_ApplyLeave] PRIMARY KEY ([Id]),
+    CONSTRAINT [FK_ApplyLeave_Leave_LeaveId] FOREIGN KEY ([LeaveId]) REFERENCES [Leave] ([Id]) ON DELETE CASCADE
+); 
+[INF]  Executed DbCommand (24ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+CREATE TABLE [CompanyProjectEmployee] (
+    [TeamId] uniqueidentifier NOT NULL,
+    [companyProjectsId] uniqueidentifier NOT NULL,
+    CONSTRAINT [PK_CompanyProjectEmployee] PRIMARY KEY ([TeamId], [companyProjectsId])
+); 
+[INF]  Executed DbCommand (5ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+CREATE TABLE [CompanyProjects] (
+    [Id] uniqueidentifier NOT NULL,
+    [Name] nvarchar(max) NOT NULL,
+    [TeamLeadId] uniqueidentifier NOT NULL,
+    [ProjectStatus] int NOT NULL,
+    [CreateDate] datetime2 NOT NULL,
+    [LastModifyDate] datetime2 NOT NULL,
+    CONSTRAINT [PK_CompanyProjects] PRIMARY KEY ([Id])
+); 
+[INF]  Executed DbCommand (16ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+CREATE TABLE [Department] (
+    [Id] uniqueidentifier NOT NULL,
+    [Name] nvarchar(max) NOT NULL,
+    [HODId] uniqueidentifier NULL,
+    [Description] nvarchar(max) NULL,
+    [CreateDate] datetime2 NOT NULL,
+    [LastModifyDate] datetime2 NOT NULL,
+    CONSTRAINT [PK_Department] PRIMARY KEY ([Id])
+); 
+[INF]  Executed DbCommand (58ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+CREATE TABLE [Employee] (
+    [Id] uniqueidentifier NOT NULL,
+    [FirstName] nvarchar(50) NULL,
+    [Surname] nvarchar(50) NULL,
+    [OtherName] nvarchar(50) NULL,
+    [ContactAddress] nvarchar(max) NULL,
+    [Email] nvarchar(max) NOT NULL,
+    [Gender] int NULL,
+    [StateOfOrigin] nvarchar(max) NULL,
+    [PhoneNo] nvarchar(max) NULL,
+    [TechnicalSkill] nvarchar(max) NULL,
+    [SoftSkill] nvarchar(max) NULL,
+    [DOB] datetime2 NULL,
+    [DateEmployed] datetime2 NULL,
+    [Nationality] nvarchar(max) NULL,
+    [Photo] varbinary(max) NULL,
+    [StaffId] nvarchar(max) NULL,
+    [NextOfKingFirstName] nvarchar(max) NULL,
+    [NextOfKingSurName] nvarchar(max) NULL,
+    [NextOfKingPhoneNo] nvarchar(max) NULL,
+    [NextOfKingAddress] nvarchar(max) NULL,
+    [NextOfKingEmail] nvarchar(max) NULL,
+    [Relationship] int NULL,
+    [PasswordHash] varbinary(max) NOT NULL,
+    [PasswordSalt] varbinary(max) NOT NULL,
+    [VerificationToken] nvarchar(max) NULL,
+    [VerifiedAt] datetime2 NULL,
+    [ResetToken] nvarchar(max) NULL,
+    [ResetTokenExpires] datetime2 NULL,
+    [RefreshToken] nvarchar(max) NULL,
+    [ManagerId] uniqueidentifier NULL,
+    [Role] int NOT NULL,
+    [JobRole] int NULL,
+    [JobLocation] int NULL,
+    [DepartmentId] uniqueidentifier NULL,
+    [WorkType] int NULL,
+    [ContractType] int NULL,
+    [ConfirmedStatus] bit NOT NULL,
+    [RecievedOfferLetter] bit NOT NULL,
+    [LastDatePromoted] datetime2 NOT NULL,
+    [IsLock] bit NOT NULL,
+    [NTry] int NOT NULL,
+    [CreateDate] datetime2 NOT NULL,
+    [LastModifyDate] datetime2 NOT NULL,
+    CONSTRAINT [PK_Employee] PRIMARY KEY ([Id]),
+    CONSTRAINT [FK_Employee_Department_DepartmentId] FOREIGN KEY ([DepartmentId]) REFERENCES [Department] ([Id]),
+    CONSTRAINT [FK_Employee_Employee_ManagerId] FOREIGN KEY ([ManagerId]) REFERENCES [Employee] ([Id])
+); 
+[INF]  Executed DbCommand (6ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+CREATE TABLE [EmployeeProjects] (
+    [Id] uniqueidentifier NOT NULL,
+    [Name] nvarchar(max) NULL,
+    [Description] nvarchar(max) NULL,
+    [Link] nvarchar(max) NULL,
+    [Status] int NOT NULL,
+    [EmployeeId] uniqueidentifier NOT NULL,
+    [CreateDate] datetime2 NOT NULL,
+    [LastModifyDate] datetime2 NOT NULL,
+    CONSTRAINT [PK_EmployeeProjects] PRIMARY KEY ([Id]),
+    CONSTRAINT [FK_EmployeeProjects_Employee_EmployeeId] FOREIGN KEY ([EmployeeId]) REFERENCES [Employee] ([Id]) ON DELETE CASCADE
+); 
+[INF]  Executed DbCommand (20ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+CREATE TABLE [Performances] (
+    [Id] uniqueidentifier NOT NULL,
+    [EmployeeId] uniqueidentifier NOT NULL,
+    [MonthlyRating] float NOT NULL,
+    [Month] datetime2 NOT NULL,
+    [CreateDate] datetime2 NOT NULL,
+    [LastModifyDate] datetime2 NOT NULL,
+    CONSTRAINT [PK_Performances] PRIMARY KEY ([Id]),
+    CONSTRAINT [FK_Performances_Employee_EmployeeId] FOREIGN KEY ([EmployeeId]) REFERENCES [Employee] ([Id]) ON DELETE CASCADE
+); 
+[INF]  Executed DbCommand (23ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+CREATE TABLE [WorkExperiences] (
+    [Id] uniqueidentifier NOT NULL,
+    [Body] nvarchar(max) NOT NULL,
+    [JobRole] nvarchar(max) NOT NULL,
+    [Department] nvarchar(max) NOT NULL,
+    [StartDate] datetime2 NOT NULL,
+    [EndDate] datetime2 NOT NULL,
+    [EmployeeId] uniqueidentifier NOT NULL,
+    [TestingMigration] nvarchar(max) NOT NULL,
+    [CreateDate] datetime2 NOT NULL,
+    [LastModifyDate] datetime2 NOT NULL,
+    CONSTRAINT [PK_WorkExperiences] PRIMARY KEY ([Id]),
+    CONSTRAINT [FK_WorkExperiences_Employee_EmployeeId] FOREIGN KEY ([EmployeeId]) REFERENCES [Employee] ([Id]) ON DELETE CASCADE
+); 
+[INF]  Executed DbCommand (176ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+CREATE INDEX [IX_ApplyLeave_EmployeeId] ON [ApplyLeave] ([EmployeeId]); 
+[INF]  Executed DbCommand (49ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+CREATE INDEX [IX_ApplyLeave_LeaveId] ON [ApplyLeave] ([LeaveId]); 
+[INF]  Executed DbCommand (13ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+CREATE INDEX [IX_CompanyProjectEmployee_companyProjectsId] ON [CompanyProjectEmployee] ([companyProjectsId]); 
+[INF]  Executed DbCommand (19ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+CREATE INDEX [IX_CompanyProjects_TeamLeadId] ON [CompanyProjects] ([TeamLeadId]); 
+[INF]  Executed DbCommand (22ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+CREATE INDEX [IX_Department_HODId] ON [Department] ([HODId]); 
+[INF]  Executed DbCommand (5ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+CREATE INDEX [IX_Employee_DepartmentId] ON [Employee] ([DepartmentId]); 
+[INF]  Executed DbCommand (2ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+CREATE INDEX [IX_Employee_ManagerId] ON [Employee] ([ManagerId]); 
+[INF]  Executed DbCommand (12ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+CREATE INDEX [IX_EmployeeProjects_EmployeeId] ON [EmployeeProjects] ([EmployeeId]); 
+[INF]  Executed DbCommand (1ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+CREATE INDEX [IX_Performances_EmployeeId] ON [Performances] ([EmployeeId]); 
+[INF]  Executed DbCommand (2ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+CREATE INDEX [IX_WorkExperiences_EmployeeId] ON [WorkExperiences] ([EmployeeId]); 
+[INF]  Executed DbCommand (257ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+ALTER TABLE [ApplyLeave] ADD CONSTRAINT [FK_ApplyLeave_Employee_EmployeeId] FOREIGN KEY ([EmployeeId]) REFERENCES [Employee] ([Id]) ON DELETE CASCADE; 
+[INF]  Executed DbCommand (10ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+ALTER TABLE [CompanyProjectEmployee] ADD CONSTRAINT [FK_CompanyProjectEmployee_CompanyProjects_companyProjectsId] FOREIGN KEY ([companyProjectsId]) REFERENCES [CompanyProjects] ([Id]) ON DELETE CASCADE; 
+[INF]  Executed DbCommand (3ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+ALTER TABLE [CompanyProjectEmployee] ADD CONSTRAINT [FK_CompanyProjectEmployee_Employee_TeamId] FOREIGN KEY ([TeamId]) REFERENCES [Employee] ([Id]) ON DELETE CASCADE; 
+[ERR]  Failed executing DbCommand (259ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+ALTER TABLE [CompanyProjects] ADD CONSTRAINT [FK_CompanyProjects_Employee_TeamLeadId] FOREIGN KEY ([TeamLeadId]) REFERENCES [Employee] ([Id]) ON DELETE CASCADE; 
+[WRN]  No store type was specified for the decimal property 'Allowance' on entity type 'Leave'. This will cause values to be silently truncated if they do not fit in the default precision and scale. Explicitly specify the SQL server column type that can accommodate all the values in 'OnModelCreating' using 'HasColumnType', specify precision and scale using 'HasPrecision', or configure a value converter using 'HasConversion'. 
+[INF]  Entity Framework Core 6.0.8 initialized 'HRMSDbContext' using provider 'Microsoft.EntityFrameworkCore.SqlServer:6.0.8' with options: None 
+[INF]  Executed DbCommand (20ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT 1 
+[INF]  Executed DbCommand (17ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT OBJECT_ID(N'[__EFMigrationsHistory]'); 
+[INF]  Executed DbCommand (3ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT 1 
+[INF]  Executed DbCommand (0ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT OBJECT_ID(N'[__EFMigrationsHistory]'); 
+[INF]  Executed DbCommand (2ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT [MigrationId], [ProductVersion]
+FROM [__EFMigrationsHistory]
+ORDER BY [MigrationId]; 
+[INF]  Applying migration '20220910134935_FirstMigration'. 
+[INF]  Executed DbCommand (3ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+CREATE TABLE [Leave] (
+    [Id] uniqueidentifier NOT NULL,
+    [Name] nvarchar(max) NOT NULL,
+    [Days] int NOT NULL,
+    [Allowance] decimal(18,2) NOT NULL,
+    [CreateDate] datetime2 NOT NULL,
+    [LastModifyDate] datetime2 NOT NULL,
+    CONSTRAINT [PK_Leave] PRIMARY KEY ([Id])
+); 
+[INF]  Executed DbCommand (37ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+CREATE TABLE [ApplyLeave] (
+    [Id] uniqueidentifier NOT NULL,
+    [LeaveId] uniqueidentifier NOT NULL,
+    [EmployeeId] uniqueidentifier NOT NULL,
+    [Reason] nvarchar(max) NOT NULL,
+    [StartDate] datetime2 NOT NULL,
+    [IsPprove] bit NOT NULL,
+    [IsReject] bit NOT NULL,
+    [ApproverMessage] nvarchar(max) NULL,
+    [CreateDate] datetime2 NOT NULL,
+    [LastModifyDate] datetime2 NOT NULL,
+    CONSTRAINT [PK_ApplyLeave] PRIMARY KEY ([Id]),
+    CONSTRAINT [FK_ApplyLeave_Leave_LeaveId] FOREIGN KEY ([LeaveId]) REFERENCES [Leave] ([Id]) ON DELETE CASCADE
+); 
+[INF]  Executed DbCommand (1ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+CREATE TABLE [CompanyProjectEmployee] (
+    [TeamId] uniqueidentifier NOT NULL,
+    [companyProjectsId] uniqueidentifier NOT NULL,
+    CONSTRAINT [PK_CompanyProjectEmployee] PRIMARY KEY ([TeamId], [companyProjectsId])
+); 
+[INF]  Executed DbCommand (1ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+CREATE TABLE [CompanyProjects] (
+    [Id] uniqueidentifier NOT NULL,
+    [Name] nvarchar(max) NOT NULL,
+    [TeamLeadId] uniqueidentifier NOT NULL,
+    [ProjectStatus] int NOT NULL,
+    [CreateDate] datetime2 NOT NULL,
+    [LastModifyDate] datetime2 NOT NULL,
+    CONSTRAINT [PK_CompanyProjects] PRIMARY KEY ([Id])
+); 
+[INF]  Executed DbCommand (15ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+CREATE TABLE [Department] (
+    [Id] uniqueidentifier NOT NULL,
+    [Name] nvarchar(max) NOT NULL,
+    [HODId] uniqueidentifier NULL,
+    [Description] nvarchar(max) NULL,
+    [CreateDate] datetime2 NOT NULL,
+    [LastModifyDate] datetime2 NOT NULL,
+    CONSTRAINT [PK_Department] PRIMARY KEY ([Id])
+); 
+[INF]  Executed DbCommand (25ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+CREATE TABLE [Employee] (
+    [Id] uniqueidentifier NOT NULL,
+    [FirstName] nvarchar(50) NULL,
+    [Surname] nvarchar(50) NULL,
+    [OtherName] nvarchar(50) NULL,
+    [ContactAddress] nvarchar(max) NULL,
+    [Email] nvarchar(max) NOT NULL,
+    [Gender] int NULL,
+    [StateOfOrigin] nvarchar(max) NULL,
+    [PhoneNo] nvarchar(max) NULL,
+    [TechnicalSkill] nvarchar(max) NULL,
+    [SoftSkill] nvarchar(max) NULL,
+    [DOB] datetime2 NULL,
+    [DateEmployed] datetime2 NULL,
+    [Nationality] nvarchar(max) NULL,
+    [Photo] varbinary(max) NULL,
+    [StaffId] nvarchar(max) NULL,
+    [NextOfKingFirstName] nvarchar(max) NULL,
+    [NextOfKingSurName] nvarchar(max) NULL,
+    [NextOfKingPhoneNo] nvarchar(max) NULL,
+    [NextOfKingAddress] nvarchar(max) NULL,
+    [NextOfKingEmail] nvarchar(max) NULL,
+    [Relationship] int NULL,
+    [PasswordHash] varbinary(max) NOT NULL,
+    [PasswordSalt] varbinary(max) NOT NULL,
+    [VerificationToken] nvarchar(max) NULL,
+    [VerifiedAt] datetime2 NULL,
+    [ResetToken] nvarchar(max) NULL,
+    [ResetTokenExpires] datetime2 NULL,
+    [RefreshToken] nvarchar(max) NULL,
+    [ManagerId] uniqueidentifier NULL,
+    [Role] int NOT NULL,
+    [JobRole] int NULL,
+    [JobLocation] int NULL,
+    [DepartmentId] uniqueidentifier NULL,
+    [WorkType] int NULL,
+    [ContractType] int NULL,
+    [ConfirmedStatus] bit NOT NULL,
+    [RecievedOfferLetter] bit NOT NULL,
+    [LastDatePromoted] datetime2 NOT NULL,
+    [IsLock] bit NOT NULL,
+    [NTry] int NOT NULL,
+    [CreateDate] datetime2 NOT NULL,
+    [LastModifyDate] datetime2 NOT NULL,
+    CONSTRAINT [PK_Employee] PRIMARY KEY ([Id]),
+    CONSTRAINT [FK_Employee_Department_DepartmentId] FOREIGN KEY ([DepartmentId]) REFERENCES [Department] ([Id]),
+    CONSTRAINT [FK_Employee_Employee_ManagerId] FOREIGN KEY ([ManagerId]) REFERENCES [Employee] ([Id])
+); 
+[INF]  Executed DbCommand (27ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+CREATE TABLE [EmployeeProjects] (
+    [Id] uniqueidentifier NOT NULL,
+    [Name] nvarchar(max) NULL,
+    [Description] nvarchar(max) NULL,
+    [Link] nvarchar(max) NULL,
+    [Status] int NOT NULL,
+    [EmployeeId] uniqueidentifier NOT NULL,
+    [CreateDate] datetime2 NOT NULL,
+    [LastModifyDate] datetime2 NOT NULL,
+    CONSTRAINT [PK_EmployeeProjects] PRIMARY KEY ([Id]),
+    CONSTRAINT [FK_EmployeeProjects_Employee_EmployeeId] FOREIGN KEY ([EmployeeId]) REFERENCES [Employee] ([Id]) ON DELETE CASCADE
+); 
+[INF]  Executed DbCommand (10ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+CREATE TABLE [Performances] (
+    [Id] uniqueidentifier NOT NULL,
+    [EmployeeId] uniqueidentifier NOT NULL,
+    [MonthlyRating] float NOT NULL,
+    [Month] datetime2 NOT NULL,
+    [CreateDate] datetime2 NOT NULL,
+    [LastModifyDate] datetime2 NOT NULL,
+    CONSTRAINT [PK_Performances] PRIMARY KEY ([Id]),
+    CONSTRAINT [FK_Performances_Employee_EmployeeId] FOREIGN KEY ([EmployeeId]) REFERENCES [Employee] ([Id]) ON DELETE CASCADE
+); 
+[INF]  Executed DbCommand (40ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+CREATE TABLE [WorkExperiences] (
+    [Id] uniqueidentifier NOT NULL,
+    [Body] nvarchar(max) NOT NULL,
+    [JobRole] nvarchar(max) NOT NULL,
+    [Department] nvarchar(max) NOT NULL,
+    [StartDate] datetime2 NOT NULL,
+    [EndDate] datetime2 NOT NULL,
+    [EmployeeId] uniqueidentifier NOT NULL,
+    [TestingMigration] nvarchar(max) NOT NULL,
+    [CreateDate] datetime2 NOT NULL,
+    [LastModifyDate] datetime2 NOT NULL,
+    CONSTRAINT [PK_WorkExperiences] PRIMARY KEY ([Id]),
+    CONSTRAINT [FK_WorkExperiences_Employee_EmployeeId] FOREIGN KEY ([EmployeeId]) REFERENCES [Employee] ([Id]) ON DELETE CASCADE
+); 
+[INF]  Executed DbCommand (2ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+CREATE INDEX [IX_ApplyLeave_EmployeeId] ON [ApplyLeave] ([EmployeeId]); 
+[INF]  Executed DbCommand (40ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+CREATE INDEX [IX_ApplyLeave_LeaveId] ON [ApplyLeave] ([LeaveId]); 
+[INF]  Executed DbCommand (2ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+CREATE INDEX [IX_CompanyProjectEmployee_companyProjectsId] ON [CompanyProjectEmployee] ([companyProjectsId]); 
+[INF]  Executed DbCommand (2ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+CREATE INDEX [IX_CompanyProjects_TeamLeadId] ON [CompanyProjects] ([TeamLeadId]); 
+[INF]  Executed DbCommand (2ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+CREATE INDEX [IX_Department_HODId] ON [Department] ([HODId]); 
+[INF]  Executed DbCommand (2ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+CREATE INDEX [IX_Employee_DepartmentId] ON [Employee] ([DepartmentId]); 
+[INF]  Executed DbCommand (2ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+CREATE INDEX [IX_Employee_ManagerId] ON [Employee] ([ManagerId]); 
+[INF]  Executed DbCommand (2ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+CREATE INDEX [IX_EmployeeProjects_EmployeeId] ON [EmployeeProjects] ([EmployeeId]); 
+[INF]  Executed DbCommand (2ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+CREATE INDEX [IX_Performances_EmployeeId] ON [Performances] ([EmployeeId]); 
+[INF]  Executed DbCommand (2ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+CREATE INDEX [IX_WorkExperiences_EmployeeId] ON [WorkExperiences] ([EmployeeId]); 
+[INF]  Executed DbCommand (69ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+ALTER TABLE [ApplyLeave] ADD CONSTRAINT [FK_ApplyLeave_Employee_EmployeeId] FOREIGN KEY ([EmployeeId]) REFERENCES [Employee] ([Id]) ON DELETE CASCADE; 
+[INF]  Executed DbCommand (10ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+ALTER TABLE [CompanyProjectEmployee] ADD CONSTRAINT [FK_CompanyProjectEmployee_CompanyProjects_companyProjectsId] FOREIGN KEY ([companyProjectsId]) REFERENCES [CompanyProjects] ([Id]) ON DELETE CASCADE; 
+[INF]  Executed DbCommand (24ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+ALTER TABLE [CompanyProjectEmployee] ADD CONSTRAINT [FK_CompanyProjectEmployee_Employee_TeamId] FOREIGN KEY ([TeamId]) REFERENCES [Employee] ([Id]) ON DELETE CASCADE; 
+[INF]  Executed DbCommand (1ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+ALTER TABLE [CompanyProjects] ADD CONSTRAINT [FK_CompanyProjects_Employee_TeamLeadId] FOREIGN KEY ([TeamLeadId]) REFERENCES [Employee] ([Id]); 
+[INF]  Executed DbCommand (10ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+ALTER TABLE [Department] ADD CONSTRAINT [FK_Department_Employee_HODId] FOREIGN KEY ([HODId]) REFERENCES [Employee] ([Id]); 
+[INF]  Executed DbCommand (360ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+INSERT INTO [__EFMigrationsHistory] ([MigrationId], [ProductVersion])
+VALUES (N'20220910134935_FirstMigration', N'6.0.8'); 
+[INF]  User profile is available. Using 'C:\Users\dell\AppData\Local\ASP.NET\DataProtection-Keys' as key repository and Windows DPAPI to encrypt keys at rest. 
+[INF]  Now listening on: https://localhost:7263 
+[INF]  Now listening on: http://localhost:5263 
+[INF]  Application started. Press Ctrl+C to shut down. 
+[INF]  Hosting environment: Development 
+[INF]  Content root path: C:\Users\dell\Desktop\RailWayCleanArchitecture\HRMSApp\HRMS\ 
+[INF]  Request starting HTTP/2 GET https://localhost:7263/swagger - - 
+[INF]  Request starting HTTP/2 GET https://localhost:7263/swagger/index.html - - 
+[INF]  Request finished HTTP/2 GET https://localhost:7263/swagger - - - 301 0 - 1393.8075ms 
+[INF]  Request starting HTTP/2 GET https://localhost:7263/swagger/swagger-ui.css - - 
+[INF]  Request finished HTTP/2 GET https://localhost:7263/swagger/index.html - - - 200 - text/html;charset=utf-8 3085.7345ms 
+[INF]  Request starting HTTP/2 GET https://localhost:7263/swagger/swagger-ui-bundle.js - - 
+[INF]  Request starting HTTP/2 GET https://localhost:7263/swagger/swagger-ui-standalone-preset.js - - 
+[INF]  Request starting HTTP/2 GET https://localhost:7263/_framework/aspnetcore-browser-refresh.js - - 
+[INF]  Request finished HTTP/2 GET https://localhost:7263/_framework/aspnetcore-browser-refresh.js - - - 200 11974 application/javascript;+charset=utf-8 86.1032ms 
+[INF]  Sending file. Request path: '/swagger-ui.css'. Physical path: 'N/A' 
+[INF]  Request finished HTTP/2 GET https://localhost:7263/swagger/swagger-ui.css - - - 200 143943 text/css 522.1703ms 
+[INF]  Sending file. Request path: '/swagger-ui-bundle.js'. Physical path: 'N/A' 
+[INF]  Request finished HTTP/2 GET https://localhost:7263/swagger/swagger-ui-bundle.js - - - 200 1096145 application/javascript 475.5643ms 
+[INF]  Sending file. Request path: '/swagger-ui-standalone-preset.js'. Physical path: 'N/A' 
+[INF]  Request finished HTTP/2 GET https://localhost:7263/swagger/swagger-ui-standalone-preset.js - - - 200 339486 application/javascript 516.6710ms 
+[INF]  Request starting HTTP/2 GET https://localhost:7263/swagger/v1/swagger.json - - 
+[INF]  Request finished HTTP/2 GET https://localhost:7263/swagger/v1/swagger.json - - - 200 - application/json;charset=utf-8 2696.3610ms 
+[INF]  Request starting HTTP/2 GET https://localhost:7263/swagger/favicon-32x32.png - - 
+[INF]  Sending file. Request path: '/favicon-32x32.png'. Physical path: 'N/A' 
+[INF]  Request finished HTTP/2 GET https://localhost:7263/swagger/favicon-32x32.png - - - 200 628 image/png 0.6836ms 
+[INF]  Request starting HTTP/2 GET https://localhost:7263/api/Department - - 
+[INF]  Authorization failed. These requirements were not met:
+DenyAnonymousAuthorizationRequirement: Requires an authenticated user. 
+[INF]  AuthenticationScheme: Bearer was challenged. 
+[INF]  Request finished HTTP/2 GET https://localhost:7263/api/Department - - - 401 0 - 1581.3093ms 
+[INF]  Request starting HTTP/2 POST https://localhost:7263/api/CompanyProject application/json 147 
+[INF]  CORS policy execution successful. 
+[INF]  Authorization failed. These requirements were not met:
+DenyAnonymousAuthorizationRequirement: Requires an authenticated user.
+RolesAuthorizationRequirement:User.IsInRole must be true for one of the following roles: (Admin|Manager) 
+[INF]  AuthenticationScheme: Bearer was challenged. 
+[INF]  Request finished HTTP/2 POST https://localhost:7263/api/CompanyProject application/json 147 - 401 0 - 90.0477ms 
+[INF]  User profile is available. Using 'C:\Users\dell\AppData\Local\ASP.NET\DataProtection-Keys' as key repository and Windows DPAPI to encrypt keys at rest. 
+[INF]  Now listening on: https://localhost:7263 
+[INF]  Now listening on: http://localhost:5263 
+[INF]  Application started. Press Ctrl+C to shut down. 
+[INF]  Hosting environment: Development 
+[INF]  Content root path: C:\Users\dell\Desktop\RailWayCleanArchitecture\HRMSApp\HRMS\ 
+[INF]  Request starting HTTP/2 GET https://localhost:7263/swagger/index.html - - 
+[INF]  Request starting HTTP/2 GET https://localhost:7263/_framework/aspnetcore-browser-refresh.js - - 
+[INF]  Request finished HTTP/2 GET https://localhost:7263/_framework/aspnetcore-browser-refresh.js - - - 200 11974 application/javascript;+charset=utf-8 199.1629ms 
+[INF]  Request finished HTTP/2 GET https://localhost:7263/swagger/index.html - - - 200 - text/html;charset=utf-8 3633.9355ms 
+[INF]  Request starting HTTP/2 GET https://localhost:7263/swagger/v1/swagger.json - - 
+[INF]  Request finished HTTP/2 GET https://localhost:7263/swagger/v1/swagger.json - - - 200 - application/json;charset=utf-8 1515.0938ms 
+[INF]  User profile is available. Using 'C:\Users\dell\AppData\Local\ASP.NET\DataProtection-Keys' as key repository and Windows DPAPI to encrypt keys at rest. 
+[INF]  Now listening on: https://localhost:7263 
+[INF]  Now listening on: http://localhost:5263 
+[INF]  Application started. Press Ctrl+C to shut down. 
+[INF]  Hosting environment: Development 
+[INF]  Content root path: C:\Users\dell\Desktop\RailWayCleanArchitecture\HRMSApp\HRMS\ 
+[INF]  Request starting HTTP/2 GET https://localhost:7263/swagger/index.html - - 
+[INF]  Request starting HTTP/2 GET https://localhost:7263/_framework/aspnetcore-browser-refresh.js - - 
+[INF]  Request finished HTTP/2 GET https://localhost:7263/_framework/aspnetcore-browser-refresh.js - - - 200 11974 application/javascript;+charset=utf-8 16.8936ms 
+[INF]  Request finished HTTP/2 GET https://localhost:7263/swagger/index.html - - - 200 - text/html;charset=utf-8 997.5999ms 
+[INF]  Request starting HTTP/2 GET https://localhost:7263/swagger/v1/swagger.json - - 
+[INF]  Request finished HTTP/2 GET https://localhost:7263/swagger/v1/swagger.json - - - 200 - application/json;charset=utf-8 316.7439ms 
+[INF]  Request starting HTTP/2 POST https://localhost:7263/api/Employee application/json 45 
+[INF]  CORS policy execution successful. 
+[INF]  Executing endpoint 'HRMS.API.Controllers.EmployeeController.Create (HRMS.API)' 
+[INF]  Route matched with {action = "Create", controller = "Employee"}. Executing controller action with signature System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.IActionResult] Create(HRMSapplication.Commands.CreateEmployee.CreateEmployeeCommand) on controller HRMS.API.Controllers.EmployeeController (HRMS.API). 
+[WRN]  No store type was specified for the decimal property 'Allowance' on entity type 'Leave'. This will cause values to be silently truncated if they do not fit in the default precision and scale. Explicitly specify the SQL server column type that can accommodate all the values in 'OnModelCreating' using 'HasColumnType', specify precision and scale using 'HasPrecision', or configure a value converter using 'HasConversion'. 
+[INF]  Entity Framework Core 6.0.8 initialized 'HRMSDbContext' using provider 'Microsoft.EntityFrameworkCore.SqlServer:6.0.8' with options: None 
+[INF]  Executed DbCommand (845ms) [Parameters=[@__ToLower_0='?' (Size = 4000)], CommandType='"Text"', CommandTimeout='30']
+SELECT [e].[Id], [e].[ConfirmedStatus], [e].[ContactAddress], [e].[ContractType], [e].[CreateDate], [e].[DOB], [e].[DateEmployed], [e].[DepartmentId], [e].[Email], [e].[FirstName], [e].[Gender], [e].[IsLock], [e].[JobLocation], [e].[JobRole], [e].[LastDatePromoted], [e].[LastModifyDate], [e].[ManagerId], [e].[NTry], [e].[Nationality], [e].[NextOfKingAddress], [e].[NextOfKingEmail], [e].[NextOfKingFirstName], [e].[NextOfKingPhoneNo], [e].[NextOfKingSurName], [e].[OtherName], [e].[PasswordHash], [e].[PasswordSalt], [e].[PhoneNo], [e].[Photo], [e].[RecievedOfferLetter], [e].[RefreshToken], [e].[Relationship], [e].[ResetToken], [e].[ResetTokenExpires], [e].[Role], [e].[SoftSkill], [e].[StaffId], [e].[StateOfOrigin], [e].[Surname], [e].[TechnicalSkill], [e].[VerificationToken], [e].[VerifiedAt], [e].[WorkType]
+FROM [Employee] AS [e]
+WHERE LOWER([e].[Email]) = @__ToLower_0 
+[INF]  Executed DbCommand (612ms) [Parameters=[@p0='?' (DbType = Guid), @p1='?' (DbType = Boolean), @p2='?' (Size = 4000), @p3='?' (DbType = Int32), @p4='?' (DbType = DateTime2), @p5='?' (DbType = DateTime2), @p6='?' (DbType = DateTime2), @p7='?' (DbType = Guid), @p8='?' (Size = 4000), @p9='?' (Size = 50), @p10='?' (DbType = Int32), @p11='?' (DbType = Boolean), @p12='?' (DbType = Int32), @p13='?' (DbType = Int32), @p14='?' (DbType = DateTime2), @p15='?' (DbType = DateTime2), @p16='?' (DbType = Guid), @p17='?' (DbType = Int32), @p18='?' (Size = 4000), @p19='?' (Size = 4000), @p20='?' (Size = 4000), @p21='?' (Size = 4000), @p22='?' (Size = 4000), @p23='?' (Size = 4000), @p24='?' (Size = 50), @p25='?' (Size = 8000) (DbType = Binary), @p26='?' (Size = 8000) (DbType = Binary), @p27='?' (Size = 4000), @p28='?' (Size = 8000) (DbType = Binary), @p29='?' (DbType = Boolean), @p30='?' (Size = 4000), @p31='?' (DbType = Int32), @p32='?' (Size = 4000), @p33='?' (DbType = DateTime2), @p34='?' (DbType = Int32), @p35='?' (Size = 4000), @p36='?' (Size = 4000), @p37='?' (Size = 4000), @p38='?' (Size = 50), @p39='?' (Size = 4000), @p40='?' (Size = 4000), @p41='?' (DbType = DateTime2), @p42='?' (DbType = Int32)], CommandType='"Text"', CommandTimeout='30']
+SET NOCOUNT ON;
+INSERT INTO [Employee] ([Id], [ConfirmedStatus], [ContactAddress], [ContractType], [CreateDate], [DOB], [DateEmployed], [DepartmentId], [Email], [FirstName], [Gender], [IsLock], [JobLocation], [JobRole], [LastDatePromoted], [LastModifyDate], [ManagerId], [NTry], [Nationality], [NextOfKingAddress], [NextOfKingEmail], [NextOfKingFirstName], [NextOfKingPhoneNo], [NextOfKingSurName], [OtherName], [PasswordHash], [PasswordSalt], [PhoneNo], [Photo], [RecievedOfferLetter], [RefreshToken], [Relationship], [ResetToken], [ResetTokenExpires], [Role], [SoftSkill], [StaffId], [StateOfOrigin], [Surname], [TechnicalSkill], [VerificationToken], [VerifiedAt], [WorkType])
+VALUES (@p0, @p1, @p2, @p3, @p4, @p5, @p6, @p7, @p8, @p9, @p10, @p11, @p12, @p13, @p14, @p15, @p16, @p17, @p18, @p19, @p20, @p21, @p22, @p23, @p24, @p25, @p26, @p27, @p28, @p29, @p30, @p31, @p32, @p33, @p34, @p35, @p36, @p37, @p38, @p39, @p40, @p41, @p42); 
+[INF]  Executing OkObjectResult, writing value of type 'HRMS.Application.Commands.CreateEmployee.CreateEmployeeResponse'. 
+[INF]  Executed action HRMS.API.Controllers.EmployeeController.Create (HRMS.API) in 28630.0445ms 
+[INF]  Executed endpoint 'HRMS.API.Controllers.EmployeeController.Create (HRMS.API)' 
+[INF]  Request finished HTTP/2 POST https://localhost:7263/api/Employee application/json 45 - 200 - application/json;+charset=utf-8 29386.0479ms 
+[INF]  Request starting HTTP/2 POST https://localhost:7263/api/Authentication/verify-account application/json 164 
+[INF]  CORS policy execution successful. 
+[INF]  Executing endpoint 'HRMS.API.Controllers.AuthenticationController.RerifyAccount (HRMS.API)' 
+[INF]  Route matched with {action = "RerifyAccount", controller = "Authentication"}. Executing controller action with signature System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.IActionResult] RerifyAccount(HRMS.Application.Services.Security.VerifyAccount.VerifyAccountCommand) on controller HRMS.API.Controllers.AuthenticationController (HRMS.API). 
+[INF]  Entity Framework Core 6.0.8 initialized 'HRMSDbContext' using provider 'Microsoft.EntityFrameworkCore.SqlServer:6.0.8' with options: None 
+[INF]  Executed DbCommand (6,219ms) [Parameters=[@__request_verifyToken_0='?' (Size = 4000)], CommandType='"Text"', CommandTimeout='30']
+SELECT [e].[Id], [e].[ConfirmedStatus], [e].[ContactAddress], [e].[ContractType], [e].[CreateDate], [e].[DOB], [e].[DateEmployed], [e].[DepartmentId], [e].[Email], [e].[FirstName], [e].[Gender], [e].[IsLock], [e].[JobLocation], [e].[JobRole], [e].[LastDatePromoted], [e].[LastModifyDate], [e].[ManagerId], [e].[NTry], [e].[Nationality], [e].[NextOfKingAddress], [e].[NextOfKingEmail], [e].[NextOfKingFirstName], [e].[NextOfKingPhoneNo], [e].[NextOfKingSurName], [e].[OtherName], [e].[PasswordHash], [e].[PasswordSalt], [e].[PhoneNo], [e].[Photo], [e].[RecievedOfferLetter], [e].[RefreshToken], [e].[Relationship], [e].[ResetToken], [e].[ResetTokenExpires], [e].[Role], [e].[SoftSkill], [e].[StaffId], [e].[StateOfOrigin], [e].[Surname], [e].[TechnicalSkill], [e].[VerificationToken], [e].[VerifiedAt], [e].[WorkType]
+FROM [Employee] AS [e]
+WHERE [e].[VerificationToken] = @__request_verifyToken_0 
+[INF]  Executed DbCommand (8,611ms) [Parameters=[@p42='?' (DbType = Guid), @p0='?' (DbType = Boolean), @p1='?' (Size = 4000), @p2='?' (DbType = Int32), @p3='?' (DbType = DateTime2), @p4='?' (DbType = DateTime2), @p5='?' (DbType = DateTime2), @p6='?' (DbType = Guid), @p7='?' (Size = 4000), @p8='?' (Size = 50), @p9='?' (DbType = Int32), @p10='?' (DbType = Boolean), @p11='?' (DbType = Int32), @p12='?' (DbType = Int32), @p13='?' (DbType = DateTime2), @p14='?' (DbType = DateTime2), @p15='?' (DbType = Guid), @p16='?' (DbType = Int32), @p17='?' (Size = 4000), @p18='?' (Size = 4000), @p19='?' (Size = 4000), @p20='?' (Size = 4000), @p21='?' (Size = 4000), @p22='?' (Size = 4000), @p23='?' (Size = 50), @p24='?' (Size = 8000) (DbType = Binary), @p25='?' (Size = 8000) (DbType = Binary), @p26='?' (Size = 4000), @p27='?' (Size = 8000) (DbType = Binary), @p28='?' (DbType = Boolean), @p29='?' (Size = 4000), @p30='?' (DbType = Int32), @p31='?' (Size = 4000), @p32='?' (DbType = DateTime2), @p33='?' (DbType = Int32), @p34='?' (Size = 4000), @p35='?' (Size = 4000), @p36='?' (Size = 4000), @p37='?' (Size = 50), @p38='?' (Size = 4000), @p39='?' (Size = 4000), @p40='?' (DbType = DateTime2), @p41='?' (DbType = Int32)], CommandType='"Text"', CommandTimeout='30']
+SET NOCOUNT ON;
+UPDATE [Employee] SET [ConfirmedStatus] = @p0, [ContactAddress] = @p1, [ContractType] = @p2, [CreateDate] = @p3, [DOB] = @p4, [DateEmployed] = @p5, [DepartmentId] = @p6, [Email] = @p7, [FirstName] = @p8, [Gender] = @p9, [IsLock] = @p10, [JobLocation] = @p11, [JobRole] = @p12, [LastDatePromoted] = @p13, [LastModifyDate] = @p14, [ManagerId] = @p15, [NTry] = @p16, [Nationality] = @p17, [NextOfKingAddress] = @p18, [NextOfKingEmail] = @p19, [NextOfKingFirstName] = @p20, [NextOfKingPhoneNo] = @p21, [NextOfKingSurName] = @p22, [OtherName] = @p23, [PasswordHash] = @p24, [PasswordSalt] = @p25, [PhoneNo] = @p26, [Photo] = @p27, [RecievedOfferLetter] = @p28, [RefreshToken] = @p29, [Relationship] = @p30, [ResetToken] = @p31, [ResetTokenExpires] = @p32, [Role] = @p33, [SoftSkill] = @p34, [StaffId] = @p35, [StateOfOrigin] = @p36, [Surname] = @p37, [TechnicalSkill] = @p38, [VerificationToken] = @p39, [VerifiedAt] = @p40, [WorkType] = @p41
+WHERE [Id] = @p42;
+SELECT @@ROWCOUNT; 
+[INF]  Executing OkObjectResult, writing value of type 'System.Boolean'. 
+[INF]  Executed action HRMS.API.Controllers.AuthenticationController.RerifyAccount (HRMS.API) in 15995.4985ms 
+[INF]  Executed endpoint 'HRMS.API.Controllers.AuthenticationController.RerifyAccount (HRMS.API)' 
+[INF]  Request finished HTTP/2 POST https://localhost:7263/api/Authentication/verify-account application/json 164 - 200 - application/json;+charset=utf-8 16025.4888ms 
+[INF]  User profile is available. Using 'C:\Users\dell\AppData\Local\ASP.NET\DataProtection-Keys' as key repository and Windows DPAPI to encrypt keys at rest. 
+[INF]  Now listening on: https://localhost:7263 
+[INF]  Now listening on: http://localhost:5263 
+[INF]  Application started. Press Ctrl+C to shut down. 
+[INF]  Hosting environment: Development 
+[INF]  Content root path: C:\Users\dell\Desktop\RailWayCleanArchitecture\HRMSApp\HRMS\ 
+[INF]  Request starting HTTP/2 GET https://localhost:7263/swagger/index.html - - 
+[INF]  Request starting HTTP/2 GET https://localhost:7263/_framework/aspnetcore-browser-refresh.js - - 
+[INF]  Request finished HTTP/2 GET https://localhost:7263/swagger/index.html - - - 200 - text/html;charset=utf-8 819.7909ms 
+[INF]  Request finished HTTP/2 GET https://localhost:7263/_framework/aspnetcore-browser-refresh.js - - - 200 11974 application/javascript;+charset=utf-8 68.7143ms 
+[INF]  Request starting HTTP/2 GET https://localhost:7263/swagger/v1/swagger.json - - 
+[INF]  Request finished HTTP/2 GET https://localhost:7263/swagger/v1/swagger.json - - - 200 - application/json;charset=utf-8 315.7277ms 
+[INF]  Request starting HTTP/2 PATCH https://localhost:7263/api/Authentication/login application/json 47 
+[INF]  CORS policy execution successful. 
+[INF]  Executing endpoint 'HRMS.API.Controllers.AuthenticationController.Login (HRMS.API)' 
+[INF]  Route matched with {action = "Login", controller = "Authentication"}. Executing controller action with signature System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.IActionResult] Login(HRMSapplication.Queries.Login.LoginCommand) on controller HRMS.API.Controllers.AuthenticationController (HRMS.API). 
+[WRN]  No store type was specified for the decimal property 'Allowance' on entity type 'Leave'. This will cause values to be silently truncated if they do not fit in the default precision and scale. Explicitly specify the SQL server column type that can accommodate all the values in 'OnModelCreating' using 'HasColumnType', specify precision and scale using 'HasPrecision', or configure a value converter using 'HasConversion'. 
+[INF]  Entity Framework Core 6.0.8 initialized 'HRMSDbContext' using provider 'Microsoft.EntityFrameworkCore.SqlServer:6.0.8' with options: None 
+[INF]  Executed DbCommand (193ms) [Parameters=[@__ToLower_0='?' (Size = 4000)], CommandType='"Text"', CommandTimeout='30']
+SELECT [e].[Id], [e].[ConfirmedStatus], [e].[ContactAddress], [e].[ContractType], [e].[CreateDate], [e].[DOB], [e].[DateEmployed], [e].[DepartmentId], [e].[Email], [e].[FirstName], [e].[Gender], [e].[IsLock], [e].[JobLocation], [e].[JobRole], [e].[LastDatePromoted], [e].[LastModifyDate], [e].[ManagerId], [e].[NTry], [e].[Nationality], [e].[NextOfKingAddress], [e].[NextOfKingEmail], [e].[NextOfKingFirstName], [e].[NextOfKingPhoneNo], [e].[NextOfKingSurName], [e].[OtherName], [e].[PasswordHash], [e].[PasswordSalt], [e].[PhoneNo], [e].[Photo], [e].[RecievedOfferLetter], [e].[RefreshToken], [e].[Relationship], [e].[ResetToken], [e].[ResetTokenExpires], [e].[Role], [e].[SoftSkill], [e].[StaffId], [e].[StateOfOrigin], [e].[Surname], [e].[TechnicalSkill], [e].[VerificationToken], [e].[VerifiedAt], [e].[WorkType]
+FROM [Employee] AS [e]
+WHERE LOWER([e].[Email]) = @__ToLower_0 
+[INF]  Executing BadRequestObjectResult, writing value of type 'System.String'. 
+[INF]  Executed action HRMS.API.Controllers.AuthenticationController.Login (HRMS.API) in 5173.3599ms 
+[INF]  Executed endpoint 'HRMS.API.Controllers.AuthenticationController.Login (HRMS.API)' 
+[INF]  Request finished HTTP/2 PATCH https://localhost:7263/api/Authentication/login application/json 47 - 400 - text/plain;+charset=utf-8 5445.9940ms 
+[INF]  Request starting HTTP/2 PATCH https://localhost:7263/api/Authentication/login application/json 55 
+[INF]  CORS policy execution successful. 
+[INF]  Executing endpoint 'HRMS.API.Controllers.AuthenticationController.Login (HRMS.API)' 
+[INF]  Route matched with {action = "Login", controller = "Authentication"}. Executing controller action with signature System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.IActionResult] Login(HRMSapplication.Queries.Login.LoginCommand) on controller HRMS.API.Controllers.AuthenticationController (HRMS.API). 
+[INF]  Entity Framework Core 6.0.8 initialized 'HRMSDbContext' using provider 'Microsoft.EntityFrameworkCore.SqlServer:6.0.8' with options: None 
+[INF]  Executed DbCommand (13ms) [Parameters=[@__ToLower_0='?' (Size = 4000)], CommandType='"Text"', CommandTimeout='30']
+SELECT [e].[Id], [e].[ConfirmedStatus], [e].[ContactAddress], [e].[ContractType], [e].[CreateDate], [e].[DOB], [e].[DateEmployed], [e].[DepartmentId], [e].[Email], [e].[FirstName], [e].[Gender], [e].[IsLock], [e].[JobLocation], [e].[JobRole], [e].[LastDatePromoted], [e].[LastModifyDate], [e].[ManagerId], [e].[NTry], [e].[Nationality], [e].[NextOfKingAddress], [e].[NextOfKingEmail], [e].[NextOfKingFirstName], [e].[NextOfKingPhoneNo], [e].[NextOfKingSurName], [e].[OtherName], [e].[PasswordHash], [e].[PasswordSalt], [e].[PhoneNo], [e].[Photo], [e].[RecievedOfferLetter], [e].[RefreshToken], [e].[Relationship], [e].[ResetToken], [e].[ResetTokenExpires], [e].[Role], [e].[SoftSkill], [e].[StaffId], [e].[StateOfOrigin], [e].[Surname], [e].[TechnicalSkill], [e].[VerificationToken], [e].[VerifiedAt], [e].[WorkType]
+FROM [Employee] AS [e]
+WHERE LOWER([e].[Email]) = @__ToLower_0 
+[INF]  Executed DbCommand (120ms) [Parameters=[@p42='?' (DbType = Guid), @p0='?' (DbType = Boolean), @p1='?' (Size = 4000), @p2='?' (DbType = Int32), @p3='?' (DbType = DateTime2), @p4='?' (DbType = DateTime2), @p5='?' (DbType = DateTime2), @p6='?' (DbType = Guid), @p7='?' (Size = 4000), @p8='?' (Size = 50), @p9='?' (DbType = Int32), @p10='?' (DbType = Boolean), @p11='?' (DbType = Int32), @p12='?' (DbType = Int32), @p13='?' (DbType = DateTime2), @p14='?' (DbType = DateTime2), @p15='?' (DbType = Guid), @p16='?' (DbType = Int32), @p17='?' (Size = 4000), @p18='?' (Size = 4000), @p19='?' (Size = 4000), @p20='?' (Size = 4000), @p21='?' (Size = 4000), @p22='?' (Size = 4000), @p23='?' (Size = 50), @p24='?' (Size = 8000) (DbType = Binary), @p25='?' (Size = 8000) (DbType = Binary), @p26='?' (Size = 4000), @p27='?' (Size = 8000) (DbType = Binary), @p28='?' (DbType = Boolean), @p29='?' (Size = 4000), @p30='?' (DbType = Int32), @p31='?' (Size = 4000), @p32='?' (DbType = DateTime2), @p33='?' (DbType = Int32), @p34='?' (Size = 4000), @p35='?' (Size = 4000), @p36='?' (Size = 4000), @p37='?' (Size = 50), @p38='?' (Size = 4000), @p39='?' (Size = 4000), @p40='?' (DbType = DateTime2), @p41='?' (DbType = Int32)], CommandType='"Text"', CommandTimeout='30']
+SET NOCOUNT ON;
+UPDATE [Employee] SET [ConfirmedStatus] = @p0, [ContactAddress] = @p1, [ContractType] = @p2, [CreateDate] = @p3, [DOB] = @p4, [DateEmployed] = @p5, [DepartmentId] = @p6, [Email] = @p7, [FirstName] = @p8, [Gender] = @p9, [IsLock] = @p10, [JobLocation] = @p11, [JobRole] = @p12, [LastDatePromoted] = @p13, [LastModifyDate] = @p14, [ManagerId] = @p15, [NTry] = @p16, [Nationality] = @p17, [NextOfKingAddress] = @p18, [NextOfKingEmail] = @p19, [NextOfKingFirstName] = @p20, [NextOfKingPhoneNo] = @p21, [NextOfKingSurName] = @p22, [OtherName] = @p23, [PasswordHash] = @p24, [PasswordSalt] = @p25, [PhoneNo] = @p26, [Photo] = @p27, [RecievedOfferLetter] = @p28, [RefreshToken] = @p29, [Relationship] = @p30, [ResetToken] = @p31, [ResetTokenExpires] = @p32, [Role] = @p33, [SoftSkill] = @p34, [StaffId] = @p35, [StateOfOrigin] = @p36, [Surname] = @p37, [TechnicalSkill] = @p38, [VerificationToken] = @p39, [VerifiedAt] = @p40, [WorkType] = @p41
+WHERE [Id] = @p42;
+SELECT @@ROWCOUNT; 
+[INF]  Executing OkObjectResult, writing value of type 'System.String'. 
+[INF]  Executed action HRMS.API.Controllers.AuthenticationController.Login (HRMS.API) in 3206.5148ms 
+[INF]  Executed endpoint 'HRMS.API.Controllers.AuthenticationController.Login (HRMS.API)' 
+[INF]  Request finished HTTP/2 PATCH https://localhost:7263/api/Authentication/login application/json 55 - 200 - text/plain;+charset=utf-8 3215.0690ms 
+[INF]  Request starting HTTP/2 GET https://localhost:7263/api/Department - - 
+[INF]  Executing endpoint 'HRMS.API.Controllers.DepartmentController.Get (HRMS.API)' 
+[INF]  Route matched with {action = "Get", controller = "Department"}. Executing controller action with signature System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.IActionResult] Get() on controller HRMS.API.Controllers.DepartmentController (HRMS.API). 
+[INF]  Entity Framework Core 6.0.8 initialized 'HRMSDbContext' using provider 'Microsoft.EntityFrameworkCore.SqlServer:6.0.8' with options: None 
+[INF]  Executed DbCommand (77ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT [d].[Id], [d].[CreateDate], [d].[Description], [d].[HODId], [d].[LastModifyDate], [d].[Name]
+FROM [Department] AS [d] 
+[INF]  Executing OkObjectResult, writing value of type 'System.Collections.Generic.List`1[[HRMSapplication.Response.DepartmentResponse, HRMS.Application, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]'. 
+[INF]  Executed action HRMS.API.Controllers.DepartmentController.Get (HRMS.API) in 147.3708ms 
+[INF]  Executed endpoint 'HRMS.API.Controllers.DepartmentController.Get (HRMS.API)' 
+[INF]  Request finished HTTP/2 GET https://localhost:7263/api/Department - - - 200 - application/json;+charset=utf-8 534.1450ms 
+[INF]  Request starting HTTP/2 POST https://localhost:7263/api/Department application/json 51 
+[INF]  CORS policy execution successful. 
+[INF]  Executing endpoint 'HRMS.API.Controllers.DepartmentController.Post (HRMS.API)' 
+[INF]  Route matched with {action = "Post", controller = "Department"}. Executing controller action with signature System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.IActionResult] Post(HRMSapplication.Commands.CreateDepartment.CreateDepartmentCommand) on controller HRMS.API.Controllers.DepartmentController (HRMS.API). 
+[INF]  Entity Framework Core 6.0.8 initialized 'HRMSDbContext' using provider 'Microsoft.EntityFrameworkCore.SqlServer:6.0.8' with options: None 
+[INF]  Executed DbCommand (42ms) [Parameters=[@p0='?' (DbType = Guid), @p1='?' (DbType = DateTime2), @p2='?' (Size = 4000), @p3='?' (DbType = Guid), @p4='?' (DbType = DateTime2), @p5='?' (Size = 4000)], CommandType='"Text"', CommandTimeout='30']
+SET NOCOUNT ON;
+INSERT INTO [Department] ([Id], [CreateDate], [Description], [HODId], [LastModifyDate], [Name])
+VALUES (@p0, @p1, @p2, @p3, @p4, @p5); 
+[INF]  Executing OkObjectResult, writing value of type 'HRMSapplication.Response.DepartmentResponse'. 
+[INF]  Executed action HRMS.API.Controllers.DepartmentController.Post (HRMS.API) in 148.1636ms 
+[INF]  Executed endpoint 'HRMS.API.Controllers.DepartmentController.Post (HRMS.API)' 
+[INF]  Request finished HTTP/2 POST https://localhost:7263/api/Department application/json 51 - 200 - application/json;+charset=utf-8 221.9059ms 
+[INF]  Request starting HTTP/2 PUT https://localhost:7263/api/Department application/json 159 
+[INF]  CORS policy execution successful. 
+[INF]  Executing endpoint 'HRMS.API.Controllers.DepartmentController.Put (HRMS.API)' 
+[INF]  Route matched with {action = "Put", controller = "Department"}. Executing controller action with signature System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.IActionResult] Put(HRMSapplication.Commands.UpdateDate.UpdateDepartmentCommand) on controller HRMS.API.Controllers.DepartmentController (HRMS.API). 
+[INF]  Entity Framework Core 6.0.8 initialized 'HRMSDbContext' using provider 'Microsoft.EntityFrameworkCore.SqlServer:6.0.8' with options: None 
+[INF]  Executed DbCommand (25ms) [Parameters=[@__get_Item_0='?' (DbType = Guid)], CommandType='"Text"', CommandTimeout='30']
+SELECT TOP(1) [d].[Id], [d].[CreateDate], [d].[Description], [d].[HODId], [d].[LastModifyDate], [d].[Name]
+FROM [Department] AS [d]
+WHERE [d].[Id] = @__get_Item_0 
+[INF]  Executed action HRMS.API.Controllers.DepartmentController.Put (HRMS.API) in 1116.7182ms 
+[INF]  Executed endpoint 'HRMS.API.Controllers.DepartmentController.Put (HRMS.API)' 
+[ERR]  An unhandled exception has occurred while executing the request. 
+System.ArgumentException: Record not found.
+   at HRMSapplication.Commands.UpdateDate.UpdateDepartmentCommandHandler.Handle(UpdateDepartmentCommand request, CancellationToken cancellationToken) in C:\Users\dell\Desktop\RailWayCleanArchitecture\HRMSApp\HRMSapplication\Services\Department\Commands\UpdateDateDepartment\UpdateDepartmentCommandHandler.cs:line 36
+   at MediatR.Pipeline.RequestExceptionProcessorBehavior`2.Handle(TRequest request, CancellationToken cancellationToken, RequestHandlerDelegate`1 next)
+   at MediatR.Pipeline.RequestExceptionProcessorBehavior`2.Handle(TRequest request, CancellationToken cancellationToken, RequestHandlerDelegate`1 next)
+   at MediatR.Pipeline.RequestExceptionActionProcessorBehavior`2.Handle(TRequest request, CancellationToken cancellationToken, RequestHandlerDelegate`1 next)
+   at MediatR.Pipeline.RequestExceptionActionProcessorBehavior`2.Handle(TRequest request, CancellationToken cancellationToken, RequestHandlerDelegate`1 next)
+   at MediatR.Pipeline.RequestPostProcessorBehavior`2.Handle(TRequest request, CancellationToken cancellationToken, RequestHandlerDelegate`1 next)
+   at MediatR.Pipeline.RequestPreProcessorBehavior`2.Handle(TRequest request, CancellationToken cancellationToken, RequestHandlerDelegate`1 next)
+   at HRMS.API.Controllers.DepartmentController.Put(UpdateDepartmentCommand department) in C:\Users\dell\Desktop\RailWayCleanArchitecture\HRMSApp\HRMS\Controllers\DepartmentController.cs:line 40
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ActionMethodExecutor.TaskOfIActionResultExecutor.Execute(IActionResultTypeMapper mapper, ObjectMethodExecutor executor, Object controller, Object[] arguments)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.<InvokeActionMethodAsync>g__Awaited|12_0(ControllerActionInvoker invoker, ValueTask`1 actionResultValueTask)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.<InvokeNextActionFilterAsync>g__Awaited|10_0(ControllerActionInvoker invoker, Task lastTask, State next, Scope scope, Object state, Boolean isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.Rethrow(ActionExecutedContextSealed context)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.Next(State& next, Scope& scope, Object& state, Boolean& isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.<InvokeInnerFilterAsync>g__Awaited|13_0(ControllerActionInvoker invoker, Task lastTask, State next, Scope scope, Object state, Boolean isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeFilterPipelineAsync>g__Awaited|20_0(ResourceInvoker invoker, Task lastTask, State next, Scope scope, Object state, Boolean isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeAsync>g__Logged|17_1(ResourceInvoker invoker)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeAsync>g__Logged|17_1(ResourceInvoker invoker)
+   at Microsoft.AspNetCore.Routing.EndpointMiddleware.<Invoke>g__AwaitRequestTask|6_0(Endpoint endpoint, Task requestTask, ILogger logger)
+   at Microsoft.AspNetCore.Authorization.Policy.AuthorizationMiddlewareResultHandler.HandleAsync(RequestDelegate next, HttpContext context, AuthorizationPolicy policy, PolicyAuthorizationResult authorizeResult)
+   at Microsoft.AspNetCore.Authorization.AuthorizationMiddleware.Invoke(HttpContext context)
+   at Microsoft.AspNetCore.Authentication.AuthenticationMiddleware.Invoke(HttpContext context)
+   at Swashbuckle.AspNetCore.SwaggerUI.SwaggerUIMiddleware.Invoke(HttpContext httpContext)
+   at Swashbuckle.AspNetCore.Swagger.SwaggerMiddleware.Invoke(HttpContext httpContext, ISwaggerProvider swaggerProvider)
+   at Microsoft.AspNetCore.Diagnostics.DeveloperExceptionPageMiddleware.Invoke(HttpContext context)
+[INF]  Request finished HTTP/2 PUT https://localhost:7263/api/Department application/json 159 - 500 - text/plain;+charset=utf-8 3175.1631ms 
+[INF]  Request starting HTTP/2 PUT https://localhost:7263/api/Department application/json 159 
+[INF]  CORS policy execution successful. 
+[INF]  Executing endpoint 'HRMS.API.Controllers.DepartmentController.Put (HRMS.API)' 
+[INF]  Route matched with {action = "Put", controller = "Department"}. Executing controller action with signature System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.IActionResult] Put(HRMSapplication.Commands.UpdateDate.UpdateDepartmentCommand) on controller HRMS.API.Controllers.DepartmentController (HRMS.API). 
+[INF]  Entity Framework Core 6.0.8 initialized 'HRMSDbContext' using provider 'Microsoft.EntityFrameworkCore.SqlServer:6.0.8' with options: None 
+[INF]  Executed DbCommand (18ms) [Parameters=[@__get_Item_0='?' (DbType = Guid)], CommandType='"Text"', CommandTimeout='30']
+SELECT TOP(1) [d].[Id], [d].[CreateDate], [d].[Description], [d].[HODId], [d].[LastModifyDate], [d].[Name]
+FROM [Department] AS [d]
+WHERE [d].[Id] = @__get_Item_0 
+[INF]  Executed DbCommand (32ms) [Parameters=[@__get_Item_0='?' (DbType = Guid)], CommandType='"Text"', CommandTimeout='30']
+SELECT TOP(1) [e].[Id], [e].[ConfirmedStatus], [e].[ContactAddress], [e].[ContractType], [e].[CreateDate], [e].[DOB], [e].[DateEmployed], [e].[DepartmentId], [e].[Email], [e].[FirstName], [e].[Gender], [e].[IsLock], [e].[JobLocation], [e].[JobRole], [e].[LastDatePromoted], [e].[LastModifyDate], [e].[ManagerId], [e].[NTry], [e].[Nationality], [e].[NextOfKingAddress], [e].[NextOfKingEmail], [e].[NextOfKingFirstName], [e].[NextOfKingPhoneNo], [e].[NextOfKingSurName], [e].[OtherName], [e].[PasswordHash], [e].[PasswordSalt], [e].[PhoneNo], [e].[Photo], [e].[RecievedOfferLetter], [e].[RefreshToken], [e].[Relationship], [e].[ResetToken], [e].[ResetTokenExpires], [e].[Role], [e].[SoftSkill], [e].[StaffId], [e].[StateOfOrigin], [e].[Surname], [e].[TechnicalSkill], [e].[VerificationToken], [e].[VerifiedAt], [e].[WorkType]
+FROM [Employee] AS [e]
+WHERE [e].[Id] = @__get_Item_0 
+[INF]  Executed DbCommand (45ms) [Parameters=[@p5='?' (DbType = Guid), @p0='?' (DbType = DateTime2), @p1='?' (Size = 4000), @p2='?' (DbType = Guid), @p3='?' (DbType = DateTime2), @p4='?' (Size = 4000)], CommandType='"Text"', CommandTimeout='30']
+SET NOCOUNT ON;
+UPDATE [Department] SET [CreateDate] = @p0, [Description] = @p1, [HODId] = @p2, [LastModifyDate] = @p3, [Name] = @p4
+WHERE [Id] = @p5;
+SELECT @@ROWCOUNT; 
+[INF]  Executing OkObjectResult, writing value of type 'HRMSapplication.Response.DepartmentResponse'. 
+[INF]  Executed action HRMS.API.Controllers.DepartmentController.Put (HRMS.API) in 144.0581ms 
+[INF]  Executed endpoint 'HRMS.API.Controllers.DepartmentController.Put (HRMS.API)' 
+[INF]  Request finished HTTP/2 PUT https://localhost:7263/api/Department application/json 159 - 200 - application/json;+charset=utf-8 150.0629ms 
+[INF]  Request starting HTTP/2 GET https://localhost:7263/api/Department - - 
+[INF]  Executing endpoint 'HRMS.API.Controllers.DepartmentController.Get (HRMS.API)' 
+[INF]  Route matched with {action = "Get", controller = "Department"}. Executing controller action with signature System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.IActionResult] Get() on controller HRMS.API.Controllers.DepartmentController (HRMS.API). 
+[INF]  Entity Framework Core 6.0.8 initialized 'HRMSDbContext' using provider 'Microsoft.EntityFrameworkCore.SqlServer:6.0.8' with options: None 
+[INF]  Executed DbCommand (3ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT [d].[Id], [d].[CreateDate], [d].[Description], [d].[HODId], [d].[LastModifyDate], [d].[Name]
+FROM [Department] AS [d] 
+[INF]  Executing OkObjectResult, writing value of type 'System.Collections.Generic.List`1[[HRMSapplication.Response.DepartmentResponse, HRMS.Application, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]'. 
+[INF]  Executed action HRMS.API.Controllers.DepartmentController.Get (HRMS.API) in 5.7294ms 
+[INF]  Executed endpoint 'HRMS.API.Controllers.DepartmentController.Get (HRMS.API)' 
+[INF]  Request finished HTTP/2 GET https://localhost:7263/api/Department - - - 200 - application/json;+charset=utf-8 6.9264ms 
+[INF]  Request starting HTTP/2 GET https://localhost:7263/api/Employee - - 
+[INF]  Executing endpoint 'HRMS.API.Controllers.EmployeeController.GetAll (HRMS.API)' 
+[INF]  Route matched with {action = "GetAll", controller = "Employee"}. Executing controller action with signature System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.IActionResult] GetAll() on controller HRMS.API.Controllers.EmployeeController (HRMS.API). 
+[INF]  Entity Framework Core 6.0.8 initialized 'HRMSDbContext' using provider 'Microsoft.EntityFrameworkCore.SqlServer:6.0.8' with options: None 
+[INF]  Executed DbCommand (79ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT [e].[Id], [e].[ConfirmedStatus], [e].[ContactAddress], [e].[ContractType], [e].[CreateDate], [e].[DOB], [e].[DateEmployed], [e].[DepartmentId], [e].[Email], [e].[FirstName], [e].[Gender], [e].[IsLock], [e].[JobLocation], [e].[JobRole], [e].[LastDatePromoted], [e].[LastModifyDate], [e].[ManagerId], [e].[NTry], [e].[Nationality], [e].[NextOfKingAddress], [e].[NextOfKingEmail], [e].[NextOfKingFirstName], [e].[NextOfKingPhoneNo], [e].[NextOfKingSurName], [e].[OtherName], [e].[PasswordHash], [e].[PasswordSalt], [e].[PhoneNo], [e].[Photo], [e].[RecievedOfferLetter], [e].[RefreshToken], [e].[Relationship], [e].[ResetToken], [e].[ResetTokenExpires], [e].[Role], [e].[SoftSkill], [e].[StaffId], [e].[StateOfOrigin], [e].[Surname], [e].[TechnicalSkill], [e].[VerificationToken], [e].[VerifiedAt], [e].[WorkType]
+FROM [Employee] AS [e] 
+[INF]  Executing OkObjectResult, writing value of type 'System.Collections.Generic.List`1[[HRMSapplication.Response.EmployeeResponse, HRMS.Application, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]'. 
+[INF]  Executed action HRMS.API.Controllers.EmployeeController.GetAll (HRMS.API) in 227.4226ms 
+[INF]  Executed endpoint 'HRMS.API.Controllers.EmployeeController.GetAll (HRMS.API)' 
+[INF]  Request finished HTTP/2 GET https://localhost:7263/api/Employee - - - 200 - application/json;+charset=utf-8 236.1385ms 
+[INF]  Request starting HTTP/2 PATCH https://localhost:7263/api/Employee application/json 833 
+[INF]  CORS policy execution successful. 
+[INF]  Executing endpoint 'HRMS.API.Controllers.EmployeeController.Update (HRMS.API)' 
+[INF]  Route matched with {action = "Update", controller = "Employee"}. Executing controller action with signature System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.IActionResult] Update(HRMSapplication.Commands.UpdateEmployee.UpdateEmployeeCommand) on controller HRMS.API.Controllers.EmployeeController (HRMS.API). 
+[INF]  Entity Framework Core 6.0.8 initialized 'HRMSDbContext' using provider 'Microsoft.EntityFrameworkCore.SqlServer:6.0.8' with options: None 
+[INF]  Executed DbCommand (5ms) [Parameters=[@__get_Item_0='?' (DbType = Guid)], CommandType='"Text"', CommandTimeout='30']
+SELECT TOP(1) [e].[Id], [e].[ConfirmedStatus], [e].[ContactAddress], [e].[ContractType], [e].[CreateDate], [e].[DOB], [e].[DateEmployed], [e].[DepartmentId], [e].[Email], [e].[FirstName], [e].[Gender], [e].[IsLock], [e].[JobLocation], [e].[JobRole], [e].[LastDatePromoted], [e].[LastModifyDate], [e].[ManagerId], [e].[NTry], [e].[Nationality], [e].[NextOfKingAddress], [e].[NextOfKingEmail], [e].[NextOfKingFirstName], [e].[NextOfKingPhoneNo], [e].[NextOfKingSurName], [e].[OtherName], [e].[PasswordHash], [e].[PasswordSalt], [e].[PhoneNo], [e].[Photo], [e].[RecievedOfferLetter], [e].[RefreshToken], [e].[Relationship], [e].[ResetToken], [e].[ResetTokenExpires], [e].[Role], [e].[SoftSkill], [e].[StaffId], [e].[StateOfOrigin], [e].[Surname], [e].[TechnicalSkill], [e].[VerificationToken], [e].[VerifiedAt], [e].[WorkType]
+FROM [Employee] AS [e]
+WHERE [e].[Id] = @__get_Item_0 
+[INF]  Executed DbCommand (22ms) [Parameters=[@__request_ManagerId_0='?' (DbType = Guid)], CommandType='"Text"', CommandTimeout='30']
+SELECT [e].[Id], [e].[ConfirmedStatus], [e].[ContactAddress], [e].[ContractType], [e].[CreateDate], [e].[DOB], [e].[DateEmployed], [e].[DepartmentId], [e].[Email], [e].[FirstName], [e].[Gender], [e].[IsLock], [e].[JobLocation], [e].[JobRole], [e].[LastDatePromoted], [e].[LastModifyDate], [e].[ManagerId], [e].[NTry], [e].[Nationality], [e].[NextOfKingAddress], [e].[NextOfKingEmail], [e].[NextOfKingFirstName], [e].[NextOfKingPhoneNo], [e].[NextOfKingSurName], [e].[OtherName], [e].[PasswordHash], [e].[PasswordSalt], [e].[PhoneNo], [e].[Photo], [e].[RecievedOfferLetter], [e].[RefreshToken], [e].[Relationship], [e].[ResetToken], [e].[ResetTokenExpires], [e].[Role], [e].[SoftSkill], [e].[StaffId], [e].[StateOfOrigin], [e].[Surname], [e].[TechnicalSkill], [e].[VerificationToken], [e].[VerifiedAt], [e].[WorkType]
+FROM [Employee] AS [e]
+WHERE [e].[Id] = @__request_ManagerId_0 
+[INF]  Executed DbCommand (2ms) [Parameters=[@__get_Item_0='?' (DbType = Guid)], CommandType='"Text"', CommandTimeout='30']
+SELECT TOP(1) [d].[Id], [d].[CreateDate], [d].[Description], [d].[HODId], [d].[LastModifyDate], [d].[Name]
+FROM [Department] AS [d]
+WHERE [d].[Id] = @__get_Item_0 
+[INF]  Executed DbCommand (35ms) [Parameters=[@p42='?' (DbType = Guid), @p0='?' (DbType = Boolean), @p1='?' (Size = 4000), @p2='?' (DbType = Int32), @p3='?' (DbType = DateTime2), @p4='?' (DbType = DateTime2), @p5='?' (DbType = DateTime2), @p6='?' (DbType = Guid), @p7='?' (Size = 4000), @p8='?' (Size = 50), @p9='?' (DbType = Int32), @p10='?' (DbType = Boolean), @p11='?' (DbType = Int32), @p12='?' (DbType = Int32), @p13='?' (DbType = DateTime2), @p14='?' (DbType = DateTime2), @p15='?' (DbType = Guid), @p16='?' (DbType = Int32), @p17='?' (Size = 4000), @p18='?' (Size = 4000), @p19='?' (Size = 4000), @p20='?' (Size = 4000), @p21='?' (Size = 4000), @p22='?' (Size = 4000), @p23='?' (Size = 50), @p24='?' (Size = 8000) (DbType = Binary), @p25='?' (Size = 8000) (DbType = Binary), @p26='?' (Size = 4000), @p27='?' (Size = 8000) (DbType = Binary), @p28='?' (DbType = Boolean), @p29='?' (Size = 4000), @p30='?' (DbType = Int32), @p31='?' (Size = 4000), @p32='?' (DbType = DateTime2), @p33='?' (DbType = Int32), @p34='?' (Size = 4000), @p35='?' (Size = 4000), @p36='?' (Size = 4000), @p37='?' (Size = 50), @p38='?' (Size = 4000), @p39='?' (Size = 4000), @p40='?' (DbType = DateTime2), @p41='?' (DbType = Int32)], CommandType='"Text"', CommandTimeout='30']
+SET NOCOUNT ON;
+UPDATE [Employee] SET [ConfirmedStatus] = @p0, [ContactAddress] = @p1, [ContractType] = @p2, [CreateDate] = @p3, [DOB] = @p4, [DateEmployed] = @p5, [DepartmentId] = @p6, [Email] = @p7, [FirstName] = @p8, [Gender] = @p9, [IsLock] = @p10, [JobLocation] = @p11, [JobRole] = @p12, [LastDatePromoted] = @p13, [LastModifyDate] = @p14, [ManagerId] = @p15, [NTry] = @p16, [Nationality] = @p17, [NextOfKingAddress] = @p18, [NextOfKingEmail] = @p19, [NextOfKingFirstName] = @p20, [NextOfKingPhoneNo] = @p21, [NextOfKingSurName] = @p22, [OtherName] = @p23, [PasswordHash] = @p24, [PasswordSalt] = @p25, [PhoneNo] = @p26, [Photo] = @p27, [RecievedOfferLetter] = @p28, [RefreshToken] = @p29, [Relationship] = @p30, [ResetToken] = @p31, [ResetTokenExpires] = @p32, [Role] = @p33, [SoftSkill] = @p34, [StaffId] = @p35, [StateOfOrigin] = @p36, [Surname] = @p37, [TechnicalSkill] = @p38, [VerificationToken] = @p39, [VerifiedAt] = @p40, [WorkType] = @p41
+WHERE [Id] = @p42;
+SELECT @@ROWCOUNT; 
+[INF]  Executing OkObjectResult, writing value of type 'HRMSapplication.Response.EmployeeResponse'. 
+[INF]  Executed action HRMS.API.Controllers.EmployeeController.Update (HRMS.API) in 298.7079ms 
+[INF]  Executed endpoint 'HRMS.API.Controllers.EmployeeController.Update (HRMS.API)' 
+[INF]  Request finished HTTP/2 PATCH https://localhost:7263/api/Employee application/json 833 - 200 - application/json;+charset=utf-8 314.6176ms 
+[INF]  Request starting HTTP/2 GET https://localhost:7263/api/Department - - 
+[INF]  Executing endpoint 'HRMS.API.Controllers.DepartmentController.Get (HRMS.API)' 
+[INF]  Route matched with {action = "Get", controller = "Department"}. Executing controller action with signature System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.IActionResult] Get() on controller HRMS.API.Controllers.DepartmentController (HRMS.API). 
+[INF]  Entity Framework Core 6.0.8 initialized 'HRMSDbContext' using provider 'Microsoft.EntityFrameworkCore.SqlServer:6.0.8' with options: None 
+[INF]  Executed DbCommand (3ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT [d].[Id], [d].[CreateDate], [d].[Description], [d].[HODId], [d].[LastModifyDate], [d].[Name]
+FROM [Department] AS [d] 
+[INF]  Executing OkObjectResult, writing value of type 'System.Collections.Generic.List`1[[HRMSapplication.Response.DepartmentResponse, HRMS.Application, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]'. 
+[INF]  Executed action HRMS.API.Controllers.DepartmentController.Get (HRMS.API) in 11.0318ms 
+[INF]  Executed endpoint 'HRMS.API.Controllers.DepartmentController.Get (HRMS.API)' 
+[INF]  Request finished HTTP/2 GET https://localhost:7263/api/Department - - - 200 - application/json;+charset=utf-8 23.1396ms 
+[INF]  Request starting HTTP/2 GET https://localhost:7263/api/Employee - - 
+[INF]  Executing endpoint 'HRMS.API.Controllers.EmployeeController.GetAll (HRMS.API)' 
+[INF]  Route matched with {action = "GetAll", controller = "Employee"}. Executing controller action with signature System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.IActionResult] GetAll() on controller HRMS.API.Controllers.EmployeeController (HRMS.API). 
+[INF]  Entity Framework Core 6.0.8 initialized 'HRMSDbContext' using provider 'Microsoft.EntityFrameworkCore.SqlServer:6.0.8' with options: None 
+[INF]  Executed DbCommand (29ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT [e].[Id], [e].[ConfirmedStatus], [e].[ContactAddress], [e].[ContractType], [e].[CreateDate], [e].[DOB], [e].[DateEmployed], [e].[DepartmentId], [e].[Email], [e].[FirstName], [e].[Gender], [e].[IsLock], [e].[JobLocation], [e].[JobRole], [e].[LastDatePromoted], [e].[LastModifyDate], [e].[ManagerId], [e].[NTry], [e].[Nationality], [e].[NextOfKingAddress], [e].[NextOfKingEmail], [e].[NextOfKingFirstName], [e].[NextOfKingPhoneNo], [e].[NextOfKingSurName], [e].[OtherName], [e].[PasswordHash], [e].[PasswordSalt], [e].[PhoneNo], [e].[Photo], [e].[RecievedOfferLetter], [e].[RefreshToken], [e].[Relationship], [e].[ResetToken], [e].[ResetTokenExpires], [e].[Role], [e].[SoftSkill], [e].[StaffId], [e].[StateOfOrigin], [e].[Surname], [e].[TechnicalSkill], [e].[VerificationToken], [e].[VerifiedAt], [e].[WorkType]
+FROM [Employee] AS [e] 
+[INF]  Executing OkObjectResult, writing value of type 'System.Collections.Generic.List`1[[HRMSapplication.Response.EmployeeResponse, HRMS.Application, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]'. 
+[INF]  Executed action HRMS.API.Controllers.EmployeeController.GetAll (HRMS.API) in 38.1168ms 
+[INF]  Executed endpoint 'HRMS.API.Controllers.EmployeeController.GetAll (HRMS.API)' 
+[INF]  Request finished HTTP/2 GET https://localhost:7263/api/Employee - - - 200 - application/json;+charset=utf-8 39.7646ms 

@@ -1,0 +1,491 @@
+[INF]  User profile is available. Using 'C:\Users\dell\AppData\Local\ASP.NET\DataProtection-Keys' as key repository and Windows DPAPI to encrypt keys at rest. 
+[INF]  Now listening on: https://localhost:7263 
+[INF]  Now listening on: http://localhost:5263 
+[INF]  Application started. Press Ctrl+C to shut down. 
+[INF]  Hosting environment: Development 
+[INF]  Content root path: C:\Users\dell\Desktop\RailWayCleanArchitecture\HRMSApp\HRMS\ 
+[INF]  Request starting HTTP/2 GET https://localhost:7263/swagger/index.html - - 
+[INF]  Request finished HTTP/2 GET https://localhost:7263/swagger/index.html - - - 200 - text/html;charset=utf-8 5984.0639ms 
+[INF]  Request starting HTTP/2 GET https://localhost:7263/_framework/aspnetcore-browser-refresh.js - - 
+[INF]  Request finished HTTP/2 GET https://localhost:7263/_framework/aspnetcore-browser-refresh.js - - - 200 11974 application/javascript;+charset=utf-8 129.2594ms 
+[INF]  Request starting HTTP/2 GET https://localhost:7263/swagger/v1/swagger.json - - 
+[INF]  Request finished HTTP/2 GET https://localhost:7263/swagger/v1/swagger.json - - - 200 - application/json;charset=utf-8 1279.1306ms 
+[INF]  Request starting HTTP/2 POST https://localhost:7263/api/Employee application/json 73 
+[INF]  CORS policy execution successful. 
+[INF]  Executing endpoint 'HRMS.API.Controllers.EmployeeController.Create (HRMS.API)' 
+[INF]  Route matched with {action = "Create", controller = "Employee"}. Executing controller action with signature System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.IActionResult] Create(HRMSapplication.Commands.CreateEmployee.CreateEmployeeCommand) on controller HRMS.API.Controllers.EmployeeController (HRMS.API). 
+[WRN]  No store type was specified for the decimal property 'Allowance' on entity type 'Leave'. This will cause values to be silently truncated if they do not fit in the default precision and scale. Explicitly specify the SQL server column type that can accommodate all the values in 'OnModelCreating' using 'HasColumnType', specify precision and scale using 'HasPrecision', or configure a value converter using 'HasConversion'. 
+[INF]  Entity Framework Core 6.0.7 initialized 'HRMSDbContext' using provider 'Microsoft.EntityFrameworkCore.SqlServer:6.0.7' with options: None 
+[INF]  Executed action HRMS.API.Controllers.EmployeeController.Create (HRMS.API) in 9049.3768ms 
+[INF]  Executed endpoint 'HRMS.API.Controllers.EmployeeController.Create (HRMS.API)' 
+[ERR]  Something went wrong: System.InvalidOperationException: The LINQ expression 'DbSet<Employee>()
+    .Where(e => e.Email.Equals(
+        value: __request_Email_0, 
+        comparisonType: OrdinalIgnoreCase))' could not be translated. Additional information: Translation of the 'string.Equals' overload with a 'StringComparison' parameter is not supported. See https://go.microsoft.com/fwlink/?linkid=2129535 for more information. Either rewrite the query in a form that can be translated, or switch to client evaluation explicitly by inserting a call to 'AsEnumerable', 'AsAsyncEnumerable', 'ToList', or 'ToListAsync'. See https://go.microsoft.com/fwlink/?linkid=2101038 for more information.
+   at Microsoft.EntityFrameworkCore.Query.QueryableMethodTranslatingExpressionVisitor.<VisitMethodCall>g__CheckTranslated|15_0(ShapedQueryExpression translated, <>c__DisplayClass15_0& )
+   at Microsoft.EntityFrameworkCore.Query.QueryableMethodTranslatingExpressionVisitor.VisitMethodCall(MethodCallExpression methodCallExpression)
+   at System.Linq.Expressions.MethodCallExpression.Accept(ExpressionVisitor visitor)
+   at System.Linq.Expressions.ExpressionVisitor.Visit(Expression node)
+   at Microsoft.EntityFrameworkCore.Query.QueryCompilationContext.CreateQueryExecutor[TResult](Expression query)
+   at Microsoft.EntityFrameworkCore.Storage.Database.CompileQuery[TResult](Expression query, Boolean async)
+   at Microsoft.EntityFrameworkCore.Query.Internal.QueryCompiler.CompileQueryCore[TResult](IDatabase database, Expression query, IModel model, Boolean async)
+   at Microsoft.EntityFrameworkCore.Query.Internal.QueryCompiler.<>c__DisplayClass12_0`1.<ExecuteAsync>b__0()
+   at Microsoft.EntityFrameworkCore.Query.Internal.CompiledQueryCache.GetOrAddQuery[TResult](Object cacheKey, Func`1 compiler)
+   at Microsoft.EntityFrameworkCore.Query.Internal.QueryCompiler.ExecuteAsync[TResult](Expression query, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Query.Internal.EntityQueryProvider.ExecuteAsync[TResult](Expression expression, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Query.Internal.EntityQueryable`1.GetAsyncEnumerator(CancellationToken cancellationToken)
+   at System.Runtime.CompilerServices.ConfiguredCancelableAsyncEnumerable`1.GetAsyncEnumerator()
+   at Microsoft.EntityFrameworkCore.EntityFrameworkQueryableExtensions.ToListAsync[TSource](IQueryable`1 source, CancellationToken cancellationToken)
+   at HRMSinfrastructure.Repositories.CommandRepo.BaseRepo.BaseRepo`1.FindByPredicate(Expression`1 predicate) in C:\Users\dell\Desktop\RailWayCleanArchitecture\HRMSApp\HRMSinfrastructure\Repositories\BaseRepo\BaseRepo.cs:line 48
+   at HRMSapplication.Commands.CreateEmployee.CreateEmployeeCommandHandler.Handle(CreateEmployeeCommand request, CancellationToken cancellationToken) in C:\Users\dell\Desktop\RailWayCleanArchitecture\HRMSApp\HRMSapplication\Services\Employee\Commands\CreateEmployee\CreateEmployeeCommandHandler.cs:line 25
+   at MediatR.Pipeline.RequestExceptionProcessorBehavior`2.Handle(TRequest request, CancellationToken cancellationToken, RequestHandlerDelegate`1 next)
+   at MediatR.Pipeline.RequestExceptionProcessorBehavior`2.Handle(TRequest request, CancellationToken cancellationToken, RequestHandlerDelegate`1 next)
+   at MediatR.Pipeline.RequestExceptionActionProcessorBehavior`2.Handle(TRequest request, CancellationToken cancellationToken, RequestHandlerDelegate`1 next)
+   at MediatR.Pipeline.RequestExceptionActionProcessorBehavior`2.Handle(TRequest request, CancellationToken cancellationToken, RequestHandlerDelegate`1 next)
+   at MediatR.Pipeline.RequestPostProcessorBehavior`2.Handle(TRequest request, CancellationToken cancellationToken, RequestHandlerDelegate`1 next)
+   at MediatR.Pipeline.RequestPreProcessorBehavior`2.Handle(TRequest request, CancellationToken cancellationToken, RequestHandlerDelegate`1 next)
+   at HRMS.API.Controllers.EmployeeController.Create(CreateEmployeeCommand employee) in C:\Users\dell\Desktop\RailWayCleanArchitecture\HRMSApp\HRMS\Controllers\EmployeeController.cs:line 35
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ActionMethodExecutor.TaskOfIActionResultExecutor.Execute(IActionResultTypeMapper mapper, ObjectMethodExecutor executor, Object controller, Object[] arguments)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.<InvokeActionMethodAsync>g__Awaited|12_0(ControllerActionInvoker invoker, ValueTask`1 actionResultValueTask)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.<InvokeNextActionFilterAsync>g__Awaited|10_0(ControllerActionInvoker invoker, Task lastTask, State next, Scope scope, Object state, Boolean isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.Rethrow(ActionExecutedContextSealed context)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.Next(State& next, Scope& scope, Object& state, Boolean& isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.InvokeInnerFilterAsync()
+--- End of stack trace from previous location ---
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeFilterPipelineAsync>g__Awaited|20_0(ResourceInvoker invoker, Task lastTask, State next, Scope scope, Object state, Boolean isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeAsync>g__Logged|17_1(ResourceInvoker invoker)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeAsync>g__Logged|17_1(ResourceInvoker invoker)
+   at Microsoft.AspNetCore.Routing.EndpointMiddleware.<Invoke>g__AwaitRequestTask|6_0(Endpoint endpoint, Task requestTask, ILogger logger)
+   at Microsoft.AspNetCore.Authorization.AuthorizationMiddleware.Invoke(HttpContext context)
+   at Microsoft.AspNetCore.Authentication.AuthenticationMiddleware.Invoke(HttpContext context)
+   at HRMS.API.ExceptionHandling.ExceptionMiddleware.Invoke(HttpContext context) in C:\Users\dell\Desktop\RailWayCleanArchitecture\HRMSApp\HRMS\ExceptionHandling\ExceptionMiddleware.cs:line 19 
+[INF]  Request finished HTTP/2 POST https://localhost:7263/api/Employee application/json 73 - 500 - application/json 13375.5724ms 
+[INF]  User profile is available. Using 'C:\Users\dell\AppData\Local\ASP.NET\DataProtection-Keys' as key repository and Windows DPAPI to encrypt keys at rest. 
+[INF]  Now listening on: https://localhost:7263 
+[INF]  Now listening on: http://localhost:5263 
+[INF]  Application started. Press Ctrl+C to shut down. 
+[INF]  Hosting environment: Development 
+[INF]  Content root path: C:\Users\dell\Desktop\RailWayCleanArchitecture\HRMSApp\HRMS\ 
+[INF]  Request starting HTTP/2 GET https://localhost:7263/swagger/index.html - - 
+[INF]  Request starting HTTP/2 GET https://localhost:7263/_framework/aspnetcore-browser-refresh.js - - 
+[INF]  Request finished HTTP/2 GET https://localhost:7263/swagger/index.html - - - 200 - text/html;charset=utf-8 2254.6763ms 
+[INF]  Request finished HTTP/2 GET https://localhost:7263/_framework/aspnetcore-browser-refresh.js - - - 200 11974 application/javascript;+charset=utf-8 150.0200ms 
+[INF]  Request starting HTTP/2 GET https://localhost:7263/swagger/v1/swagger.json - - 
+[INF]  Request finished HTTP/2 GET https://localhost:7263/swagger/v1/swagger.json - - - 200 - application/json;charset=utf-8 975.5022ms 
+[INF]  Request starting HTTP/2 POST https://localhost:7263/api/Employee application/json 46 
+[INF]  CORS policy execution successful. 
+[INF]  Executing endpoint 'HRMS.API.Controllers.EmployeeController.Create (HRMS.API)' 
+[INF]  Route matched with {action = "Create", controller = "Employee"}. Executing controller action with signature System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.IActionResult] Create(HRMSapplication.Commands.CreateEmployee.CreateEmployeeCommand) on controller HRMS.API.Controllers.EmployeeController (HRMS.API). 
+[WRN]  No store type was specified for the decimal property 'Allowance' on entity type 'Leave'. This will cause values to be silently truncated if they do not fit in the default precision and scale. Explicitly specify the SQL server column type that can accommodate all the values in 'OnModelCreating' using 'HasColumnType', specify precision and scale using 'HasPrecision', or configure a value converter using 'HasConversion'. 
+[INF]  Entity Framework Core 6.0.7 initialized 'HRMSDbContext' using provider 'Microsoft.EntityFrameworkCore.SqlServer:6.0.7' with options: None 
+[ERR]  Failed executing DbCommand (4,213ms) [Parameters=[@__ToLower_0='?' (Size = 4000)], CommandType='"Text"', CommandTimeout='30']
+SELECT [e].[Id], [e].[ConfirmedStatus], [e].[ContactAddress], [e].[ContractType], [e].[CreateDate], [e].[DOB], [e].[DateEmployed], [e].[DepartmentId], [e].[Email], [e].[FirstName], [e].[Gender], [e].[IsLock], [e].[JobRole], [e].[LastDatePromoted], [e].[LastModifyDate], [e].[ManagerId], [e].[NTry], [e].[Nationality], [e].[NextOfKingAddress], [e].[NextOfKingEmail], [e].[NextOfKingFirstName], [e].[NextOfKingPhoneNo], [e].[NextOfKingSurName], [e].[OtherName], [e].[PasswordHash], [e].[PasswordSalt], [e].[PhoneNo], [e].[Photo], [e].[RecievedOfferLetter], [e].[RefreshToken], [e].[Relationship], [e].[ResetToken], [e].[ResetTokenExpires], [e].[Role], [e].[SoftSkill], [e].[StaffId], [e].[StateOfOrigin], [e].[Surname], [e].[TechnicalSkill], [e].[VerificationToken], [e].[VerifiedAt], [e].[WorkType]
+FROM [Employee] AS [e]
+WHERE LOWER([e].[Email]) = @__ToLower_0 
+[ERR]  An exception occurred while iterating over the results of a query for context type 'HRMSinfrastructure.Data.HRMSDbContext'.
+Microsoft.Data.SqlClient.SqlException (0x80131904): Invalid column name 'ResetToken'.
+Invalid column name 'ResetTokenExpires'.
+Invalid column name 'VerificationToken'.
+Invalid column name 'VerifiedAt'.
+   at Microsoft.Data.SqlClient.SqlCommand.<>c.<ExecuteDbDataReaderAsync>b__188_0(Task`1 result)
+   at System.Threading.Tasks.ContinuationResultTaskFromResultTask`2.InnerInvoke()
+   at System.Threading.Tasks.Task.<>c.<.cctor>b__272_0(Object obj)
+   at System.Threading.ExecutionContext.RunInternal(ExecutionContext executionContext, ContextCallback callback, Object state)
+--- End of stack trace from previous location ---
+   at System.Threading.Tasks.Task.ExecuteWithThreadLocal(Task& currentTaskSlot, Thread threadPoolThread)
+--- End of stack trace from previous location ---
+   at Microsoft.EntityFrameworkCore.Storage.RelationalCommand.ExecuteReaderAsync(RelationalCommandParameterObject parameterObject, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Storage.RelationalCommand.ExecuteReaderAsync(RelationalCommandParameterObject parameterObject, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Query.Internal.SingleQueryingEnumerable`1.AsyncEnumerator.InitializeReaderAsync(AsyncEnumerator enumerator, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.SqlServer.Storage.Internal.SqlServerExecutionStrategy.ExecuteAsync[TState,TResult](TState state, Func`4 operation, Func`4 verifySucceeded, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Query.Internal.SingleQueryingEnumerable`1.AsyncEnumerator.MoveNextAsync()
+ClientConnectionId:d4e42683-48ed-45c1-b694-4d0231d6aa08
+Error Number:207,State:1,Class:16 
+Microsoft.Data.SqlClient.SqlException (0x80131904): Invalid column name 'ResetToken'.
+Invalid column name 'ResetTokenExpires'.
+Invalid column name 'VerificationToken'.
+Invalid column name 'VerifiedAt'.
+   at Microsoft.Data.SqlClient.SqlCommand.<>c.<ExecuteDbDataReaderAsync>b__188_0(Task`1 result)
+   at System.Threading.Tasks.ContinuationResultTaskFromResultTask`2.InnerInvoke()
+   at System.Threading.Tasks.Task.<>c.<.cctor>b__272_0(Object obj)
+   at System.Threading.ExecutionContext.RunInternal(ExecutionContext executionContext, ContextCallback callback, Object state)
+--- End of stack trace from previous location ---
+   at System.Threading.Tasks.Task.ExecuteWithThreadLocal(Task& currentTaskSlot, Thread threadPoolThread)
+--- End of stack trace from previous location ---
+   at Microsoft.EntityFrameworkCore.Storage.RelationalCommand.ExecuteReaderAsync(RelationalCommandParameterObject parameterObject, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Storage.RelationalCommand.ExecuteReaderAsync(RelationalCommandParameterObject parameterObject, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Query.Internal.SingleQueryingEnumerable`1.AsyncEnumerator.InitializeReaderAsync(AsyncEnumerator enumerator, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.SqlServer.Storage.Internal.SqlServerExecutionStrategy.ExecuteAsync[TState,TResult](TState state, Func`4 operation, Func`4 verifySucceeded, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Query.Internal.SingleQueryingEnumerable`1.AsyncEnumerator.MoveNextAsync()
+ClientConnectionId:d4e42683-48ed-45c1-b694-4d0231d6aa08
+Error Number:207,State:1,Class:16
+[INF]  Executed action HRMS.API.Controllers.EmployeeController.Create (HRMS.API) in 9566.8977ms 
+[INF]  Executed endpoint 'HRMS.API.Controllers.EmployeeController.Create (HRMS.API)' 
+[ERR]  Something went wrong: Microsoft.Data.SqlClient.SqlException (0x80131904): Invalid column name 'ResetToken'.
+Invalid column name 'ResetTokenExpires'.
+Invalid column name 'VerificationToken'.
+Invalid column name 'VerifiedAt'.
+   at Microsoft.Data.SqlClient.SqlCommand.<>c.<ExecuteDbDataReaderAsync>b__188_0(Task`1 result)
+   at System.Threading.Tasks.ContinuationResultTaskFromResultTask`2.InnerInvoke()
+   at System.Threading.Tasks.Task.<>c.<.cctor>b__272_0(Object obj)
+   at System.Threading.ExecutionContext.RunInternal(ExecutionContext executionContext, ContextCallback callback, Object state)
+--- End of stack trace from previous location ---
+   at System.Threading.Tasks.Task.ExecuteWithThreadLocal(Task& currentTaskSlot, Thread threadPoolThread)
+--- End of stack trace from previous location ---
+   at Microsoft.EntityFrameworkCore.Storage.RelationalCommand.ExecuteReaderAsync(RelationalCommandParameterObject parameterObject, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Storage.RelationalCommand.ExecuteReaderAsync(RelationalCommandParameterObject parameterObject, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Query.Internal.SingleQueryingEnumerable`1.AsyncEnumerator.InitializeReaderAsync(AsyncEnumerator enumerator, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.SqlServer.Storage.Internal.SqlServerExecutionStrategy.ExecuteAsync[TState,TResult](TState state, Func`4 operation, Func`4 verifySucceeded, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Query.Internal.SingleQueryingEnumerable`1.AsyncEnumerator.MoveNextAsync()
+   at Microsoft.EntityFrameworkCore.EntityFrameworkQueryableExtensions.ToListAsync[TSource](IQueryable`1 source, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.EntityFrameworkQueryableExtensions.ToListAsync[TSource](IQueryable`1 source, CancellationToken cancellationToken)
+   at HRMSinfrastructure.Repositories.CommandRepo.BaseRepo.BaseRepo`1.FindByPredicate(Expression`1 predicate) in C:\Users\dell\Desktop\RailWayCleanArchitecture\HRMSApp\HRMSinfrastructure\Repositories\BaseRepo\BaseRepo.cs:line 46
+   at HRMSapplication.Commands.CreateEmployee.CreateEmployeeCommandHandler.Handle(CreateEmployeeCommand request, CancellationToken cancellationToken) in C:\Users\dell\Desktop\RailWayCleanArchitecture\HRMSApp\HRMSapplication\Services\Employee\Commands\CreateEmployee\CreateEmployeeCommandHandler.cs:line 25
+   at MediatR.Pipeline.RequestExceptionProcessorBehavior`2.Handle(TRequest request, CancellationToken cancellationToken, RequestHandlerDelegate`1 next)
+   at MediatR.Pipeline.RequestExceptionProcessorBehavior`2.Handle(TRequest request, CancellationToken cancellationToken, RequestHandlerDelegate`1 next)
+   at MediatR.Pipeline.RequestExceptionActionProcessorBehavior`2.Handle(TRequest request, CancellationToken cancellationToken, RequestHandlerDelegate`1 next)
+   at MediatR.Pipeline.RequestExceptionActionProcessorBehavior`2.Handle(TRequest request, CancellationToken cancellationToken, RequestHandlerDelegate`1 next)
+   at MediatR.Pipeline.RequestPostProcessorBehavior`2.Handle(TRequest request, CancellationToken cancellationToken, RequestHandlerDelegate`1 next)
+   at MediatR.Pipeline.RequestPreProcessorBehavior`2.Handle(TRequest request, CancellationToken cancellationToken, RequestHandlerDelegate`1 next)
+   at HRMS.API.Controllers.EmployeeController.Create(CreateEmployeeCommand employee) in C:\Users\dell\Desktop\RailWayCleanArchitecture\HRMSApp\HRMS\Controllers\EmployeeController.cs:line 37
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ActionMethodExecutor.TaskOfIActionResultExecutor.Execute(IActionResultTypeMapper mapper, ObjectMethodExecutor executor, Object controller, Object[] arguments)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.<InvokeActionMethodAsync>g__Awaited|12_0(ControllerActionInvoker invoker, ValueTask`1 actionResultValueTask)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.<InvokeNextActionFilterAsync>g__Awaited|10_0(ControllerActionInvoker invoker, Task lastTask, State next, Scope scope, Object state, Boolean isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.Rethrow(ActionExecutedContextSealed context)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.Next(State& next, Scope& scope, Object& state, Boolean& isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.<InvokeInnerFilterAsync>g__Awaited|13_0(ControllerActionInvoker invoker, Task lastTask, State next, Scope scope, Object state, Boolean isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeFilterPipelineAsync>g__Awaited|20_0(ResourceInvoker invoker, Task lastTask, State next, Scope scope, Object state, Boolean isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeAsync>g__Logged|17_1(ResourceInvoker invoker)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeAsync>g__Logged|17_1(ResourceInvoker invoker)
+   at Microsoft.AspNetCore.Routing.EndpointMiddleware.<Invoke>g__AwaitRequestTask|6_0(Endpoint endpoint, Task requestTask, ILogger logger)
+   at Microsoft.AspNetCore.Authorization.AuthorizationMiddleware.Invoke(HttpContext context)
+   at Microsoft.AspNetCore.Authentication.AuthenticationMiddleware.Invoke(HttpContext context)
+   at HRMS.API.ExceptionHandling.ExceptionMiddleware.Invoke(HttpContext context) in C:\Users\dell\Desktop\RailWayCleanArchitecture\HRMSApp\HRMS\ExceptionHandling\ExceptionMiddleware.cs:line 19
+ClientConnectionId:d4e42683-48ed-45c1-b694-4d0231d6aa08
+Error Number:207,State:1,Class:16 
+[INF]  Request finished HTTP/2 POST https://localhost:7263/api/Employee application/json 46 - 500 - application/json 11183.7451ms 
+[WRN]  No store type was specified for the decimal property 'Allowance' on entity type 'Leave'. This will cause values to be silently truncated if they do not fit in the default precision and scale. Explicitly specify the SQL server column type that can accommodate all the values in 'OnModelCreating' using 'HasColumnType', specify precision and scale using 'HasPrecision', or configure a value converter using 'HasConversion'. 
+[INF]  Entity Framework Core 6.0.7 initialized 'HRMSDbContext' using provider 'Microsoft.EntityFrameworkCore.SqlServer:6.0.7' with options: None 
+[WRN]  No store type was specified for the decimal property 'Allowance' on entity type 'Leave'. This will cause values to be silently truncated if they do not fit in the default precision and scale. Explicitly specify the SQL server column type that can accommodate all the values in 'OnModelCreating' using 'HasColumnType', specify precision and scale using 'HasPrecision', or configure a value converter using 'HasConversion'. 
+[INF]  Entity Framework Core 6.0.7 initialized 'HRMSDbContext' using provider 'Microsoft.EntityFrameworkCore.SqlServer:6.0.7' with options: None 
+[WRN]  No store type was specified for the decimal property 'Allowance' on entity type 'Leave'. This will cause values to be silently truncated if they do not fit in the default precision and scale. Explicitly specify the SQL server column type that can accommodate all the values in 'OnModelCreating' using 'HasColumnType', specify precision and scale using 'HasPrecision', or configure a value converter using 'HasConversion'. 
+[WRN]  No store type was specified for the decimal property 'Allowance' on entity type 'Leave'. This will cause values to be silently truncated if they do not fit in the default precision and scale. Explicitly specify the SQL server column type that can accommodate all the values in 'OnModelCreating' using 'HasColumnType', specify precision and scale using 'HasPrecision', or configure a value converter using 'HasConversion'. 
+[INF]  Entity Framework Core 6.0.7 initialized 'HRMSDbContext' using provider 'Microsoft.EntityFrameworkCore.SqlServer:6.0.7' with options: None 
+[INF]  Executed DbCommand (30ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT 1 
+[INF]  Executed DbCommand (64ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT OBJECT_ID(N'[__EFMigrationsHistory]'); 
+[INF]  Executed DbCommand (2ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT 1 
+[INF]  Executed DbCommand (0ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT OBJECT_ID(N'[__EFMigrationsHistory]'); 
+[INF]  Executed DbCommand (12ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT [MigrationId], [ProductVersion]
+FROM [__EFMigrationsHistory]
+ORDER BY [MigrationId]; 
+[INF]  Applying migration '20220806200035_InitialMigration'. 
+[ERR]  Failed executing DbCommand (475ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+CREATE TABLE [CompanyProjects] (
+    [Id] uniqueidentifier NOT NULL,
+    [Name] nvarchar(max) NOT NULL,
+    [ProjectStatus] int NOT NULL,
+    [CreateDate] datetime2 NOT NULL,
+    [LastModifyDate] datetime2 NOT NULL,
+    CONSTRAINT [PK_CompanyProjects] PRIMARY KEY ([Id])
+); 
+[WRN]  No store type was specified for the decimal property 'Allowance' on entity type 'Leave'. This will cause values to be silently truncated if they do not fit in the default precision and scale. Explicitly specify the SQL server column type that can accommodate all the values in 'OnModelCreating' using 'HasColumnType', specify precision and scale using 'HasPrecision', or configure a value converter using 'HasConversion'. 
+[INF]  Entity Framework Core 6.0.7 initialized 'HRMSDbContext' using provider 'Microsoft.EntityFrameworkCore.SqlServer:6.0.7' with options: None 
+[INF]  Executed DbCommand (26ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT 1 
+[INF]  Executed DbCommand (28ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT OBJECT_ID(N'[__EFMigrationsHistory]'); 
+[INF]  Executed DbCommand (2ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT 1 
+[INF]  Executed DbCommand (0ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT OBJECT_ID(N'[__EFMigrationsHistory]'); 
+[INF]  Executed DbCommand (2ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT [MigrationId], [ProductVersion]
+FROM [__EFMigrationsHistory]
+ORDER BY [MigrationId]; 
+[INF]  Applying migration '20220806200035_InitialMigration'. 
+[ERR]  Failed executing DbCommand (3ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+CREATE TABLE [CompanyProjects] (
+    [Id] uniqueidentifier NOT NULL,
+    [Name] nvarchar(max) NOT NULL,
+    [ProjectStatus] int NOT NULL,
+    [CreateDate] datetime2 NOT NULL,
+    [LastModifyDate] datetime2 NOT NULL,
+    CONSTRAINT [PK_CompanyProjects] PRIMARY KEY ([Id])
+); 
+[WRN]  No store type was specified for the decimal property 'Allowance' on entity type 'Leave'. This will cause values to be silently truncated if they do not fit in the default precision and scale. Explicitly specify the SQL server column type that can accommodate all the values in 'OnModelCreating' using 'HasColumnType', specify precision and scale using 'HasPrecision', or configure a value converter using 'HasConversion'. 
+[INF]  Entity Framework Core 6.0.7 initialized 'HRMSDbContext' using provider 'Microsoft.EntityFrameworkCore.SqlServer:6.0.7' with options: None 
+[WRN]  No store type was specified for the decimal property 'Allowance' on entity type 'Leave'. This will cause values to be silently truncated if they do not fit in the default precision and scale. Explicitly specify the SQL server column type that can accommodate all the values in 'OnModelCreating' using 'HasColumnType', specify precision and scale using 'HasPrecision', or configure a value converter using 'HasConversion'. 
+[INF]  Executed DbCommand (26ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT 1 
+[INF]  Executed DbCommand (25ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT OBJECT_ID(N'[__EFMigrationsHistory]'); 
+[INF]  Executed DbCommand (4ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT [MigrationId], [ProductVersion]
+FROM [__EFMigrationsHistory]
+ORDER BY [MigrationId]; 
+[WRN]  No store type was specified for the decimal property 'Allowance' on entity type 'Leave'. This will cause values to be silently truncated if they do not fit in the default precision and scale. Explicitly specify the SQL server column type that can accommodate all the values in 'OnModelCreating' using 'HasColumnType', specify precision and scale using 'HasPrecision', or configure a value converter using 'HasConversion'. 
+[INF]  Entity Framework Core 6.0.7 initialized 'HRMSDbContext' using provider 'Microsoft.EntityFrameworkCore.SqlServer:6.0.7' with options: None 
+[WRN]  No store type was specified for the decimal property 'Allowance' on entity type 'Leave'. This will cause values to be silently truncated if they do not fit in the default precision and scale. Explicitly specify the SQL server column type that can accommodate all the values in 'OnModelCreating' using 'HasColumnType', specify precision and scale using 'HasPrecision', or configure a value converter using 'HasConversion'. 
+[WRN]  No store type was specified for the decimal property 'Allowance' on entity type 'Leave'. This will cause values to be silently truncated if they do not fit in the default precision and scale. Explicitly specify the SQL server column type that can accommodate all the values in 'OnModelCreating' using 'HasColumnType', specify precision and scale using 'HasPrecision', or configure a value converter using 'HasConversion'. 
+[INF]  Entity Framework Core 6.0.7 initialized 'HRMSDbContext' using provider 'Microsoft.EntityFrameworkCore.SqlServer:6.0.7' with options: None 
+[INF]  Executed DbCommand (33ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT 1 
+[INF]  Executed DbCommand (32ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT OBJECT_ID(N'[__EFMigrationsHistory]'); 
+[INF]  Executed DbCommand (3ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT 1 
+[INF]  Executed DbCommand (0ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT OBJECT_ID(N'[__EFMigrationsHistory]'); 
+[INF]  Executed DbCommand (3ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT [MigrationId], [ProductVersion]
+FROM [__EFMigrationsHistory]
+ORDER BY [MigrationId]; 
+[INF]  Applying migration '20220806200527_InitialMigration'. 
+[ERR]  Failed executing DbCommand (4ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+CREATE TABLE [Leave] (
+    [Id] uniqueidentifier NOT NULL,
+    [Name] nvarchar(max) NOT NULL,
+    [Days] int NOT NULL,
+    [Allowance] decimal(18,2) NOT NULL,
+    [CreateDate] datetime2 NOT NULL,
+    [LastModifyDate] datetime2 NOT NULL,
+    CONSTRAINT [PK_Leave] PRIMARY KEY ([Id])
+); 
+[WRN]  No store type was specified for the decimal property 'Allowance' on entity type 'Leave'. This will cause values to be silently truncated if they do not fit in the default precision and scale. Explicitly specify the SQL server column type that can accommodate all the values in 'OnModelCreating' using 'HasColumnType', specify precision and scale using 'HasPrecision', or configure a value converter using 'HasConversion'. 
+[INF]  Entity Framework Core 6.0.7 initialized 'HRMSDbContext' using provider 'Microsoft.EntityFrameworkCore.SqlServer:6.0.7' with options: None 
+[WRN]  No store type was specified for the decimal property 'Allowance' on entity type 'Leave'. This will cause values to be silently truncated if they do not fit in the default precision and scale. Explicitly specify the SQL server column type that can accommodate all the values in 'OnModelCreating' using 'HasColumnType', specify precision and scale using 'HasPrecision', or configure a value converter using 'HasConversion'. 
+[INF]  Executed DbCommand (29ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT 1 
+[INF]  Executed DbCommand (39ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT OBJECT_ID(N'[__EFMigrationsHistory]'); 
+[INF]  Executed DbCommand (2ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT [MigrationId], [ProductVersion]
+FROM [__EFMigrationsHistory]
+ORDER BY [MigrationId]; 
+[WRN]  No store type was specified for the decimal property 'Allowance' on entity type 'Leave'. This will cause values to be silently truncated if they do not fit in the default precision and scale. Explicitly specify the SQL server column type that can accommodate all the values in 'OnModelCreating' using 'HasColumnType', specify precision and scale using 'HasPrecision', or configure a value converter using 'HasConversion'. 
+[INF]  Entity Framework Core 6.0.7 initialized 'HRMSDbContext' using provider 'Microsoft.EntityFrameworkCore.SqlServer:6.0.7' with options: None 
+[WRN]  No store type was specified for the decimal property 'Allowance' on entity type 'Leave'. This will cause values to be silently truncated if they do not fit in the default precision and scale. Explicitly specify the SQL server column type that can accommodate all the values in 'OnModelCreating' using 'HasColumnType', specify precision and scale using 'HasPrecision', or configure a value converter using 'HasConversion'. 
+[WRN]  No store type was specified for the decimal property 'Allowance' on entity type 'Leave'. This will cause values to be silently truncated if they do not fit in the default precision and scale. Explicitly specify the SQL server column type that can accommodate all the values in 'OnModelCreating' using 'HasColumnType', specify precision and scale using 'HasPrecision', or configure a value converter using 'HasConversion'. 
+[INF]  Entity Framework Core 6.0.7 initialized 'HRMSDbContext' using provider 'Microsoft.EntityFrameworkCore.SqlServer:6.0.7' with options: None 
+[WRN]  No store type was specified for the decimal property 'Allowance' on entity type 'Leave'. This will cause values to be silently truncated if they do not fit in the default precision and scale. Explicitly specify the SQL server column type that can accommodate all the values in 'OnModelCreating' using 'HasColumnType', specify precision and scale using 'HasPrecision', or configure a value converter using 'HasConversion'. 
+[INF]  Executed DbCommand (7,580ms) [Parameters=[], CommandType='"Text"', CommandTimeout='60']
+CREATE DATABASE [HrmsDb]; 
+[INF]  Executed DbCommand (1,170ms) [Parameters=[], CommandType='"Text"', CommandTimeout='60']
+IF SERVERPROPERTY('EngineEdition') <> 5
+BEGIN
+    ALTER DATABASE [HrmsDb] SET READ_COMMITTED_SNAPSHOT ON;
+END; 
+[INF]  Executed DbCommand (13ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT 1 
+[INF]  Executed DbCommand (191ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+CREATE TABLE [__EFMigrationsHistory] (
+    [MigrationId] nvarchar(150) NOT NULL,
+    [ProductVersion] nvarchar(32) NOT NULL,
+    CONSTRAINT [PK___EFMigrationsHistory] PRIMARY KEY ([MigrationId])
+); 
+[INF]  Executed DbCommand (0ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT 1 
+[INF]  Executed DbCommand (21ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT OBJECT_ID(N'[__EFMigrationsHistory]'); 
+[INF]  Executed DbCommand (3ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT [MigrationId], [ProductVersion]
+FROM [__EFMigrationsHistory]
+ORDER BY [MigrationId]; 
+[INF]  Applying migration '20220806201440_InitialMigration'. 
+[INF]  Executed DbCommand (130ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+CREATE TABLE [CompanyProjects] (
+    [Id] uniqueidentifier NOT NULL,
+    [Name] nvarchar(max) NOT NULL,
+    [ProjectStatus] int NOT NULL,
+    [CreateDate] datetime2 NOT NULL,
+    [LastModifyDate] datetime2 NOT NULL,
+    CONSTRAINT [PK_CompanyProjects] PRIMARY KEY ([Id])
+); 
+[INF]  Executed DbCommand (3ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+CREATE TABLE [Leave] (
+    [Id] uniqueidentifier NOT NULL,
+    [Name] nvarchar(max) NOT NULL,
+    [Days] int NOT NULL,
+    [Allowance] decimal(18,2) NOT NULL,
+    [CreateDate] datetime2 NOT NULL,
+    [LastModifyDate] datetime2 NOT NULL,
+    CONSTRAINT [PK_Leave] PRIMARY KEY ([Id])
+); 
+[INF]  Executed DbCommand (105ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+CREATE TABLE [ApplyLeave] (
+    [Id] uniqueidentifier NOT NULL,
+    [LeaveId] uniqueidentifier NOT NULL,
+    [EmployeeId] uniqueidentifier NOT NULL,
+    [Reason] nvarchar(max) NOT NULL,
+    [StartDate] datetime2 NOT NULL,
+    [IsPprove] bit NOT NULL,
+    [IsReject] bit NOT NULL,
+    [ApproverMessage] nvarchar(max) NULL,
+    [CreateDate] datetime2 NOT NULL,
+    [LastModifyDate] datetime2 NOT NULL,
+    CONSTRAINT [PK_ApplyLeave] PRIMARY KEY ([Id]),
+    CONSTRAINT [FK_ApplyLeave_Leave_LeaveId] FOREIGN KEY ([LeaveId]) REFERENCES [Leave] ([Id]) ON DELETE CASCADE
+); 
+[INF]  Executed DbCommand (5ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+CREATE TABLE [Department] (
+    [Id] uniqueidentifier NOT NULL,
+    [Name] nvarchar(max) NOT NULL,
+    [HODId] uniqueidentifier NULL,
+    [Description] nvarchar(max) NULL,
+    [CreateDate] datetime2 NOT NULL,
+    [LastModifyDate] datetime2 NOT NULL,
+    CONSTRAINT [PK_Department] PRIMARY KEY ([Id])
+); 
+[INF]  Executed DbCommand (93ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+CREATE TABLE [Employee] (
+    [Id] uniqueidentifier NOT NULL,
+    [FirstName] nvarchar(50) NULL,
+    [Surname] nvarchar(50) NULL,
+    [OtherName] nvarchar(50) NULL,
+    [ContactAddress] nvarchar(max) NULL,
+    [Email] nvarchar(max) NOT NULL,
+    [Gender] int NULL,
+    [StateOfOrigin] nvarchar(max) NULL,
+    [PhoneNo] nvarchar(max) NULL,
+    [TechnicalSkill] nvarchar(max) NULL,
+    [SoftSkill] nvarchar(max) NULL,
+    [DOB] datetime2 NULL,
+    [DateEmployed] datetime2 NULL,
+    [Nationality] nvarchar(max) NULL,
+    [Photo] varbinary(max) NULL,
+    [StaffId] nvarchar(max) NULL,
+    [NextOfKingFirstName] nvarchar(max) NULL,
+    [NextOfKingSurName] nvarchar(max) NULL,
+    [NextOfKingPhoneNo] nvarchar(max) NULL,
+    [NextOfKingAddress] nvarchar(max) NULL,
+    [NextOfKingEmail] nvarchar(max) NULL,
+    [Relationship] int NULL,
+    [PasswordHash] varbinary(max) NULL,
+    [PasswordSalt] varbinary(max) NULL,
+    [VerificationToken] nvarchar(max) NULL,
+    [VerifiedAt] datetime2 NULL,
+    [ResetToken] nvarchar(max) NULL,
+    [ResetTokenExpires] datetime2 NULL,
+    [RefreshToken] nvarchar(max) NULL,
+    [ManagerId] uniqueidentifier NULL,
+    [Role] int NOT NULL,
+    [JobRole] int NULL,
+    [DepartmentId] uniqueidentifier NULL,
+    [WorkType] int NULL,
+    [ContractType] int NULL,
+    [ConfirmedStatus] bit NOT NULL,
+    [RecievedOfferLetter] bit NOT NULL,
+    [LastDatePromoted] datetime2 NOT NULL,
+    [IsLock] bit NOT NULL,
+    [NTry] int NOT NULL,
+    [CreateDate] datetime2 NOT NULL,
+    [LastModifyDate] datetime2 NOT NULL,
+    CONSTRAINT [PK_Employee] PRIMARY KEY ([Id]),
+    CONSTRAINT [FK_Employee_Department_DepartmentId] FOREIGN KEY ([DepartmentId]) REFERENCES [Department] ([Id]),
+    CONSTRAINT [FK_Employee_Employee_ManagerId] FOREIGN KEY ([ManagerId]) REFERENCES [Employee] ([Id])
+); 
+[INF]  Executed DbCommand (4ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+CREATE TABLE [Performances] (
+    [Id] uniqueidentifier NOT NULL,
+    [EmployeeId] uniqueidentifier NOT NULL,
+    [MonthlyRating] float NOT NULL,
+    [Month] datetime2 NOT NULL,
+    [CreateDate] datetime2 NOT NULL,
+    [LastModifyDate] datetime2 NOT NULL,
+    CONSTRAINT [PK_Performances] PRIMARY KEY ([Id]),
+    CONSTRAINT [FK_Performances_Employee_EmployeeId] FOREIGN KEY ([EmployeeId]) REFERENCES [Employee] ([Id]) ON DELETE CASCADE
+); 
+[INF]  Executed DbCommand (35ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+CREATE TABLE [WorkExperiences] (
+    [Id] uniqueidentifier NOT NULL,
+    [body] nvarchar(max) NOT NULL,
+    [JobRole] nvarchar(max) NOT NULL,
+    [Department] nvarchar(max) NOT NULL,
+    [StartDate] datetime2 NOT NULL,
+    [EndDate] datetime2 NOT NULL,
+    [employeeId] uniqueidentifier NOT NULL,
+    [CreateDate] datetime2 NOT NULL,
+    [LastModifyDate] datetime2 NOT NULL,
+    CONSTRAINT [PK_WorkExperiences] PRIMARY KEY ([Id]),
+    CONSTRAINT [FK_WorkExperiences_Employee_employeeId] FOREIGN KEY ([employeeId]) REFERENCES [Employee] ([Id]) ON DELETE CASCADE
+); 
+[INF]  Executed DbCommand (107ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+CREATE INDEX [IX_ApplyLeave_EmployeeId] ON [ApplyLeave] ([EmployeeId]); 
+[INF]  Executed DbCommand (1ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+CREATE INDEX [IX_ApplyLeave_LeaveId] ON [ApplyLeave] ([LeaveId]); 
+[INF]  Executed DbCommand (37ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+CREATE INDEX [IX_Department_HODId] ON [Department] ([HODId]); 
+[INF]  Executed DbCommand (1ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+CREATE INDEX [IX_Employee_DepartmentId] ON [Employee] ([DepartmentId]); 
+[INF]  Executed DbCommand (21ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+CREATE INDEX [IX_Employee_ManagerId] ON [Employee] ([ManagerId]); 
+[INF]  Executed DbCommand (1ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+CREATE INDEX [IX_Performances_EmployeeId] ON [Performances] ([EmployeeId]); 
+[INF]  Executed DbCommand (1ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+CREATE INDEX [IX_WorkExperiences_employeeId] ON [WorkExperiences] ([employeeId]); 
+[INF]  Executed DbCommand (191ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+ALTER TABLE [ApplyLeave] ADD CONSTRAINT [FK_ApplyLeave_Employee_EmployeeId] FOREIGN KEY ([EmployeeId]) REFERENCES [Employee] ([Id]) ON DELETE CASCADE; 
+[INF]  Executed DbCommand (107ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+ALTER TABLE [Department] ADD CONSTRAINT [FK_Department_Employee_HODId] FOREIGN KEY ([HODId]) REFERENCES [Employee] ([Id]); 
+[INF]  Executed DbCommand (87ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+INSERT INTO [__EFMigrationsHistory] ([MigrationId], [ProductVersion])
+VALUES (N'20220806201440_InitialMigration', N'6.0.7'); 
+[INF]  User profile is available. Using 'C:\Users\dell\AppData\Local\ASP.NET\DataProtection-Keys' as key repository and Windows DPAPI to encrypt keys at rest. 
+[INF]  Now listening on: https://localhost:7263 
+[INF]  Now listening on: http://localhost:5263 
+[INF]  Application started. Press Ctrl+C to shut down. 
+[INF]  Hosting environment: Development 
+[INF]  Content root path: C:\Users\dell\Desktop\RailWayCleanArchitecture\HRMSApp\HRMS\ 
+[INF]  Request starting HTTP/2 GET https://localhost:7263/swagger/index.html - - 
+[INF]  Request starting HTTP/2 GET https://localhost:7263/_framework/aspnetcore-browser-refresh.js - - 
+[INF]  Request finished HTTP/2 GET https://localhost:7263/swagger/index.html - - - 200 - text/html;charset=utf-8 641.1796ms 
+[INF]  Request finished HTTP/2 GET https://localhost:7263/_framework/aspnetcore-browser-refresh.js - - - 200 11974 application/javascript;+charset=utf-8 9.2663ms 
+[INF]  Request starting HTTP/2 GET https://localhost:7263/swagger/v1/swagger.json - - 
+[INF]  Request finished HTTP/2 GET https://localhost:7263/swagger/v1/swagger.json - - - 200 - application/json;charset=utf-8 339.7484ms 
+[INF]  Request starting HTTP/2 POST https://localhost:7263/api/Employee application/json 46 
+[INF]  CORS policy execution successful. 
+[INF]  Executing endpoint 'HRMS.API.Controllers.EmployeeController.Create (HRMS.API)' 
+[INF]  Route matched with {action = "Create", controller = "Employee"}. Executing controller action with signature System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.IActionResult] Create(HRMSapplication.Commands.CreateEmployee.CreateEmployeeCommand) on controller HRMS.API.Controllers.EmployeeController (HRMS.API). 
+[WRN]  No store type was specified for the decimal property 'Allowance' on entity type 'Leave'. This will cause values to be silently truncated if they do not fit in the default precision and scale. Explicitly specify the SQL server column type that can accommodate all the values in 'OnModelCreating' using 'HasColumnType', specify precision and scale using 'HasPrecision', or configure a value converter using 'HasConversion'. 
+[INF]  Entity Framework Core 6.0.7 initialized 'HRMSDbContext' using provider 'Microsoft.EntityFrameworkCore.SqlServer:6.0.7' with options: None 
+[INF]  Executed DbCommand (171ms) [Parameters=[@__ToLower_0='?' (Size = 4000)], CommandType='"Text"', CommandTimeout='30']
+SELECT [e].[Id], [e].[ConfirmedStatus], [e].[ContactAddress], [e].[ContractType], [e].[CreateDate], [e].[DOB], [e].[DateEmployed], [e].[DepartmentId], [e].[Email], [e].[FirstName], [e].[Gender], [e].[IsLock], [e].[JobRole], [e].[LastDatePromoted], [e].[LastModifyDate], [e].[ManagerId], [e].[NTry], [e].[Nationality], [e].[NextOfKingAddress], [e].[NextOfKingEmail], [e].[NextOfKingFirstName], [e].[NextOfKingPhoneNo], [e].[NextOfKingSurName], [e].[OtherName], [e].[PasswordHash], [e].[PasswordSalt], [e].[PhoneNo], [e].[Photo], [e].[RecievedOfferLetter], [e].[RefreshToken], [e].[Relationship], [e].[ResetToken], [e].[ResetTokenExpires], [e].[Role], [e].[SoftSkill], [e].[StaffId], [e].[StateOfOrigin], [e].[Surname], [e].[TechnicalSkill], [e].[VerificationToken], [e].[VerifiedAt], [e].[WorkType]
+FROM [Employee] AS [e]
+WHERE LOWER([e].[Email]) = @__ToLower_0 
+[INF]  Executed DbCommand (154ms) [Parameters=[@p0='?' (DbType = Guid), @p1='?' (DbType = Boolean), @p2='?' (Size = 4000), @p3='?' (DbType = Int32), @p4='?' (DbType = DateTime2), @p5='?' (DbType = DateTime2), @p6='?' (DbType = DateTime2), @p7='?' (DbType = Guid), @p8='?' (Size = 4000), @p9='?' (Size = 50), @p10='?' (DbType = Int32), @p11='?' (DbType = Boolean), @p12='?' (DbType = Int32), @p13='?' (DbType = DateTime2), @p14='?' (DbType = DateTime2), @p15='?' (DbType = Guid), @p16='?' (DbType = Int32), @p17='?' (Size = 4000), @p18='?' (Size = 4000), @p19='?' (Size = 4000), @p20='?' (Size = 4000), @p21='?' (Size = 4000), @p22='?' (Size = 4000), @p23='?' (Size = 50), @p24='?' (Size = 8000) (DbType = Binary), @p25='?' (Size = 8000) (DbType = Binary), @p26='?' (Size = 4000), @p27='?' (Size = 8000) (DbType = Binary), @p28='?' (DbType = Boolean), @p29='?' (Size = 4000), @p30='?' (DbType = Int32), @p31='?' (Size = 4000), @p32='?' (DbType = DateTime2), @p33='?' (DbType = Int32), @p34='?' (Size = 4000), @p35='?' (Size = 4000), @p36='?' (Size = 4000), @p37='?' (Size = 50), @p38='?' (Size = 4000), @p39='?' (Size = 4000), @p40='?' (DbType = DateTime2), @p41='?' (DbType = Int32)], CommandType='"Text"', CommandTimeout='30']
+SET NOCOUNT ON;
+INSERT INTO [Employee] ([Id], [ConfirmedStatus], [ContactAddress], [ContractType], [CreateDate], [DOB], [DateEmployed], [DepartmentId], [Email], [FirstName], [Gender], [IsLock], [JobRole], [LastDatePromoted], [LastModifyDate], [ManagerId], [NTry], [Nationality], [NextOfKingAddress], [NextOfKingEmail], [NextOfKingFirstName], [NextOfKingPhoneNo], [NextOfKingSurName], [OtherName], [PasswordHash], [PasswordSalt], [PhoneNo], [Photo], [RecievedOfferLetter], [RefreshToken], [Relationship], [ResetToken], [ResetTokenExpires], [Role], [SoftSkill], [StaffId], [StateOfOrigin], [Surname], [TechnicalSkill], [VerificationToken], [VerifiedAt], [WorkType])
+VALUES (@p0, @p1, @p2, @p3, @p4, @p5, @p6, @p7, @p8, @p9, @p10, @p11, @p12, @p13, @p14, @p15, @p16, @p17, @p18, @p19, @p20, @p21, @p22, @p23, @p24, @p25, @p26, @p27, @p28, @p29, @p30, @p31, @p32, @p33, @p34, @p35, @p36, @p37, @p38, @p39, @p40, @p41); 
+[INF]  Executing OkObjectResult, writing value of type 'HRMSapplication.Response.EmployeeResponse'. 
+[INF]  Executed action HRMS.API.Controllers.EmployeeController.Create (HRMS.API) in 3909.0074ms 
+[INF]  Executed endpoint 'HRMS.API.Controllers.EmployeeController.Create (HRMS.API)' 
+[INF]  Request finished HTTP/2 POST https://localhost:7263/api/Employee application/json 46 - 200 - application/json;+charset=utf-8 4205.0652ms 
+[INF]  User profile is available. Using 'C:\Users\dell\AppData\Local\ASP.NET\DataProtection-Keys' as key repository and Windows DPAPI to encrypt keys at rest. 
+[INF]  Now listening on: https://localhost:7263 
+[INF]  Now listening on: http://localhost:5263 
+[INF]  Application started. Press Ctrl+C to shut down. 
+[INF]  Hosting environment: Development 
+[INF]  Content root path: C:\Users\dell\Desktop\RailWayCleanArchitecture\HRMSApp\HRMS\ 
+[INF]  Request starting HTTP/2 GET https://localhost:7263/swagger/index.html - - 
+[INF]  Request finished HTTP/2 GET https://localhost:7263/swagger/index.html - - - 200 - text/html;charset=utf-8 603.5770ms 
+[INF]  Request starting HTTP/2 GET https://localhost:7263/_framework/aspnetcore-browser-refresh.js - - 
+[INF]  Request finished HTTP/2 GET https://localhost:7263/_framework/aspnetcore-browser-refresh.js - - - 200 11974 application/javascript;+charset=utf-8 14.2507ms 
+[INF]  Request starting HTTP/2 GET https://localhost:7263/swagger/v1/swagger.json - - 
+[INF]  Request finished HTTP/2 GET https://localhost:7263/swagger/v1/swagger.json - - - 200 - application/json;charset=utf-8 274.3709ms 
+[INF]  Request starting HTTP/2 GET https://localhost:7263/api/Employee - - 
+[INF]  Executing endpoint 'HRMS.API.Controllers.EmployeeController.GetAll (HRMS.API)' 
+[INF]  Route matched with {action = "GetAll", controller = "Employee"}. Executing controller action with signature System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.IActionResult] GetAll() on controller HRMS.API.Controllers.EmployeeController (HRMS.API). 
+[WRN]  No store type was specified for the decimal property 'Allowance' on entity type 'Leave'. This will cause values to be silently truncated if they do not fit in the default precision and scale. Explicitly specify the SQL server column type that can accommodate all the values in 'OnModelCreating' using 'HasColumnType', specify precision and scale using 'HasPrecision', or configure a value converter using 'HasConversion'. 
+[INF]  Entity Framework Core 6.0.7 initialized 'HRMSDbContext' using provider 'Microsoft.EntityFrameworkCore.SqlServer:6.0.7' with options: None 
+[INF]  Executed DbCommand (172ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT [e].[Id], [e].[ConfirmedStatus], [e].[ContactAddress], [e].[ContractType], [e].[CreateDate], [e].[DOB], [e].[DateEmployed], [e].[DepartmentId], [e].[Email], [e].[FirstName], [e].[Gender], [e].[IsLock], [e].[JobRole], [e].[LastDatePromoted], [e].[LastModifyDate], [e].[ManagerId], [e].[NTry], [e].[Nationality], [e].[NextOfKingAddress], [e].[NextOfKingEmail], [e].[NextOfKingFirstName], [e].[NextOfKingPhoneNo], [e].[NextOfKingSurName], [e].[OtherName], [e].[PasswordHash], [e].[PasswordSalt], [e].[PhoneNo], [e].[Photo], [e].[RecievedOfferLetter], [e].[RefreshToken], [e].[Relationship], [e].[ResetToken], [e].[ResetTokenExpires], [e].[Role], [e].[SoftSkill], [e].[StaffId], [e].[StateOfOrigin], [e].[Surname], [e].[TechnicalSkill], [e].[VerificationToken], [e].[VerifiedAt], [e].[WorkType]
+FROM [Employee] AS [e] 
+[INF]  Executing OkObjectResult, writing value of type 'System.Collections.Generic.List`1[[HRMSapplication.Response.EmployeeResponse, HRMS.Application, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]'. 
+[INF]  Executed action HRMS.API.Controllers.EmployeeController.GetAll (HRMS.API) in 2815.522ms 
+[INF]  Executed endpoint 'HRMS.API.Controllers.EmployeeController.GetAll (HRMS.API)' 
+[INF]  Request finished HTTP/2 GET https://localhost:7263/api/Employee - - - 200 - application/json;+charset=utf-8 2969.9776ms 

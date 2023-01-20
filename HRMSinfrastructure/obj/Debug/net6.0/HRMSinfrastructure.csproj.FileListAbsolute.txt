@@ -1,0 +1,17 @@
+C:\Users\dell\Desktop\RailWayCleanArchitecture\HRMSApp\HRMSinfrastructure\bin\Debug\net6.0\HRMSinfrastructure.deps.json
+C:\Users\dell\Desktop\RailWayCleanArchitecture\HRMSApp\HRMSinfrastructure\bin\Debug\net6.0\HRMSinfrastructure.runtimeconfig.json
+C:\Users\dell\Desktop\RailWayCleanArchitecture\HRMSApp\HRMSinfrastructure\bin\Debug\net6.0\HRMSinfrastructure.dll
+C:\Users\dell\Desktop\RailWayCleanArchitecture\HRMSApp\HRMSinfrastructure\bin\Debug\net6.0\HRMSinfrastructure.pdb
+C:\Users\dell\Desktop\RailWayCleanArchitecture\HRMSApp\HRMSinfrastructure\obj\Debug\net6.0\HRMSinfrastructure.csproj.AssemblyReference.cache
+C:\Users\dell\Desktop\RailWayCleanArchitecture\HRMSApp\HRMSinfrastructure\obj\Debug\net6.0\HRMSinfrastructure.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\dell\Desktop\RailWayCleanArchitecture\HRMSApp\HRMSinfrastructure\obj\Debug\net6.0\HRMSinfrastructure.AssemblyInfoInputs.cache
+C:\Users\dell\Desktop\RailWayCleanArchitecture\HRMSApp\HRMSinfrastructure\obj\Debug\net6.0\HRMSinfrastructure.AssemblyInfo.cs
+C:\Users\dell\Desktop\RailWayCleanArchitecture\HRMSApp\HRMSinfrastructure\obj\Debug\net6.0\HRMSinfrastructure.csproj.CoreCompileInputs.cache
+C:\Users\dell\Desktop\RailWayCleanArchitecture\HRMSApp\HRMSinfrastructure\obj\Debug\net6.0\HRMSinfrastructure.dll
+C:\Users\dell\Desktop\RailWayCleanArchitecture\HRMSApp\HRMSinfrastructure\obj\Debug\net6.0\refint\HRMSinfrastructure.dll
+C:\Users\dell\Desktop\RailWayCleanArchitecture\HRMSApp\HRMSinfrastructure\obj\Debug\net6.0\HRMSinfrastructure.pdb
+C:\Users\dell\Desktop\RailWayCleanArchitecture\HRMSApp\HRMSinfrastructure\obj\Debug\net6.0\HRMSinfrastructure.genruntimeconfig.cache
+C:\Users\dell\Desktop\RailWayCleanArchitecture\HRMSApp\HRMSinfrastructure\obj\Debug\net6.0\ref\HRMSinfrastructure.dll
+C:\Users\dell\Desktop\RailWayCleanArchitecture\HRMSApp\HRMSinfrastructure\bin\Debug\net6.0\HRMScore.dll
+C:\Users\dell\Desktop\RailWayCleanArchitecture\HRMSApp\HRMSinfrastructure\bin\Debug\net6.0\HRMScore.pdb
+C:\Users\dell\Desktop\RailWayCleanArchitecture\HRMSApp\HRMSinfrastructure\obj\Debug\net6.0\HRMSinfrastructure.csproj.CopyComplete

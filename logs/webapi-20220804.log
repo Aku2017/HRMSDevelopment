@@ -1,0 +1,632 @@
+[WRN]  No store type was specified for the decimal property 'Allowance' on entity type 'Leave'. This will cause values to be silently truncated if they do not fit in the default precision and scale. Explicitly specify the SQL server column type that can accommodate all the values in 'OnModelCreating' using 'HasColumnType', specify precision and scale using 'HasPrecision', or configure a value converter using 'HasConversion'. 
+[INF]  Entity Framework Core 6.0.7 initialized 'HRMSDbContext' using provider 'Microsoft.EntityFrameworkCore.SqlServer:6.0.7' with options: None 
+[INF]  Executed DbCommand (78ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT 1 
+[INF]  Executed DbCommand (202ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT OBJECT_ID(N'[__EFMigrationsHistory]'); 
+[INF]  Executed DbCommand (2ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT 1 
+[INF]  Executed DbCommand (1,236ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+CREATE TABLE [__EFMigrationsHistory] (
+    [MigrationId] nvarchar(150) NOT NULL,
+    [ProductVersion] nvarchar(32) NOT NULL,
+    CONSTRAINT [PK___EFMigrationsHistory] PRIMARY KEY ([MigrationId])
+); 
+[INF]  Executed DbCommand (1ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT 1 
+[INF]  Executed DbCommand (4ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT OBJECT_ID(N'[__EFMigrationsHistory]'); 
+[INF]  Executed DbCommand (152ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT [MigrationId], [ProductVersion]
+FROM [__EFMigrationsHistory]
+ORDER BY [MigrationId]; 
+[INF]  Applying migration '20220803163304_InitialMigration'. 
+[INF]  Executed DbCommand (168ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+CREATE TABLE [CompanyProjects] (
+    [Id] uniqueidentifier NOT NULL,
+    [Name] nvarchar(max) NOT NULL,
+    [ProjectStatus] int NOT NULL,
+    [CreateDate] datetime2 NOT NULL,
+    [LastModifyDate] datetime2 NOT NULL,
+    CONSTRAINT [PK_CompanyProjects] PRIMARY KEY ([Id])
+); 
+[INF]  Executed DbCommand (123ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+CREATE TABLE [Leave] (
+    [Id] uniqueidentifier NOT NULL,
+    [Name] nvarchar(max) NOT NULL,
+    [Days] int NOT NULL,
+    [Allowance] decimal(18,2) NOT NULL,
+    [CreateDate] datetime2 NOT NULL,
+    [LastModifyDate] datetime2 NOT NULL,
+    CONSTRAINT [PK_Leave] PRIMARY KEY ([Id])
+); 
+[INF]  Executed DbCommand (143ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+CREATE TABLE [ApplyLeave] (
+    [Id] uniqueidentifier NOT NULL,
+    [LeaveId] uniqueidentifier NOT NULL,
+    [EmployeeId] uniqueidentifier NOT NULL,
+    [Reason] nvarchar(max) NOT NULL,
+    [StartDate] datetime2 NOT NULL,
+    [IsPprove] bit NOT NULL,
+    [IsReject] bit NOT NULL,
+    [ApproverMessage] nvarchar(max) NULL,
+    [CreateDate] datetime2 NOT NULL,
+    [LastModifyDate] datetime2 NOT NULL,
+    CONSTRAINT [PK_ApplyLeave] PRIMARY KEY ([Id]),
+    CONSTRAINT [FK_ApplyLeave_Leave_LeaveId] FOREIGN KEY ([LeaveId]) REFERENCES [Leave] ([Id]) ON DELETE CASCADE
+); 
+[INF]  Executed DbCommand (42ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+CREATE TABLE [Department] (
+    [Id] uniqueidentifier NOT NULL,
+    [Name] nvarchar(max) NOT NULL,
+    [HODId] uniqueidentifier NULL,
+    [Description] nvarchar(max) NULL,
+    [CreateDate] datetime2 NOT NULL,
+    [LastModifyDate] datetime2 NOT NULL,
+    CONSTRAINT [PK_Department] PRIMARY KEY ([Id])
+); 
+[INF]  Executed DbCommand (128ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+CREATE TABLE [Employee] (
+    [Id] uniqueidentifier NOT NULL,
+    [FirstName] nvarchar(50) NOT NULL,
+    [Surname] nvarchar(50) NOT NULL,
+    [OtherName] nvarchar(50) NULL,
+    [ContactAddress] nvarchar(max) NULL,
+    [Email] nvarchar(max) NOT NULL,
+    [Gender] int NULL,
+    [StateOfOrigin] nvarchar(max) NULL,
+    [PhoneNo] nvarchar(max) NULL,
+    [TechnicalSkill] nvarchar(max) NULL,
+    [SoftSkill] nvarchar(max) NULL,
+    [DOB] datetime2 NULL,
+    [DateEmployed] datetime2 NULL,
+    [Nationality] nvarchar(max) NULL,
+    [PasswordHash] varbinary(max) NOT NULL,
+    [PasswordSalt] varbinary(max) NOT NULL,
+    [RefreshToken] nvarchar(max) NULL,
+    [Photo] varbinary(max) NULL,
+    [StaffId] nvarchar(max) NULL,
+    [NextOfKingFirstName] nvarchar(max) NULL,
+    [NextOfKingSurName] nvarchar(max) NULL,
+    [NextOfKingPhoneNo] nvarchar(max) NULL,
+    [NextOfKingAddress] nvarchar(max) NULL,
+    [NextOfKingEmail] nvarchar(max) NULL,
+    [Relationship] int NULL,
+    [ManagerId] uniqueidentifier NULL,
+    [Role] int NOT NULL,
+    [JobRole] int NULL,
+    [DepartmentId] uniqueidentifier NULL,
+    [WorkType] int NULL,
+    [ContractType] int NULL,
+    [ConfirmedStatus] bit NOT NULL,
+    [RecievedOfferLetter] bit NOT NULL,
+    [LastDatePromoted] datetime2 NOT NULL,
+    [IsLock] bit NOT NULL,
+    [NTry] int NOT NULL,
+    [CreateDate] datetime2 NOT NULL,
+    [LastModifyDate] datetime2 NOT NULL,
+    CONSTRAINT [PK_Employee] PRIMARY KEY ([Id]),
+    CONSTRAINT [FK_Employee_Department_DepartmentId] FOREIGN KEY ([DepartmentId]) REFERENCES [Department] ([Id]),
+    CONSTRAINT [FK_Employee_Employee_ManagerId] FOREIGN KEY ([ManagerId]) REFERENCES [Employee] ([Id])
+); 
+[INF]  Executed DbCommand (38ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+CREATE TABLE [Performances] (
+    [Id] uniqueidentifier NOT NULL,
+    [EmployeeId] uniqueidentifier NOT NULL,
+    [MonthlyRating] float NOT NULL,
+    [Month] datetime2 NOT NULL,
+    [CreateDate] datetime2 NOT NULL,
+    [LastModifyDate] datetime2 NOT NULL,
+    CONSTRAINT [PK_Performances] PRIMARY KEY ([Id]),
+    CONSTRAINT [FK_Performances_Employee_EmployeeId] FOREIGN KEY ([EmployeeId]) REFERENCES [Employee] ([Id]) ON DELETE CASCADE
+); 
+[INF]  Executed DbCommand (51ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+CREATE TABLE [WorkExperiences] (
+    [Id] uniqueidentifier NOT NULL,
+    [body] nvarchar(max) NOT NULL,
+    [JobRole] nvarchar(max) NOT NULL,
+    [Department] nvarchar(max) NOT NULL,
+    [StartDate] datetime2 NOT NULL,
+    [EndDate] datetime2 NOT NULL,
+    [employeeId] uniqueidentifier NOT NULL,
+    [CreateDate] datetime2 NOT NULL,
+    [LastModifyDate] datetime2 NOT NULL,
+    CONSTRAINT [PK_WorkExperiences] PRIMARY KEY ([Id]),
+    CONSTRAINT [FK_WorkExperiences_Employee_employeeId] FOREIGN KEY ([employeeId]) REFERENCES [Employee] ([Id]) ON DELETE CASCADE
+); 
+[INF]  Executed DbCommand (160ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+CREATE INDEX [IX_ApplyLeave_EmployeeId] ON [ApplyLeave] ([EmployeeId]); 
+[INF]  Executed DbCommand (41ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+CREATE INDEX [IX_ApplyLeave_LeaveId] ON [ApplyLeave] ([LeaveId]); 
+[INF]  Executed DbCommand (8ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+CREATE INDEX [IX_Department_HODId] ON [Department] ([HODId]); 
+[INF]  Executed DbCommand (33ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+CREATE INDEX [IX_Employee_DepartmentId] ON [Employee] ([DepartmentId]); 
+[INF]  Executed DbCommand (32ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+CREATE INDEX [IX_Employee_ManagerId] ON [Employee] ([ManagerId]); 
+[INF]  Executed DbCommand (141ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+CREATE INDEX [IX_Performances_EmployeeId] ON [Performances] ([EmployeeId]); 
+[INF]  Executed DbCommand (19ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+CREATE INDEX [IX_WorkExperiences_employeeId] ON [WorkExperiences] ([employeeId]); 
+[INF]  Executed DbCommand (286ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+ALTER TABLE [ApplyLeave] ADD CONSTRAINT [FK_ApplyLeave_Employee_EmployeeId] FOREIGN KEY ([EmployeeId]) REFERENCES [Employee] ([Id]) ON DELETE CASCADE; 
+[INF]  Executed DbCommand (92ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+ALTER TABLE [Department] ADD CONSTRAINT [FK_Department_Employee_HODId] FOREIGN KEY ([HODId]) REFERENCES [Employee] ([Id]); 
+[INF]  Executed DbCommand (214ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+INSERT INTO [__EFMigrationsHistory] ([MigrationId], [ProductVersion])
+VALUES (N'20220803163304_InitialMigration', N'6.0.7'); 
+[INF]  User profile is available. Using 'C:\Users\dell\AppData\Local\ASP.NET\DataProtection-Keys' as key repository and Windows DPAPI to encrypt keys at rest. 
+[INF]  Now listening on: https://localhost:7263 
+[INF]  Now listening on: http://localhost:5263 
+[INF]  Application started. Press Ctrl+C to shut down. 
+[INF]  Hosting environment: Development 
+[INF]  Content root path: C:\Users\dell\Desktop\RailWayCleanArchitecture\HRMSApp\HRMS\ 
+[INF]  Request starting HTTP/2 GET https://localhost:7263/swagger/index.html - - 
+[INF]  Request starting HTTP/2 GET https://localhost:7263/_framework/aspnetcore-browser-refresh.js - - 
+[INF]  Request finished HTTP/2 GET https://localhost:7263/swagger/index.html - - - 200 - text/html;charset=utf-8 1806.6321ms 
+[INF]  Request finished HTTP/2 GET https://localhost:7263/_framework/aspnetcore-browser-refresh.js - - - 200 11974 application/javascript;+charset=utf-8 48.0671ms 
+[INF]  Request starting HTTP/2 GET https://localhost:7263/swagger/v1/swagger.json - - 
+[ERR]  An unhandled exception has occurred while executing the request. 
+Swashbuckle.AspNetCore.SwaggerGen.SwaggerGeneratorException: Conflicting method/path combination "POST api/Employee" for actions - HRMS.API.Controllers.EmployeeController.Create (HRMS.API),HRMS.API.Controllers.EmployeeController.Update (HRMS.API). Actions require a unique method/path combination for Swagger/OpenAPI 3.0. Use ConflictingActionsResolver as a workaround
+   at Swashbuckle.AspNetCore.SwaggerGen.SwaggerGenerator.GenerateOperations(IEnumerable`1 apiDescriptions, SchemaRepository schemaRepository)
+   at Swashbuckle.AspNetCore.SwaggerGen.SwaggerGenerator.GeneratePaths(IEnumerable`1 apiDescriptions, SchemaRepository schemaRepository)
+   at Swashbuckle.AspNetCore.SwaggerGen.SwaggerGenerator.GetSwaggerDocument(String documentName, String host, String basePath)
+   at Swashbuckle.AspNetCore.SwaggerGen.SwaggerGenerator.GetSwaggerAsync(String documentName, String host, String basePath)
+   at Swashbuckle.AspNetCore.Swagger.SwaggerMiddleware.Invoke(HttpContext httpContext, ISwaggerProvider swaggerProvider)
+   at Microsoft.AspNetCore.Diagnostics.DeveloperExceptionPageMiddleware.Invoke(HttpContext context)
+[INF]  Request finished HTTP/2 GET https://localhost:7263/swagger/v1/swagger.json - - - 500 - text/plain;+charset=utf-8 4564.8898ms 
+[INF]  User profile is available. Using 'C:\Users\dell\AppData\Local\ASP.NET\DataProtection-Keys' as key repository and Windows DPAPI to encrypt keys at rest. 
+[INF]  Now listening on: https://localhost:7263 
+[INF]  Now listening on: http://localhost:5263 
+[INF]  Application started. Press Ctrl+C to shut down. 
+[INF]  Hosting environment: Development 
+[INF]  Content root path: C:\Users\dell\Desktop\RailWayCleanArchitecture\HRMSApp\HRMS\ 
+[INF]  Request starting HTTP/2 GET https://localhost:7263/swagger/index.html - - 
+[INF]  Request finished HTTP/2 GET https://localhost:7263/swagger/index.html - - - 200 - text/html;charset=utf-8 531.4324ms 
+[INF]  Request starting HTTP/2 GET https://localhost:7263/_framework/aspnetcore-browser-refresh.js - - 
+[INF]  Request finished HTTP/2 GET https://localhost:7263/_framework/aspnetcore-browser-refresh.js - - - 200 11974 application/javascript;+charset=utf-8 5.4171ms 
+[INF]  Request starting HTTP/2 GET https://localhost:7263/swagger/v1/swagger.json - - 
+[ERR]  An unhandled exception has occurred while executing the request. 
+Swashbuckle.AspNetCore.SwaggerGen.SwaggerGeneratorException: Conflicting method/path combination "POST api/Employee" for actions - HRMS.API.Controllers.EmployeeController.Create (HRMS.API),HRMS.API.Controllers.EmployeeController.Update (HRMS.API). Actions require a unique method/path combination for Swagger/OpenAPI 3.0. Use ConflictingActionsResolver as a workaround
+   at Swashbuckle.AspNetCore.SwaggerGen.SwaggerGenerator.GenerateOperations(IEnumerable`1 apiDescriptions, SchemaRepository schemaRepository)
+   at Swashbuckle.AspNetCore.SwaggerGen.SwaggerGenerator.GeneratePaths(IEnumerable`1 apiDescriptions, SchemaRepository schemaRepository)
+   at Swashbuckle.AspNetCore.SwaggerGen.SwaggerGenerator.GetSwaggerDocument(String documentName, String host, String basePath)
+   at Swashbuckle.AspNetCore.SwaggerGen.SwaggerGenerator.GetSwaggerAsync(String documentName, String host, String basePath)
+   at Swashbuckle.AspNetCore.Swagger.SwaggerMiddleware.Invoke(HttpContext httpContext, ISwaggerProvider swaggerProvider)
+   at Microsoft.AspNetCore.Diagnostics.DeveloperExceptionPageMiddleware.Invoke(HttpContext context)
+[INF]  Request finished HTTP/2 GET https://localhost:7263/swagger/v1/swagger.json - - - 500 - text/plain;+charset=utf-8 78.3936ms 
+[INF]  User profile is available. Using 'C:\Users\dell\AppData\Local\ASP.NET\DataProtection-Keys' as key repository and Windows DPAPI to encrypt keys at rest. 
+[INF]  Now listening on: https://localhost:7263 
+[INF]  Now listening on: http://localhost:5263 
+[INF]  Application started. Press Ctrl+C to shut down. 
+[INF]  Hosting environment: Development 
+[INF]  Content root path: C:\Users\dell\Desktop\RailWayCleanArchitecture\HRMSApp\HRMS\ 
+[INF]  Request starting HTTP/2 GET https://localhost:7263/swagger/index.html - - 
+[INF]  Request finished HTTP/2 GET https://localhost:7263/swagger/index.html - - - 200 - text/html;charset=utf-8 492.1392ms 
+[INF]  Request starting HTTP/2 GET https://localhost:7263/_framework/aspnetcore-browser-refresh.js - - 
+[INF]  Request finished HTTP/2 GET https://localhost:7263/_framework/aspnetcore-browser-refresh.js - - - 200 11974 application/javascript;+charset=utf-8 5.4249ms 
+[INF]  Request starting HTTP/2 GET https://localhost:7263/swagger/v1/swagger.json - - 
+[ERR]  An unhandled exception has occurred while executing the request. 
+Swashbuckle.AspNetCore.SwaggerGen.SwaggerGeneratorException: Conflicting method/path combination "POST api/Employee" for actions - HRMS.API.Controllers.EmployeeController.Create (HRMS.API),HRMS.API.Controllers.EmployeeController.Update (HRMS.API). Actions require a unique method/path combination for Swagger/OpenAPI 3.0. Use ConflictingActionsResolver as a workaround
+   at Swashbuckle.AspNetCore.SwaggerGen.SwaggerGenerator.GenerateOperations(IEnumerable`1 apiDescriptions, SchemaRepository schemaRepository)
+   at Swashbuckle.AspNetCore.SwaggerGen.SwaggerGenerator.GeneratePaths(IEnumerable`1 apiDescriptions, SchemaRepository schemaRepository)
+   at Swashbuckle.AspNetCore.SwaggerGen.SwaggerGenerator.GetSwaggerDocument(String documentName, String host, String basePath)
+   at Swashbuckle.AspNetCore.SwaggerGen.SwaggerGenerator.GetSwaggerAsync(String documentName, String host, String basePath)
+   at Swashbuckle.AspNetCore.Swagger.SwaggerMiddleware.Invoke(HttpContext httpContext, ISwaggerProvider swaggerProvider)
+   at Microsoft.AspNetCore.Diagnostics.DeveloperExceptionPageMiddleware.Invoke(HttpContext context)
+[INF]  Request finished HTTP/2 GET https://localhost:7263/swagger/v1/swagger.json - - - 500 - text/plain;+charset=utf-8 170.1979ms 
+[INF]  User profile is available. Using 'C:\Users\dell\AppData\Local\ASP.NET\DataProtection-Keys' as key repository and Windows DPAPI to encrypt keys at rest. 
+[INF]  Now listening on: https://localhost:7263 
+[INF]  Now listening on: http://localhost:5263 
+[INF]  Application started. Press Ctrl+C to shut down. 
+[INF]  Hosting environment: Development 
+[INF]  Content root path: C:\Users\dell\Desktop\RailWayCleanArchitecture\HRMSApp\HRMS\ 
+[INF]  Request starting HTTP/2 GET https://localhost:7263/swagger/index.html - - 
+[INF]  Request finished HTTP/2 GET https://localhost:7263/swagger/index.html - - - 200 - text/html;charset=utf-8 623.2918ms 
+[INF]  Request starting HTTP/2 GET https://localhost:7263/_framework/aspnetcore-browser-refresh.js - - 
+[INF]  Request finished HTTP/2 GET https://localhost:7263/_framework/aspnetcore-browser-refresh.js - - - 200 11974 application/javascript;+charset=utf-8 6.0509ms 
+[INF]  Request starting HTTP/2 GET https://localhost:7263/swagger/v1/swagger.json - - 
+[ERR]  An unhandled exception has occurred while executing the request. 
+Swashbuckle.AspNetCore.SwaggerGen.SwaggerGeneratorException: Conflicting method/path combination "POST api/Employee" for actions - HRMS.API.Controllers.EmployeeController.Create (HRMS.API),HRMS.API.Controllers.EmployeeController.Update (HRMS.API). Actions require a unique method/path combination for Swagger/OpenAPI 3.0. Use ConflictingActionsResolver as a workaround
+   at Swashbuckle.AspNetCore.SwaggerGen.SwaggerGenerator.GenerateOperations(IEnumerable`1 apiDescriptions, SchemaRepository schemaRepository)
+   at Swashbuckle.AspNetCore.SwaggerGen.SwaggerGenerator.GeneratePaths(IEnumerable`1 apiDescriptions, SchemaRepository schemaRepository)
+   at Swashbuckle.AspNetCore.SwaggerGen.SwaggerGenerator.GetSwaggerDocument(String documentName, String host, String basePath)
+   at Swashbuckle.AspNetCore.SwaggerGen.SwaggerGenerator.GetSwaggerAsync(String documentName, String host, String basePath)
+   at Swashbuckle.AspNetCore.Swagger.SwaggerMiddleware.Invoke(HttpContext httpContext, ISwaggerProvider swaggerProvider)
+   at Microsoft.AspNetCore.Diagnostics.DeveloperExceptionPageMiddleware.Invoke(HttpContext context)
+[INF]  Request finished HTTP/2 GET https://localhost:7263/swagger/v1/swagger.json - - - 500 - text/plain;+charset=utf-8 86.1664ms 
+[INF]  User profile is available. Using 'C:\Users\dell\AppData\Local\ASP.NET\DataProtection-Keys' as key repository and Windows DPAPI to encrypt keys at rest. 
+[INF]  Now listening on: https://localhost:7263 
+[INF]  Now listening on: http://localhost:5263 
+[INF]  Application started. Press Ctrl+C to shut down. 
+[INF]  Hosting environment: Development 
+[INF]  Content root path: C:\Users\dell\Desktop\RailWayCleanArchitecture\HRMSApp\HRMS\ 
+[INF]  Request starting HTTP/2 GET https://localhost:7263/swagger/index.html - - 
+[INF]  Request finished HTTP/2 GET https://localhost:7263/swagger/index.html - - - 200 - text/html;charset=utf-8 838.4933ms 
+[INF]  Request starting HTTP/2 GET https://localhost:7263/_framework/aspnetcore-browser-refresh.js - - 
+[INF]  Request finished HTTP/2 GET https://localhost:7263/_framework/aspnetcore-browser-refresh.js - - - 200 11974 application/javascript;+charset=utf-8 4.8550ms 
+[INF]  Request starting HTTP/2 GET https://localhost:7263/swagger/v1/swagger.json - - 
+[ERR]  An unhandled exception has occurred while executing the request. 
+Swashbuckle.AspNetCore.SwaggerGen.SwaggerGeneratorException: Conflicting method/path combination "POST api/Employee" for actions - HRMS.API.Controllers.EmployeeController.Create (HRMS.API),HRMS.API.Controllers.EmployeeController.Update (HRMS.API). Actions require a unique method/path combination for Swagger/OpenAPI 3.0. Use ConflictingActionsResolver as a workaround
+   at Swashbuckle.AspNetCore.SwaggerGen.SwaggerGenerator.GenerateOperations(IEnumerable`1 apiDescriptions, SchemaRepository schemaRepository)
+   at Swashbuckle.AspNetCore.SwaggerGen.SwaggerGenerator.GeneratePaths(IEnumerable`1 apiDescriptions, SchemaRepository schemaRepository)
+   at Swashbuckle.AspNetCore.SwaggerGen.SwaggerGenerator.GetSwaggerDocument(String documentName, String host, String basePath)
+   at Swashbuckle.AspNetCore.SwaggerGen.SwaggerGenerator.GetSwaggerAsync(String documentName, String host, String basePath)
+   at Swashbuckle.AspNetCore.Swagger.SwaggerMiddleware.Invoke(HttpContext httpContext, ISwaggerProvider swaggerProvider)
+   at Microsoft.AspNetCore.Diagnostics.DeveloperExceptionPageMiddleware.Invoke(HttpContext context)
+[INF]  Request finished HTTP/2 GET https://localhost:7263/swagger/v1/swagger.json - - - 500 - text/plain;+charset=utf-8 192.3388ms 
+[INF]  Request starting HTTP/2 GET https://localhost:7263/swagger/v1/swagger.json - - 
+[ERR]  An unhandled exception has occurred while executing the request. 
+Swashbuckle.AspNetCore.SwaggerGen.SwaggerGeneratorException: Conflicting method/path combination "POST api/Employee" for actions - HRMS.API.Controllers.EmployeeController.Create (HRMS.API),HRMS.API.Controllers.EmployeeController.Update (HRMS.API). Actions require a unique method/path combination for Swagger/OpenAPI 3.0. Use ConflictingActionsResolver as a workaround
+   at Swashbuckle.AspNetCore.SwaggerGen.SwaggerGenerator.GenerateOperations(IEnumerable`1 apiDescriptions, SchemaRepository schemaRepository)
+   at Swashbuckle.AspNetCore.SwaggerGen.SwaggerGenerator.GeneratePaths(IEnumerable`1 apiDescriptions, SchemaRepository schemaRepository)
+   at Swashbuckle.AspNetCore.SwaggerGen.SwaggerGenerator.GetSwaggerDocument(String documentName, String host, String basePath)
+   at Swashbuckle.AspNetCore.SwaggerGen.SwaggerGenerator.GetSwaggerAsync(String documentName, String host, String basePath)
+   at Swashbuckle.AspNetCore.Swagger.SwaggerMiddleware.Invoke(HttpContext httpContext, ISwaggerProvider swaggerProvider)
+   at Microsoft.AspNetCore.Diagnostics.DeveloperExceptionPageMiddleware.Invoke(HttpContext context)
+[INF]  Request finished HTTP/2 GET https://localhost:7263/swagger/v1/swagger.json - - - 500 - text/html;+charset=utf-8 231.2651ms 
+[INF]  Request starting HTTP/2 GET https://localhost:7263/_framework/aspnetcore-browser-refresh.js - - 
+[INF]  Request finished HTTP/2 GET https://localhost:7263/_framework/aspnetcore-browser-refresh.js - - - 200 11974 application/javascript;+charset=utf-8 0.9364ms 
+[INF]  Request starting HTTP/2 GET https://localhost:7263/favicon.ico - - 
+[INF]  Request finished HTTP/2 GET https://localhost:7263/favicon.ico - - - 404 0 - 900.3239ms 
+[INF]  User profile is available. Using 'C:\Users\dell\AppData\Local\ASP.NET\DataProtection-Keys' as key repository and Windows DPAPI to encrypt keys at rest. 
+[INF]  Now listening on: https://localhost:7263 
+[INF]  Now listening on: http://localhost:5263 
+[INF]  Application started. Press Ctrl+C to shut down. 
+[INF]  Hosting environment: Development 
+[INF]  Content root path: C:\Users\dell\Desktop\RailWayCleanArchitecture\HRMSApp\HRMS\ 
+[INF]  Request starting HTTP/2 GET https://localhost:7263/swagger/index.html - - 
+[INF]  Request finished HTTP/2 GET https://localhost:7263/swagger/index.html - - - 200 - text/html;charset=utf-8 521.5329ms 
+[INF]  Request starting HTTP/2 GET https://localhost:7263/_framework/aspnetcore-browser-refresh.js - - 
+[INF]  Request finished HTTP/2 GET https://localhost:7263/_framework/aspnetcore-browser-refresh.js - - - 200 11974 application/javascript;+charset=utf-8 18.3189ms 
+[INF]  Request starting HTTP/2 GET https://localhost:7263/swagger/v1/swagger.json - - 
+[INF]  Request finished HTTP/2 GET https://localhost:7263/swagger/v1/swagger.json - - - 200 - application/json;charset=utf-8 495.5057ms 
+[INF]  Request starting HTTP/2 POST https://localhost:7263/api/Employee application/json 49 
+[INF]  CORS policy execution successful. 
+[INF]  Executing endpoint 'HRMS.API.Controllers.EmployeeController.Create (HRMS.API)' 
+[INF]  Route matched with {action = "Create", controller = "Employee"}. Executing controller action with signature System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.IActionResult] Create(HRMSapplication.Commands.CreateEmployee.CreateEmployeeCommand) on controller HRMS.API.Controllers.EmployeeController (HRMS.API). 
+[WRN]  No store type was specified for the decimal property 'Allowance' on entity type 'Leave'. This will cause values to be silently truncated if they do not fit in the default precision and scale. Explicitly specify the SQL server column type that can accommodate all the values in 'OnModelCreating' using 'HasColumnType', specify precision and scale using 'HasPrecision', or configure a value converter using 'HasConversion'. 
+[INF]  Entity Framework Core 6.0.7 initialized 'HRMSDbContext' using provider 'Microsoft.EntityFrameworkCore.SqlServer:6.0.7' with options: None 
+[INF]  Executed DbCommand (333ms) [Parameters=[@__employee_Email_0='?' (Size = 4000)], CommandType='"Text"', CommandTimeout='30']
+SELECT CASE
+    WHEN EXISTS (
+        SELECT 1
+        FROM [Employee] AS [e]
+        WHERE [e].[Email] = @__employee_Email_0) THEN CAST(1 AS bit)
+    ELSE CAST(0 AS bit)
+END 
+[ERR]  Failed executing DbCommand (768ms) [Parameters=[@p0='?' (DbType = Guid), @p1='?' (DbType = Boolean), @p2='?' (Size = 4000), @p3='?' (DbType = Int32), @p4='?' (DbType = DateTime2), @p5='?' (DbType = DateTime2), @p6='?' (DbType = DateTime2), @p7='?' (DbType = Guid), @p8='?' (Size = 4000), @p9='?' (Size = 50), @p10='?' (DbType = Int32), @p11='?' (DbType = Boolean), @p12='?' (DbType = Int32), @p13='?' (DbType = DateTime2), @p14='?' (DbType = DateTime2), @p15='?' (DbType = Guid), @p16='?' (DbType = Int32), @p17='?' (Size = 4000), @p18='?' (Size = 4000), @p19='?' (Size = 4000), @p20='?' (Size = 4000), @p21='?' (Size = 4000), @p22='?' (Size = 4000), @p23='?' (Size = 50), @p24='?' (Size = 8000) (DbType = Binary), @p25='?' (Size = 8000) (DbType = Binary), @p26='?' (Size = 4000), @p27='?' (Size = 8000) (DbType = Binary), @p28='?' (DbType = Boolean), @p29='?' (Size = 4000), @p30='?' (DbType = Int32), @p31='?' (DbType = Int32), @p32='?' (Size = 4000), @p33='?' (Size = 4000), @p34='?' (Size = 4000), @p35='?' (Size = 50), @p36='?' (Size = 4000), @p37='?' (DbType = Int32)], CommandType='"Text"', CommandTimeout='30']
+SET NOCOUNT ON;
+INSERT INTO [Employee] ([Id], [ConfirmedStatus], [ContactAddress], [ContractType], [CreateDate], [DOB], [DateEmployed], [DepartmentId], [Email], [FirstName], [Gender], [IsLock], [JobRole], [LastDatePromoted], [LastModifyDate], [ManagerId], [NTry], [Nationality], [NextOfKingAddress], [NextOfKingEmail], [NextOfKingFirstName], [NextOfKingPhoneNo], [NextOfKingSurName], [OtherName], [PasswordHash], [PasswordSalt], [PhoneNo], [Photo], [RecievedOfferLetter], [RefreshToken], [Relationship], [Role], [SoftSkill], [StaffId], [StateOfOrigin], [Surname], [TechnicalSkill], [WorkType])
+VALUES (@p0, @p1, @p2, @p3, @p4, @p5, @p6, @p7, @p8, @p9, @p10, @p11, @p12, @p13, @p14, @p15, @p16, @p17, @p18, @p19, @p20, @p21, @p22, @p23, @p24, @p25, @p26, @p27, @p28, @p29, @p30, @p31, @p32, @p33, @p34, @p35, @p36, @p37); 
+[ERR]  An exception occurred in the database while saving changes for context type 'HRMSinfrastructure.Data.HRMSDbContext'.
+Microsoft.EntityFrameworkCore.DbUpdateException: An error occurred while saving the entity changes. See the inner exception for details.
+ ---> Microsoft.Data.SqlClient.SqlException (0x80131904): Cannot insert the value NULL into column 'FirstName', table 'HrmsDb.dbo.Employee'; column does not allow nulls. INSERT fails.
+The statement has been terminated.
+   at Microsoft.Data.SqlClient.SqlCommand.<>c.<ExecuteDbDataReaderAsync>b__188_0(Task`1 result)
+   at System.Threading.Tasks.ContinuationResultTaskFromResultTask`2.InnerInvoke()
+   at System.Threading.Tasks.Task.<>c.<.cctor>b__272_0(Object obj)
+   at System.Threading.ExecutionContext.RunInternal(ExecutionContext executionContext, ContextCallback callback, Object state)
+--- End of stack trace from previous location ---
+   at System.Threading.Tasks.Task.ExecuteWithThreadLocal(Task& currentTaskSlot, Thread threadPoolThread)
+--- End of stack trace from previous location ---
+   at Microsoft.EntityFrameworkCore.Storage.RelationalCommand.ExecuteReaderAsync(RelationalCommandParameterObject parameterObject, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Storage.RelationalCommand.ExecuteReaderAsync(RelationalCommandParameterObject parameterObject, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Update.ReaderModificationCommandBatch.ExecuteAsync(IRelationalConnection connection, CancellationToken cancellationToken)
+ClientConnectionId:8e23431d-5511-4486-9e86-3a8a7ccf32f5
+Error Number:515,State:2,Class:16
+   --- End of inner exception stack trace ---
+   at Microsoft.EntityFrameworkCore.Update.ReaderModificationCommandBatch.ExecuteAsync(IRelationalConnection connection, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Update.Internal.BatchExecutor.ExecuteAsync(IEnumerable`1 commandBatches, IRelationalConnection connection, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Update.Internal.BatchExecutor.ExecuteAsync(IEnumerable`1 commandBatches, IRelationalConnection connection, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Update.Internal.BatchExecutor.ExecuteAsync(IEnumerable`1 commandBatches, IRelationalConnection connection, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.ChangeTracking.Internal.StateManager.SaveChangesAsync(IList`1 entriesToSave, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.ChangeTracking.Internal.StateManager.SaveChangesAsync(StateManager stateManager, Boolean acceptAllChangesOnSuccess, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.SqlServer.Storage.Internal.SqlServerExecutionStrategy.ExecuteAsync[TState,TResult](TState state, Func`4 operation, Func`4 verifySucceeded, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.DbContext.SaveChangesAsync(Boolean acceptAllChangesOnSuccess, CancellationToken cancellationToken) 
+Microsoft.EntityFrameworkCore.DbUpdateException: An error occurred while saving the entity changes. See the inner exception for details.
+ ---> Microsoft.Data.SqlClient.SqlException (0x80131904): Cannot insert the value NULL into column 'FirstName', table 'HrmsDb.dbo.Employee'; column does not allow nulls. INSERT fails.
+The statement has been terminated.
+   at Microsoft.Data.SqlClient.SqlCommand.<>c.<ExecuteDbDataReaderAsync>b__188_0(Task`1 result)
+   at System.Threading.Tasks.ContinuationResultTaskFromResultTask`2.InnerInvoke()
+   at System.Threading.Tasks.Task.<>c.<.cctor>b__272_0(Object obj)
+   at System.Threading.ExecutionContext.RunInternal(ExecutionContext executionContext, ContextCallback callback, Object state)
+--- End of stack trace from previous location ---
+   at System.Threading.Tasks.Task.ExecuteWithThreadLocal(Task& currentTaskSlot, Thread threadPoolThread)
+--- End of stack trace from previous location ---
+   at Microsoft.EntityFrameworkCore.Storage.RelationalCommand.ExecuteReaderAsync(RelationalCommandParameterObject parameterObject, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Storage.RelationalCommand.ExecuteReaderAsync(RelationalCommandParameterObject parameterObject, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Update.ReaderModificationCommandBatch.ExecuteAsync(IRelationalConnection connection, CancellationToken cancellationToken)
+ClientConnectionId:8e23431d-5511-4486-9e86-3a8a7ccf32f5
+Error Number:515,State:2,Class:16
+   --- End of inner exception stack trace ---
+   at Microsoft.EntityFrameworkCore.Update.ReaderModificationCommandBatch.ExecuteAsync(IRelationalConnection connection, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Update.Internal.BatchExecutor.ExecuteAsync(IEnumerable`1 commandBatches, IRelationalConnection connection, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Update.Internal.BatchExecutor.ExecuteAsync(IEnumerable`1 commandBatches, IRelationalConnection connection, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Update.Internal.BatchExecutor.ExecuteAsync(IEnumerable`1 commandBatches, IRelationalConnection connection, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.ChangeTracking.Internal.StateManager.SaveChangesAsync(IList`1 entriesToSave, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.ChangeTracking.Internal.StateManager.SaveChangesAsync(StateManager stateManager, Boolean acceptAllChangesOnSuccess, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.SqlServer.Storage.Internal.SqlServerExecutionStrategy.ExecuteAsync[TState,TResult](TState state, Func`4 operation, Func`4 verifySucceeded, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.DbContext.SaveChangesAsync(Boolean acceptAllChangesOnSuccess, CancellationToken cancellationToken)
+[INF]  Executed action HRMS.API.Controllers.EmployeeController.Create (HRMS.API) in 7747.4908ms 
+[INF]  Executed endpoint 'HRMS.API.Controllers.EmployeeController.Create (HRMS.API)' 
+[ERR]  Something went wrong: Microsoft.EntityFrameworkCore.DbUpdateException: An error occurred while saving the entity changes. See the inner exception for details.
+ ---> Microsoft.Data.SqlClient.SqlException (0x80131904): Cannot insert the value NULL into column 'FirstName', table 'HrmsDb.dbo.Employee'; column does not allow nulls. INSERT fails.
+The statement has been terminated.
+   at Microsoft.Data.SqlClient.SqlCommand.<>c.<ExecuteDbDataReaderAsync>b__188_0(Task`1 result)
+   at System.Threading.Tasks.ContinuationResultTaskFromResultTask`2.InnerInvoke()
+   at System.Threading.Tasks.Task.<>c.<.cctor>b__272_0(Object obj)
+   at System.Threading.ExecutionContext.RunInternal(ExecutionContext executionContext, ContextCallback callback, Object state)
+--- End of stack trace from previous location ---
+   at System.Threading.Tasks.Task.ExecuteWithThreadLocal(Task& currentTaskSlot, Thread threadPoolThread)
+--- End of stack trace from previous location ---
+   at Microsoft.EntityFrameworkCore.Storage.RelationalCommand.ExecuteReaderAsync(RelationalCommandParameterObject parameterObject, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Storage.RelationalCommand.ExecuteReaderAsync(RelationalCommandParameterObject parameterObject, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Update.ReaderModificationCommandBatch.ExecuteAsync(IRelationalConnection connection, CancellationToken cancellationToken)
+ClientConnectionId:8e23431d-5511-4486-9e86-3a8a7ccf32f5
+Error Number:515,State:2,Class:16
+   --- End of inner exception stack trace ---
+   at Microsoft.EntityFrameworkCore.Update.ReaderModificationCommandBatch.ExecuteAsync(IRelationalConnection connection, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Update.Internal.BatchExecutor.ExecuteAsync(IEnumerable`1 commandBatches, IRelationalConnection connection, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Update.Internal.BatchExecutor.ExecuteAsync(IEnumerable`1 commandBatches, IRelationalConnection connection, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Update.Internal.BatchExecutor.ExecuteAsync(IEnumerable`1 commandBatches, IRelationalConnection connection, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.ChangeTracking.Internal.StateManager.SaveChangesAsync(IList`1 entriesToSave, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.ChangeTracking.Internal.StateManager.SaveChangesAsync(StateManager stateManager, Boolean acceptAllChangesOnSuccess, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.SqlServer.Storage.Internal.SqlServerExecutionStrategy.ExecuteAsync[TState,TResult](TState state, Func`4 operation, Func`4 verifySucceeded, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.DbContext.SaveChangesAsync(Boolean acceptAllChangesOnSuccess, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.DbContext.SaveChangesAsync(Boolean acceptAllChangesOnSuccess, CancellationToken cancellationToken)
+   at HRMSinfrastructure.Repositories.CommandRepo.BaseRepo.BaseRepo`1.SaveChangesAsync() in C:\Users\dell\Desktop\RailWayCleanArchitecture\HRMSApp\HRMSinfrastructure\Repositories\BaseRepo\BaseRepo.cs:line 42
+   at HRMSapplication.Commands.CreateEmployee.CreateEmployeeCommandHandler.Handle(CreateEmployeeCommand request, CancellationToken cancellationToken) in C:\Users\dell\Desktop\RailWayCleanArchitecture\HRMSApp\HRMSapplication\Services\Employee\Commands\CreateEmployee\CreateEmployeeCommandHandler.cs:line 35
+   at MediatR.Pipeline.RequestExceptionProcessorBehavior`2.Handle(TRequest request, CancellationToken cancellationToken, RequestHandlerDelegate`1 next)
+   at MediatR.Pipeline.RequestExceptionProcessorBehavior`2.Handle(TRequest request, CancellationToken cancellationToken, RequestHandlerDelegate`1 next)
+   at MediatR.Pipeline.RequestExceptionActionProcessorBehavior`2.Handle(TRequest request, CancellationToken cancellationToken, RequestHandlerDelegate`1 next)
+   at MediatR.Pipeline.RequestExceptionActionProcessorBehavior`2.Handle(TRequest request, CancellationToken cancellationToken, RequestHandlerDelegate`1 next)
+   at MediatR.Pipeline.RequestPostProcessorBehavior`2.Handle(TRequest request, CancellationToken cancellationToken, RequestHandlerDelegate`1 next)
+   at MediatR.Pipeline.RequestPreProcessorBehavior`2.Handle(TRequest request, CancellationToken cancellationToken, RequestHandlerDelegate`1 next)
+   at HRMS.API.Controllers.EmployeeController.Create(CreateEmployeeCommand employee) in C:\Users\dell\Desktop\RailWayCleanArchitecture\HRMSApp\HRMS\Controllers\EmployeeController.cs:line 35
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ActionMethodExecutor.TaskOfIActionResultExecutor.Execute(IActionResultTypeMapper mapper, ObjectMethodExecutor executor, Object controller, Object[] arguments)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.<InvokeActionMethodAsync>g__Awaited|12_0(ControllerActionInvoker invoker, ValueTask`1 actionResultValueTask)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.<InvokeNextActionFilterAsync>g__Awaited|10_0(ControllerActionInvoker invoker, Task lastTask, State next, Scope scope, Object state, Boolean isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.Rethrow(ActionExecutedContextSealed context)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.Next(State& next, Scope& scope, Object& state, Boolean& isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.<InvokeInnerFilterAsync>g__Awaited|13_0(ControllerActionInvoker invoker, Task lastTask, State next, Scope scope, Object state, Boolean isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeFilterPipelineAsync>g__Awaited|20_0(ResourceInvoker invoker, Task lastTask, State next, Scope scope, Object state, Boolean isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeAsync>g__Logged|17_1(ResourceInvoker invoker)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeAsync>g__Logged|17_1(ResourceInvoker invoker)
+   at Microsoft.AspNetCore.Routing.EndpointMiddleware.<Invoke>g__AwaitRequestTask|6_0(Endpoint endpoint, Task requestTask, ILogger logger)
+   at Microsoft.AspNetCore.Authorization.AuthorizationMiddleware.Invoke(HttpContext context)
+   at Microsoft.AspNetCore.Authentication.AuthenticationMiddleware.Invoke(HttpContext context)
+   at HRMS.API.ExceptionHandling.ExceptionMiddleware.Invoke(HttpContext context) in C:\Users\dell\Desktop\RailWayCleanArchitecture\HRMSApp\HRMS\ExceptionHandling\ExceptionMiddleware.cs:line 19 
+[INF]  Request finished HTTP/2 POST https://localhost:7263/api/Employee application/json 49 - 500 - application/json 9258.1746ms 
+[INF]  Request starting HTTP/2 POST https://localhost:7263/api/Employee application/json 59 
+[INF]  CORS policy execution successful. 
+[INF]  Executing endpoint 'HRMS.API.Controllers.EmployeeController.Create (HRMS.API)' 
+[INF]  Route matched with {action = "Create", controller = "Employee"}. Executing controller action with signature System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.IActionResult] Create(HRMSapplication.Commands.CreateEmployee.CreateEmployeeCommand) on controller HRMS.API.Controllers.EmployeeController (HRMS.API). 
+[INF]  Entity Framework Core 6.0.7 initialized 'HRMSDbContext' using provider 'Microsoft.EntityFrameworkCore.SqlServer:6.0.7' with options: None 
+[INF]  Executed DbCommand (3ms) [Parameters=[@__employee_Email_0='?' (Size = 4000)], CommandType='"Text"', CommandTimeout='30']
+SELECT CASE
+    WHEN EXISTS (
+        SELECT 1
+        FROM [Employee] AS [e]
+        WHERE [e].[Email] = @__employee_Email_0) THEN CAST(1 AS bit)
+    ELSE CAST(0 AS bit)
+END 
+[ERR]  Failed executing DbCommand (7ms) [Parameters=[@p0='?' (DbType = Guid), @p1='?' (DbType = Boolean), @p2='?' (Size = 4000), @p3='?' (DbType = Int32), @p4='?' (DbType = DateTime2), @p5='?' (DbType = DateTime2), @p6='?' (DbType = DateTime2), @p7='?' (DbType = Guid), @p8='?' (Size = 4000), @p9='?' (Size = 50), @p10='?' (DbType = Int32), @p11='?' (DbType = Boolean), @p12='?' (DbType = Int32), @p13='?' (DbType = DateTime2), @p14='?' (DbType = DateTime2), @p15='?' (DbType = Guid), @p16='?' (DbType = Int32), @p17='?' (Size = 4000), @p18='?' (Size = 4000), @p19='?' (Size = 4000), @p20='?' (Size = 4000), @p21='?' (Size = 4000), @p22='?' (Size = 4000), @p23='?' (Size = 50), @p24='?' (Size = 8000) (DbType = Binary), @p25='?' (Size = 8000) (DbType = Binary), @p26='?' (Size = 4000), @p27='?' (Size = 8000) (DbType = Binary), @p28='?' (DbType = Boolean), @p29='?' (Size = 4000), @p30='?' (DbType = Int32), @p31='?' (DbType = Int32), @p32='?' (Size = 4000), @p33='?' (Size = 4000), @p34='?' (Size = 4000), @p35='?' (Size = 50), @p36='?' (Size = 4000), @p37='?' (DbType = Int32)], CommandType='"Text"', CommandTimeout='30']
+SET NOCOUNT ON;
+INSERT INTO [Employee] ([Id], [ConfirmedStatus], [ContactAddress], [ContractType], [CreateDate], [DOB], [DateEmployed], [DepartmentId], [Email], [FirstName], [Gender], [IsLock], [JobRole], [LastDatePromoted], [LastModifyDate], [ManagerId], [NTry], [Nationality], [NextOfKingAddress], [NextOfKingEmail], [NextOfKingFirstName], [NextOfKingPhoneNo], [NextOfKingSurName], [OtherName], [PasswordHash], [PasswordSalt], [PhoneNo], [Photo], [RecievedOfferLetter], [RefreshToken], [Relationship], [Role], [SoftSkill], [StaffId], [StateOfOrigin], [Surname], [TechnicalSkill], [WorkType])
+VALUES (@p0, @p1, @p2, @p3, @p4, @p5, @p6, @p7, @p8, @p9, @p10, @p11, @p12, @p13, @p14, @p15, @p16, @p17, @p18, @p19, @p20, @p21, @p22, @p23, @p24, @p25, @p26, @p27, @p28, @p29, @p30, @p31, @p32, @p33, @p34, @p35, @p36, @p37); 
+[ERR]  An exception occurred in the database while saving changes for context type 'HRMSinfrastructure.Data.HRMSDbContext'.
+Microsoft.EntityFrameworkCore.DbUpdateException: An error occurred while saving the entity changes. See the inner exception for details.
+ ---> Microsoft.Data.SqlClient.SqlException (0x80131904): Cannot insert the value NULL into column 'FirstName', table 'HrmsDb.dbo.Employee'; column does not allow nulls. INSERT fails.
+The statement has been terminated.
+   at Microsoft.Data.SqlClient.SqlCommand.<>c.<ExecuteDbDataReaderAsync>b__188_0(Task`1 result)
+   at System.Threading.Tasks.ContinuationResultTaskFromResultTask`2.InnerInvoke()
+   at System.Threading.Tasks.Task.<>c.<.cctor>b__272_0(Object obj)
+   at System.Threading.ExecutionContext.RunInternal(ExecutionContext executionContext, ContextCallback callback, Object state)
+--- End of stack trace from previous location ---
+   at System.Threading.Tasks.Task.ExecuteWithThreadLocal(Task& currentTaskSlot, Thread threadPoolThread)
+--- End of stack trace from previous location ---
+   at Microsoft.EntityFrameworkCore.Storage.RelationalCommand.ExecuteReaderAsync(RelationalCommandParameterObject parameterObject, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Storage.RelationalCommand.ExecuteReaderAsync(RelationalCommandParameterObject parameterObject, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Update.ReaderModificationCommandBatch.ExecuteAsync(IRelationalConnection connection, CancellationToken cancellationToken)
+ClientConnectionId:8e23431d-5511-4486-9e86-3a8a7ccf32f5
+Error Number:515,State:2,Class:16
+   --- End of inner exception stack trace ---
+   at Microsoft.EntityFrameworkCore.Update.ReaderModificationCommandBatch.ExecuteAsync(IRelationalConnection connection, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Update.Internal.BatchExecutor.ExecuteAsync(IEnumerable`1 commandBatches, IRelationalConnection connection, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Update.Internal.BatchExecutor.ExecuteAsync(IEnumerable`1 commandBatches, IRelationalConnection connection, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Update.Internal.BatchExecutor.ExecuteAsync(IEnumerable`1 commandBatches, IRelationalConnection connection, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.ChangeTracking.Internal.StateManager.SaveChangesAsync(IList`1 entriesToSave, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.ChangeTracking.Internal.StateManager.SaveChangesAsync(StateManager stateManager, Boolean acceptAllChangesOnSuccess, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.SqlServer.Storage.Internal.SqlServerExecutionStrategy.ExecuteAsync[TState,TResult](TState state, Func`4 operation, Func`4 verifySucceeded, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.DbContext.SaveChangesAsync(Boolean acceptAllChangesOnSuccess, CancellationToken cancellationToken) 
+Microsoft.EntityFrameworkCore.DbUpdateException: An error occurred while saving the entity changes. See the inner exception for details.
+ ---> Microsoft.Data.SqlClient.SqlException (0x80131904): Cannot insert the value NULL into column 'FirstName', table 'HrmsDb.dbo.Employee'; column does not allow nulls. INSERT fails.
+The statement has been terminated.
+   at Microsoft.Data.SqlClient.SqlCommand.<>c.<ExecuteDbDataReaderAsync>b__188_0(Task`1 result)
+   at System.Threading.Tasks.ContinuationResultTaskFromResultTask`2.InnerInvoke()
+   at System.Threading.Tasks.Task.<>c.<.cctor>b__272_0(Object obj)
+   at System.Threading.ExecutionContext.RunInternal(ExecutionContext executionContext, ContextCallback callback, Object state)
+--- End of stack trace from previous location ---
+   at System.Threading.Tasks.Task.ExecuteWithThreadLocal(Task& currentTaskSlot, Thread threadPoolThread)
+--- End of stack trace from previous location ---
+   at Microsoft.EntityFrameworkCore.Storage.RelationalCommand.ExecuteReaderAsync(RelationalCommandParameterObject parameterObject, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Storage.RelationalCommand.ExecuteReaderAsync(RelationalCommandParameterObject parameterObject, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Update.ReaderModificationCommandBatch.ExecuteAsync(IRelationalConnection connection, CancellationToken cancellationToken)
+ClientConnectionId:8e23431d-5511-4486-9e86-3a8a7ccf32f5
+Error Number:515,State:2,Class:16
+   --- End of inner exception stack trace ---
+   at Microsoft.EntityFrameworkCore.Update.ReaderModificationCommandBatch.ExecuteAsync(IRelationalConnection connection, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Update.Internal.BatchExecutor.ExecuteAsync(IEnumerable`1 commandBatches, IRelationalConnection connection, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Update.Internal.BatchExecutor.ExecuteAsync(IEnumerable`1 commandBatches, IRelationalConnection connection, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Update.Internal.BatchExecutor.ExecuteAsync(IEnumerable`1 commandBatches, IRelationalConnection connection, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.ChangeTracking.Internal.StateManager.SaveChangesAsync(IList`1 entriesToSave, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.ChangeTracking.Internal.StateManager.SaveChangesAsync(StateManager stateManager, Boolean acceptAllChangesOnSuccess, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.SqlServer.Storage.Internal.SqlServerExecutionStrategy.ExecuteAsync[TState,TResult](TState state, Func`4 operation, Func`4 verifySucceeded, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.DbContext.SaveChangesAsync(Boolean acceptAllChangesOnSuccess, CancellationToken cancellationToken)
+[INF]  Executed action HRMS.API.Controllers.EmployeeController.Create (HRMS.API) in 410.8699ms 
+[INF]  Executed endpoint 'HRMS.API.Controllers.EmployeeController.Create (HRMS.API)' 
+[ERR]  Something went wrong: Microsoft.EntityFrameworkCore.DbUpdateException: An error occurred while saving the entity changes. See the inner exception for details.
+ ---> Microsoft.Data.SqlClient.SqlException (0x80131904): Cannot insert the value NULL into column 'FirstName', table 'HrmsDb.dbo.Employee'; column does not allow nulls. INSERT fails.
+The statement has been terminated.
+   at Microsoft.Data.SqlClient.SqlCommand.<>c.<ExecuteDbDataReaderAsync>b__188_0(Task`1 result)
+   at System.Threading.Tasks.ContinuationResultTaskFromResultTask`2.InnerInvoke()
+   at System.Threading.Tasks.Task.<>c.<.cctor>b__272_0(Object obj)
+   at System.Threading.ExecutionContext.RunInternal(ExecutionContext executionContext, ContextCallback callback, Object state)
+--- End of stack trace from previous location ---
+   at System.Threading.Tasks.Task.ExecuteWithThreadLocal(Task& currentTaskSlot, Thread threadPoolThread)
+--- End of stack trace from previous location ---
+   at Microsoft.EntityFrameworkCore.Storage.RelationalCommand.ExecuteReaderAsync(RelationalCommandParameterObject parameterObject, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Storage.RelationalCommand.ExecuteReaderAsync(RelationalCommandParameterObject parameterObject, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Update.ReaderModificationCommandBatch.ExecuteAsync(IRelationalConnection connection, CancellationToken cancellationToken)
+ClientConnectionId:8e23431d-5511-4486-9e86-3a8a7ccf32f5
+Error Number:515,State:2,Class:16
+   --- End of inner exception stack trace ---
+   at Microsoft.EntityFrameworkCore.Update.ReaderModificationCommandBatch.ExecuteAsync(IRelationalConnection connection, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Update.Internal.BatchExecutor.ExecuteAsync(IEnumerable`1 commandBatches, IRelationalConnection connection, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Update.Internal.BatchExecutor.ExecuteAsync(IEnumerable`1 commandBatches, IRelationalConnection connection, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Update.Internal.BatchExecutor.ExecuteAsync(IEnumerable`1 commandBatches, IRelationalConnection connection, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.ChangeTracking.Internal.StateManager.SaveChangesAsync(IList`1 entriesToSave, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.ChangeTracking.Internal.StateManager.SaveChangesAsync(StateManager stateManager, Boolean acceptAllChangesOnSuccess, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.SqlServer.Storage.Internal.SqlServerExecutionStrategy.ExecuteAsync[TState,TResult](TState state, Func`4 operation, Func`4 verifySucceeded, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.DbContext.SaveChangesAsync(Boolean acceptAllChangesOnSuccess, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.DbContext.SaveChangesAsync(Boolean acceptAllChangesOnSuccess, CancellationToken cancellationToken)
+   at HRMSinfrastructure.Repositories.CommandRepo.BaseRepo.BaseRepo`1.SaveChangesAsync() in C:\Users\dell\Desktop\RailWayCleanArchitecture\HRMSApp\HRMSinfrastructure\Repositories\BaseRepo\BaseRepo.cs:line 42
+   at HRMSapplication.Commands.CreateEmployee.CreateEmployeeCommandHandler.Handle(CreateEmployeeCommand request, CancellationToken cancellationToken) in C:\Users\dell\Desktop\RailWayCleanArchitecture\HRMSApp\HRMSapplication\Services\Employee\Commands\CreateEmployee\CreateEmployeeCommandHandler.cs:line 35
+   at MediatR.Pipeline.RequestExceptionProcessorBehavior`2.Handle(TRequest request, CancellationToken cancellationToken, RequestHandlerDelegate`1 next)
+   at MediatR.Pipeline.RequestExceptionProcessorBehavior`2.Handle(TRequest request, CancellationToken cancellationToken, RequestHandlerDelegate`1 next)
+   at MediatR.Pipeline.RequestExceptionActionProcessorBehavior`2.Handle(TRequest request, CancellationToken cancellationToken, RequestHandlerDelegate`1 next)
+   at MediatR.Pipeline.RequestExceptionActionProcessorBehavior`2.Handle(TRequest request, CancellationToken cancellationToken, RequestHandlerDelegate`1 next)
+   at MediatR.Pipeline.RequestPostProcessorBehavior`2.Handle(TRequest request, CancellationToken cancellationToken, RequestHandlerDelegate`1 next)
+   at MediatR.Pipeline.RequestPreProcessorBehavior`2.Handle(TRequest request, CancellationToken cancellationToken, RequestHandlerDelegate`1 next)
+   at HRMS.API.Controllers.EmployeeController.Create(CreateEmployeeCommand employee) in C:\Users\dell\Desktop\RailWayCleanArchitecture\HRMSApp\HRMS\Controllers\EmployeeController.cs:line 35
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ActionMethodExecutor.TaskOfIActionResultExecutor.Execute(IActionResultTypeMapper mapper, ObjectMethodExecutor executor, Object controller, Object[] arguments)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.<InvokeActionMethodAsync>g__Awaited|12_0(ControllerActionInvoker invoker, ValueTask`1 actionResultValueTask)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.<InvokeNextActionFilterAsync>g__Awaited|10_0(ControllerActionInvoker invoker, Task lastTask, State next, Scope scope, Object state, Boolean isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.Rethrow(ActionExecutedContextSealed context)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.Next(State& next, Scope& scope, Object& state, Boolean& isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.<InvokeInnerFilterAsync>g__Awaited|13_0(ControllerActionInvoker invoker, Task lastTask, State next, Scope scope, Object state, Boolean isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeFilterPipelineAsync>g__Awaited|20_0(ResourceInvoker invoker, Task lastTask, State next, Scope scope, Object state, Boolean isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeAsync>g__Logged|17_1(ResourceInvoker invoker)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeAsync>g__Logged|17_1(ResourceInvoker invoker)
+   at Microsoft.AspNetCore.Routing.EndpointMiddleware.<Invoke>g__AwaitRequestTask|6_0(Endpoint endpoint, Task requestTask, ILogger logger)
+   at Microsoft.AspNetCore.Authorization.AuthorizationMiddleware.Invoke(HttpContext context)
+   at Microsoft.AspNetCore.Authentication.AuthenticationMiddleware.Invoke(HttpContext context)
+   at HRMS.API.ExceptionHandling.ExceptionMiddleware.Invoke(HttpContext context) in C:\Users\dell\Desktop\RailWayCleanArchitecture\HRMSApp\HRMS\ExceptionHandling\ExceptionMiddleware.cs:line 19 
+[INF]  Request finished HTTP/2 POST https://localhost:7263/api/Employee application/json 59 - 500 - application/json 578.7388ms 
+[INF]  Request starting HTTP/2 POST https://localhost:7263/api/Employee application/json 59 
+[INF]  CORS policy execution successful. 
+[INF]  Executing endpoint 'HRMS.API.Controllers.EmployeeController.Create (HRMS.API)' 
+[INF]  Route matched with {action = "Create", controller = "Employee"}. Executing controller action with signature System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.IActionResult] Create(HRMSapplication.Commands.CreateEmployee.CreateEmployeeCommand) on controller HRMS.API.Controllers.EmployeeController (HRMS.API). 
+[INF]  Entity Framework Core 6.0.7 initialized 'HRMSDbContext' using provider 'Microsoft.EntityFrameworkCore.SqlServer:6.0.7' with options: None 
+[INF]  Executed DbCommand (4ms) [Parameters=[@__employee_Email_0='?' (Size = 4000)], CommandType='"Text"', CommandTimeout='30']
+SELECT CASE
+    WHEN EXISTS (
+        SELECT 1
+        FROM [Employee] AS [e]
+        WHERE [e].[Email] = @__employee_Email_0) THEN CAST(1 AS bit)
+    ELSE CAST(0 AS bit)
+END 
+[ERR]  Failed executing DbCommand (10ms) [Parameters=[@p0='?' (DbType = Guid), @p1='?' (DbType = Boolean), @p2='?' (Size = 4000), @p3='?' (DbType = Int32), @p4='?' (DbType = DateTime2), @p5='?' (DbType = DateTime2), @p6='?' (DbType = DateTime2), @p7='?' (DbType = Guid), @p8='?' (Size = 4000), @p9='?' (Size = 50), @p10='?' (DbType = Int32), @p11='?' (DbType = Boolean), @p12='?' (DbType = Int32), @p13='?' (DbType = DateTime2), @p14='?' (DbType = DateTime2), @p15='?' (DbType = Guid), @p16='?' (DbType = Int32), @p17='?' (Size = 4000), @p18='?' (Size = 4000), @p19='?' (Size = 4000), @p20='?' (Size = 4000), @p21='?' (Size = 4000), @p22='?' (Size = 4000), @p23='?' (Size = 50), @p24='?' (Size = 8000) (DbType = Binary), @p25='?' (Size = 8000) (DbType = Binary), @p26='?' (Size = 4000), @p27='?' (Size = 8000) (DbType = Binary), @p28='?' (DbType = Boolean), @p29='?' (Size = 4000), @p30='?' (DbType = Int32), @p31='?' (DbType = Int32), @p32='?' (Size = 4000), @p33='?' (Size = 4000), @p34='?' (Size = 4000), @p35='?' (Size = 50), @p36='?' (Size = 4000), @p37='?' (DbType = Int32)], CommandType='"Text"', CommandTimeout='30']
+SET NOCOUNT ON;
+INSERT INTO [Employee] ([Id], [ConfirmedStatus], [ContactAddress], [ContractType], [CreateDate], [DOB], [DateEmployed], [DepartmentId], [Email], [FirstName], [Gender], [IsLock], [JobRole], [LastDatePromoted], [LastModifyDate], [ManagerId], [NTry], [Nationality], [NextOfKingAddress], [NextOfKingEmail], [NextOfKingFirstName], [NextOfKingPhoneNo], [NextOfKingSurName], [OtherName], [PasswordHash], [PasswordSalt], [PhoneNo], [Photo], [RecievedOfferLetter], [RefreshToken], [Relationship], [Role], [SoftSkill], [StaffId], [StateOfOrigin], [Surname], [TechnicalSkill], [WorkType])
+VALUES (@p0, @p1, @p2, @p3, @p4, @p5, @p6, @p7, @p8, @p9, @p10, @p11, @p12, @p13, @p14, @p15, @p16, @p17, @p18, @p19, @p20, @p21, @p22, @p23, @p24, @p25, @p26, @p27, @p28, @p29, @p30, @p31, @p32, @p33, @p34, @p35, @p36, @p37); 
+[ERR]  An exception occurred in the database while saving changes for context type 'HRMSinfrastructure.Data.HRMSDbContext'.
+Microsoft.EntityFrameworkCore.DbUpdateException: An error occurred while saving the entity changes. See the inner exception for details.
+ ---> Microsoft.Data.SqlClient.SqlException (0x80131904): Cannot insert the value NULL into column 'FirstName', table 'HrmsDb.dbo.Employee'; column does not allow nulls. INSERT fails.
+The statement has been terminated.
+   at Microsoft.Data.SqlClient.SqlCommand.<>c.<ExecuteDbDataReaderAsync>b__188_0(Task`1 result)
+   at System.Threading.Tasks.ContinuationResultTaskFromResultTask`2.InnerInvoke()
+   at System.Threading.Tasks.Task.<>c.<.cctor>b__272_0(Object obj)
+   at System.Threading.ExecutionContext.RunInternal(ExecutionContext executionContext, ContextCallback callback, Object state)
+--- End of stack trace from previous location ---
+   at System.Threading.Tasks.Task.ExecuteWithThreadLocal(Task& currentTaskSlot, Thread threadPoolThread)
+--- End of stack trace from previous location ---
+   at Microsoft.EntityFrameworkCore.Storage.RelationalCommand.ExecuteReaderAsync(RelationalCommandParameterObject parameterObject, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Storage.RelationalCommand.ExecuteReaderAsync(RelationalCommandParameterObject parameterObject, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Update.ReaderModificationCommandBatch.ExecuteAsync(IRelationalConnection connection, CancellationToken cancellationToken)
+ClientConnectionId:8e23431d-5511-4486-9e86-3a8a7ccf32f5
+Error Number:515,State:2,Class:16
+   --- End of inner exception stack trace ---
+   at Microsoft.EntityFrameworkCore.Update.ReaderModificationCommandBatch.ExecuteAsync(IRelationalConnection connection, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Update.Internal.BatchExecutor.ExecuteAsync(IEnumerable`1 commandBatches, IRelationalConnection connection, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Update.Internal.BatchExecutor.ExecuteAsync(IEnumerable`1 commandBatches, IRelationalConnection connection, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Update.Internal.BatchExecutor.ExecuteAsync(IEnumerable`1 commandBatches, IRelationalConnection connection, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.ChangeTracking.Internal.StateManager.SaveChangesAsync(IList`1 entriesToSave, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.ChangeTracking.Internal.StateManager.SaveChangesAsync(StateManager stateManager, Boolean acceptAllChangesOnSuccess, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.SqlServer.Storage.Internal.SqlServerExecutionStrategy.ExecuteAsync[TState,TResult](TState state, Func`4 operation, Func`4 verifySucceeded, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.DbContext.SaveChangesAsync(Boolean acceptAllChangesOnSuccess, CancellationToken cancellationToken) 
+Microsoft.EntityFrameworkCore.DbUpdateException: An error occurred while saving the entity changes. See the inner exception for details.
+ ---> Microsoft.Data.SqlClient.SqlException (0x80131904): Cannot insert the value NULL into column 'FirstName', table 'HrmsDb.dbo.Employee'; column does not allow nulls. INSERT fails.
+The statement has been terminated.
+   at Microsoft.Data.SqlClient.SqlCommand.<>c.<ExecuteDbDataReaderAsync>b__188_0(Task`1 result)
+   at System.Threading.Tasks.ContinuationResultTaskFromResultTask`2.InnerInvoke()
+   at System.Threading.Tasks.Task.<>c.<.cctor>b__272_0(Object obj)
+   at System.Threading.ExecutionContext.RunInternal(ExecutionContext executionContext, ContextCallback callback, Object state)
+--- End of stack trace from previous location ---
+   at System.Threading.Tasks.Task.ExecuteWithThreadLocal(Task& currentTaskSlot, Thread threadPoolThread)
+--- End of stack trace from previous location ---
+   at Microsoft.EntityFrameworkCore.Storage.RelationalCommand.ExecuteReaderAsync(RelationalCommandParameterObject parameterObject, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Storage.RelationalCommand.ExecuteReaderAsync(RelationalCommandParameterObject parameterObject, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Update.ReaderModificationCommandBatch.ExecuteAsync(IRelationalConnection connection, CancellationToken cancellationToken)
+ClientConnectionId:8e23431d-5511-4486-9e86-3a8a7ccf32f5
+Error Number:515,State:2,Class:16
+   --- End of inner exception stack trace ---
+   at Microsoft.EntityFrameworkCore.Update.ReaderModificationCommandBatch.ExecuteAsync(IRelationalConnection connection, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Update.Internal.BatchExecutor.ExecuteAsync(IEnumerable`1 commandBatches, IRelationalConnection connection, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Update.Internal.BatchExecutor.ExecuteAsync(IEnumerable`1 commandBatches, IRelationalConnection connection, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Update.Internal.BatchExecutor.ExecuteAsync(IEnumerable`1 commandBatches, IRelationalConnection connection, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.ChangeTracking.Internal.StateManager.SaveChangesAsync(IList`1 entriesToSave, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.ChangeTracking.Internal.StateManager.SaveChangesAsync(StateManager stateManager, Boolean acceptAllChangesOnSuccess, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.SqlServer.Storage.Internal.SqlServerExecutionStrategy.ExecuteAsync[TState,TResult](TState state, Func`4 operation, Func`4 verifySucceeded, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.DbContext.SaveChangesAsync(Boolean acceptAllChangesOnSuccess, CancellationToken cancellationToken)
+[INF]  Executed action HRMS.API.Controllers.EmployeeController.Create (HRMS.API) in 163268.3701ms 
+[INF]  Executed endpoint 'HRMS.API.Controllers.EmployeeController.Create (HRMS.API)' 
+[ERR]  Something went wrong: Microsoft.EntityFrameworkCore.DbUpdateException: An error occurred while saving the entity changes. See the inner exception for details.
+ ---> Microsoft.Data.SqlClient.SqlException (0x80131904): Cannot insert the value NULL into column 'FirstName', table 'HrmsDb.dbo.Employee'; column does not allow nulls. INSERT fails.
+The statement has been terminated.
+   at Microsoft.Data.SqlClient.SqlCommand.<>c.<ExecuteDbDataReaderAsync>b__188_0(Task`1 result)
+   at System.Threading.Tasks.ContinuationResultTaskFromResultTask`2.InnerInvoke()
+   at System.Threading.Tasks.Task.<>c.<.cctor>b__272_0(Object obj)
+   at System.Threading.ExecutionContext.RunInternal(ExecutionContext executionContext, ContextCallback callback, Object state)
+--- End of stack trace from previous location ---
+   at System.Threading.Tasks.Task.ExecuteWithThreadLocal(Task& currentTaskSlot, Thread threadPoolThread)
+--- End of stack trace from previous location ---
+   at Microsoft.EntityFrameworkCore.Storage.RelationalCommand.ExecuteReaderAsync(RelationalCommandParameterObject parameterObject, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Storage.RelationalCommand.ExecuteReaderAsync(RelationalCommandParameterObject parameterObject, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Update.ReaderModificationCommandBatch.ExecuteAsync(IRelationalConnection connection, CancellationToken cancellationToken)
+ClientConnectionId:8e23431d-5511-4486-9e86-3a8a7ccf32f5
+Error Number:515,State:2,Class:16
+   --- End of inner exception stack trace ---
+   at Microsoft.EntityFrameworkCore.Update.ReaderModificationCommandBatch.ExecuteAsync(IRelationalConnection connection, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Update.Internal.BatchExecutor.ExecuteAsync(IEnumerable`1 commandBatches, IRelationalConnection connection, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Update.Internal.BatchExecutor.ExecuteAsync(IEnumerable`1 commandBatches, IRelationalConnection connection, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Update.Internal.BatchExecutor.ExecuteAsync(IEnumerable`1 commandBatches, IRelationalConnection connection, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.ChangeTracking.Internal.StateManager.SaveChangesAsync(IList`1 entriesToSave, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.ChangeTracking.Internal.StateManager.SaveChangesAsync(StateManager stateManager, Boolean acceptAllChangesOnSuccess, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.SqlServer.Storage.Internal.SqlServerExecutionStrategy.ExecuteAsync[TState,TResult](TState state, Func`4 operation, Func`4 verifySucceeded, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.DbContext.SaveChangesAsync(Boolean acceptAllChangesOnSuccess, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.DbContext.SaveChangesAsync(Boolean acceptAllChangesOnSuccess, CancellationToken cancellationToken)
+   at HRMSinfrastructure.Repositories.CommandRepo.BaseRepo.BaseRepo`1.SaveChangesAsync() in C:\Users\dell\Desktop\RailWayCleanArchitecture\HRMSApp\HRMSinfrastructure\Repositories\BaseRepo\BaseRepo.cs:line 42
+   at HRMSapplication.Commands.CreateEmployee.CreateEmployeeCommandHandler.Handle(CreateEmployeeCommand request, CancellationToken cancellationToken) in C:\Users\dell\Desktop\RailWayCleanArchitecture\HRMSApp\HRMSapplication\Services\Employee\Commands\CreateEmployee\CreateEmployeeCommandHandler.cs:line 35
+   at MediatR.Pipeline.RequestExceptionProcessorBehavior`2.Handle(TRequest request, CancellationToken cancellationToken, RequestHandlerDelegate`1 next)
+   at MediatR.Pipeline.RequestExceptionProcessorBehavior`2.Handle(TRequest request, CancellationToken cancellationToken, RequestHandlerDelegate`1 next)
+   at MediatR.Pipeline.RequestExceptionActionProcessorBehavior`2.Handle(TRequest request, CancellationToken cancellationToken, RequestHandlerDelegate`1 next)
+   at MediatR.Pipeline.RequestExceptionActionProcessorBehavior`2.Handle(TRequest request, CancellationToken cancellationToken, RequestHandlerDelegate`1 next)
+   at MediatR.Pipeline.RequestPostProcessorBehavior`2.Handle(TRequest request, CancellationToken cancellationToken, RequestHandlerDelegate`1 next)
+   at MediatR.Pipeline.RequestPreProcessorBehavior`2.Handle(TRequest request, CancellationToken cancellationToken, RequestHandlerDelegate`1 next)
+   at HRMS.API.Controllers.EmployeeController.Create(CreateEmployeeCommand employee) in C:\Users\dell\Desktop\RailWayCleanArchitecture\HRMSApp\HRMS\Controllers\EmployeeController.cs:line 35
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ActionMethodExecutor.TaskOfIActionResultExecutor.Execute(IActionResultTypeMapper mapper, ObjectMethodExecutor executor, Object controller, Object[] arguments)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.<InvokeActionMethodAsync>g__Awaited|12_0(ControllerActionInvoker invoker, ValueTask`1 actionResultValueTask)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.<InvokeNextActionFilterAsync>g__Awaited|10_0(ControllerActionInvoker invoker, Task lastTask, State next, Scope scope, Object state, Boolean isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.Rethrow(ActionExecutedContextSealed context)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.Next(State& next, Scope& scope, Object& state, Boolean& isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.<InvokeInnerFilterAsync>g__Awaited|13_0(ControllerActionInvoker invoker, Task lastTask, State next, Scope scope, Object state, Boolean isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeFilterPipelineAsync>g__Awaited|20_0(ResourceInvoker invoker, Task lastTask, State next, Scope scope, Object state, Boolean isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeAsync>g__Logged|17_1(ResourceInvoker invoker)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeAsync>g__Logged|17_1(ResourceInvoker invoker)
+   at Microsoft.AspNetCore.Routing.EndpointMiddleware.<Invoke>g__AwaitRequestTask|6_0(Endpoint endpoint, Task requestTask, ILogger logger)
+   at Microsoft.AspNetCore.Authorization.AuthorizationMiddleware.Invoke(HttpContext context)
+   at Microsoft.AspNetCore.Authentication.AuthenticationMiddleware.Invoke(HttpContext context)
+   at HRMS.API.ExceptionHandling.ExceptionMiddleware.Invoke(HttpContext context) in C:\Users\dell\Desktop\RailWayCleanArchitecture\HRMSApp\HRMS\ExceptionHandling\ExceptionMiddleware.cs:line 19 
+[INF]  Request finished HTTP/2 POST https://localhost:7263/api/Employee application/json 59 - 500 - application/json 163434.1014ms 

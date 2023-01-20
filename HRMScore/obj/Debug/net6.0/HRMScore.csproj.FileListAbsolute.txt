@@ -1,0 +1,12 @@
+C:\Users\dell\Desktop\RailWayCleanArchitecture\HRMSApp\HRMScore\obj\Debug\net6.0\HRMScore.csproj.AssemblyReference.cache
+C:\Users\dell\Desktop\RailWayCleanArchitecture\HRMSApp\HRMScore\obj\Debug\net6.0\HRMScore.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\dell\Desktop\RailWayCleanArchitecture\HRMSApp\HRMScore\obj\Debug\net6.0\HRMScore.AssemblyInfoInputs.cache
+C:\Users\dell\Desktop\RailWayCleanArchitecture\HRMSApp\HRMScore\obj\Debug\net6.0\HRMScore.AssemblyInfo.cs
+C:\Users\dell\Desktop\RailWayCleanArchitecture\HRMSApp\HRMScore\obj\Debug\net6.0\HRMScore.csproj.CoreCompileInputs.cache
+C:\Users\dell\Desktop\RailWayCleanArchitecture\HRMSApp\HRMScore\bin\Debug\net6.0\HRMScore.deps.json
+C:\Users\dell\Desktop\RailWayCleanArchitecture\HRMSApp\HRMScore\bin\Debug\net6.0\HRMScore.dll
+C:\Users\dell\Desktop\RailWayCleanArchitecture\HRMSApp\HRMScore\bin\Debug\net6.0\HRMScore.pdb
+C:\Users\dell\Desktop\RailWayCleanArchitecture\HRMSApp\HRMScore\obj\Debug\net6.0\HRMScore.dll
+C:\Users\dell\Desktop\RailWayCleanArchitecture\HRMSApp\HRMScore\obj\Debug\net6.0\refint\HRMScore.dll
+C:\Users\dell\Desktop\RailWayCleanArchitecture\HRMSApp\HRMScore\obj\Debug\net6.0\HRMScore.pdb
+C:\Users\dell\Desktop\RailWayCleanArchitecture\HRMSApp\HRMScore\obj\Debug\net6.0\ref\HRMScore.dll

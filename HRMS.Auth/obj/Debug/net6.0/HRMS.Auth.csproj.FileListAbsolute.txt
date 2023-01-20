@@ -1,0 +1,17 @@
+C:\Users\dell\Desktop\RailWayCleanArchitecture\HRMSApp\HRMS.Auth\obj\Debug\net6.0\HRMS.Auth.csproj.AssemblyReference.cache
+C:\Users\dell\Desktop\RailWayCleanArchitecture\HRMSApp\HRMS.Auth\obj\Debug\net6.0\HRMS.Auth.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\dell\Desktop\RailWayCleanArchitecture\HRMSApp\HRMS.Auth\obj\Debug\net6.0\HRMS.Auth.AssemblyInfoInputs.cache
+C:\Users\dell\Desktop\RailWayCleanArchitecture\HRMSApp\HRMS.Auth\obj\Debug\net6.0\HRMS.Auth.AssemblyInfo.cs
+C:\Users\dell\Desktop\RailWayCleanArchitecture\HRMSApp\HRMS.Auth\obj\Debug\net6.0\HRMS.Auth.csproj.CoreCompileInputs.cache
+C:\Users\dell\Desktop\RailWayCleanArchitecture\HRMSApp\HRMS.Auth\bin\Debug\net6.0\HRMS.Auth.deps.json
+C:\Users\dell\Desktop\RailWayCleanArchitecture\HRMSApp\HRMS.Auth\bin\Debug\net6.0\HRMS.Auth.dll
+C:\Users\dell\Desktop\RailWayCleanArchitecture\HRMSApp\HRMS.Auth\bin\Debug\net6.0\HRMS.Auth.pdb
+C:\Users\dell\Desktop\RailWayCleanArchitecture\HRMSApp\HRMS.Auth\bin\Debug\net6.0\HRMS.Application.dll
+C:\Users\dell\Desktop\RailWayCleanArchitecture\HRMSApp\HRMS.Auth\bin\Debug\net6.0\HRMS.Domain.dll
+C:\Users\dell\Desktop\RailWayCleanArchitecture\HRMSApp\HRMS.Auth\bin\Debug\net6.0\HRMS.Application.pdb
+C:\Users\dell\Desktop\RailWayCleanArchitecture\HRMSApp\HRMS.Auth\bin\Debug\net6.0\HRMS.Domain.pdb
+C:\Users\dell\Desktop\RailWayCleanArchitecture\HRMSApp\HRMS.Auth\obj\Debug\net6.0\HRMS.Auth.csproj.CopyComplete
+C:\Users\dell\Desktop\RailWayCleanArchitecture\HRMSApp\HRMS.Auth\obj\Debug\net6.0\HRMS.Auth.dll
+C:\Users\dell\Desktop\RailWayCleanArchitecture\HRMSApp\HRMS.Auth\obj\Debug\net6.0\refint\HRMS.Auth.dll
+C:\Users\dell\Desktop\RailWayCleanArchitecture\HRMSApp\HRMS.Auth\obj\Debug\net6.0\HRMS.Auth.pdb
+C:\Users\dell\Desktop\RailWayCleanArchitecture\HRMSApp\HRMS.Auth\obj\Debug\net6.0\ref\HRMS.Auth.dll
